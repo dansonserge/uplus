@@ -907,8 +907,8 @@
 					 		"recipients"	=>$recipients,
 					 		"message"		=>$message,
 					 	);
-				 	//include 'sms.php';
-				 	//if($httpcode == 200){}
+				 	include 'sms.php';
+				 	if($httpcode == 200){}
 
 					// Bwiuld the answel
 					$returnedinformation    = array();   
