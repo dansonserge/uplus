@@ -72,7 +72,7 @@
                                                 <div class="uk-input-group">
                                                     <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
                                                     <label for="uk_dp_1">Select date</label>
-                                                    <input class="md-input" type="text" id="schedDate" data-uk-datepicker="{format:'DD.MM.YYYY'}" required="required">
+                                                    <input class="md-input" type="text" id="schedDate" data-uk-datepicker="{format:'DD-MM-YYYY'}" required="required">
                                                 </div>
                                             </div>
                                         </div>
@@ -139,6 +139,15 @@
     <script src="assets/js/custom/handlebars_helpers.min.js"></script>
     <!-- CLNDR -->
     <script src="bower_components/clndr/clndr.min.js"></script>
+
+    <!-- datatables -->
+    <script src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+
+     <!-- datatables custom integration -->
+    <script src="assets/js/custom/datatables/datatables.uikit.min.js"></script>
+
+    <!--  datatables functions -->
+    <script src="assets/js/pages/plugins_datatables.min.js"></script>
 
     <script src="js/custom.js"></script>
     <script type="text/javascript">

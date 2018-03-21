@@ -67,13 +67,51 @@
             </div>
             <div class="md-card-content errorHandle"></div>
         </div>
-            <div class="md-card 1st-step sms-elem">
-                <div class="md-card-content">
-                    Estimated SMS Cost <i class="uk-text-small">units</i>
-                    <p class="estimCost"><span id="recCount">0</span> * <span id="msgCount">0</span> = <span id="totalEstim">0</span></p>
-                </div>
+        <div class="md-card 1st-step sms-elem">
+            <div class="md-card-content">
+                Estimated SMS Cost <i class="uk-text-small">units</i>
+                <p class="estimCost"><span id="recCount">0</span> * <span id="msgCount">0</span> = <span id="totalEstim">0</span></p>
             </div>
-
+        </div>
+        <div class="md-card 1st-step scheduledTable">
+            <div class="md-card-toolbar">
+                <p class="md-card-toolbar-heading-text">Scheduled broadcasts</p>
+            </div>
+            <div class="md-card-content">
+                <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Message</th>
+                            <th>Channel</th>
+                            <th>Schedule Date</th>
+                            <th>Number</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                        $n=0;
+                        $sqlGetMembers = $db->query("SELECT *, (SELECT COUNT(*) FROM messageslog WHERE message = message.id) as number FROM message WHERE !ISNULL(scheduleTime) ORDER BY scheduleTime DESC") or die ($db->error);
+                        while($scheMessage = mysqli_fetch_array($sqlGetMembers))
+                            {
+                                $messageId = $scheMessage['id'];
+                                $n++;
+                                echo '<tr>
+                                <td>'.$n.'</td>
+                                <td>'.substr($scheMessage['message'], 0, 20).'..</td>
+                                <td>'.$scheMessage['channel'].'</td>
+                                <td>'.$scheMessage['scheduleTime'].'</td>
+                                <td>'.$scheMessage['number'].'</td>
+                                <td><a href="#?id='.$messageId.'"><i class="material-icons">mode_edit</i></a></td>
+                                </tr>';
+                            }
+                        ?> 
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <div class="uk-width-large-2-4">
         <div class="md-card">

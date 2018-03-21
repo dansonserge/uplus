@@ -57,11 +57,11 @@
                                 <tbody>
                                     <?php 
                                     $n=0;
-                                    $sqlGetMembers = $db->query("SELECT * FROM `members` ORDER BY id DESC")or die (mysqli_error());
+                                    $sqlGetMembers = $db->query("SELECT * FROM `members` ORDER BY id DESC")or die ($db->error);
                                     while($rowMember = mysqli_fetch_array($sqlGetMembers))
                                         {
                                             $branchid = $rowMember['branchid'];
-                                            $sqlGetMembersloc = $db->query("SELECT * FROM `branches` WHERE id = '$branchid'")or die (mysqli_error());
+                                            $sqlGetMembersloc = $db->query("SELECT * FROM `branches` WHERE id = '$branchid'")or die ($db->error);
                                             $branches = mysqli_fetch_array($sqlGetMembersloc);
                                             $n++;
                                             echo '<tr>
@@ -303,7 +303,7 @@
     <script src="bower_components/datatables-buttons/js/buttons.html5.js"></script>
     <script src="bower_components/datatables-buttons/js/buttons.print.js"></script>
     
-      <!-- datatables custom integration -->
+    <!-- datatables custom integration -->
     <script src="assets/js/custom/datatables/datatables.uikit.min.js"></script>
 
     <!--  datatables functions -->

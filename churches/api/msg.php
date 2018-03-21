@@ -25,6 +25,9 @@
         $subject = $req['subject']??"";
 
         $scheduleTime = $req['scheduleTime']??false;
+
+        //formatting time
+        $scheduleTime = date("Y-m-d h:i:s", strtotime($scheduleTime));
         
 
         //Adding message in DB as reference

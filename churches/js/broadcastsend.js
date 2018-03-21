@@ -331,8 +331,8 @@ $('textarea#broadcastMsg').keypress(function(){
 $(".checkCont input[type='checkbox'].controlOption").change(function(){
     var status = this.checked; // "select all" checked status
     clickedElem = $(this).attr('data-target');
+
     elems = $('.'+clickedElem);
-    log(clickedElem)
     
 
     elems.each(function(){ //iterate all listed checkbox items
