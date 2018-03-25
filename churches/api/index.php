@@ -3,7 +3,7 @@
 	include "../class.message.php";
 	$Message = new broadcast();
 	$request = array_merge($_POST, $_GET); //$_GET for devt nd $_POST for production
-    $response = array();
+    	$response = array();
 	
 	$action = $request['action']??"";
 
