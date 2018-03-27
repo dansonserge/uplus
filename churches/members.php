@@ -36,9 +36,9 @@
                                     <h4 class="heading_c uk-margin-bottom">Members attendance</h4>
                                 </div>
                                 <div class="uk-width-1-4">
-                                    <form class="uk-form">
-                                        <div class="uk-form-row uk--select"  data-uk-form-select>
-                                            <select id="selectChart">
+                                    <form class="-form">
+                                        <div class="uk--select"  data-uk-form-select>
+                                            <select id="selectChart" class="md-input">
                                                 <option>Service</option>
                                                 <option>Gender</option>
                                                 <option>Days</option>
