@@ -381,8 +381,14 @@
 		require('db.php');
 		$groupId			= mysqli_real_escape_string($db, $_POST['groupId']);
 		$invitorId			= mysqli_real_escape_string($db, $_POST['invitorId']);
-		$invitedPhone		= mysqli_real_escape_string($db, $_POST['invitedPhone']);
+		$invitedPhonearray		= mysqli_real_escape_string($db, $_POST['invitedPhone']);
 
+		foreach($invitedPhonearray as $i => $item) 
+		{
+		    $invitedPhone = $invitedPhonearray[$i];
+		
+		
+		
 		//CLEAN PHONE
 		$invitedPhone 	= preg_replace( '/[^0-9]/', '', $invitedPhone );
 		$invitedPhone 	= substr($invitedPhone, -10); 
@@ -493,6 +499,8 @@
 		else
 		{
 			echo "Poison Detected: ".$groupId;
+		}
+		
 		}
 		mysqli_close($db);
 		mysqli_close($outCon);		
