@@ -33,7 +33,7 @@
                         <div class="md-card-content">
                             <div class=" uk-grid">
                                 <div class="uk-width-3-4">
-                                    <h4 class="heading_c uk-margin-bottom">Members attendance</h4>
+                                    <h4 class="heading_c uk-margin-bottom">Members attendance Analysis</h4>
                                 </div>
                                 <div class="uk-width-1-4">
                                     <form class="-form">
@@ -63,7 +63,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Branche</th>
+                                        <th>Branch</th>
                                         <th>Phone</th>
                                         <th>Email</th>
                                         <th>Address</th>
