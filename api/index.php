@@ -382,7 +382,8 @@
 		$groupId			= mysqli_real_escape_string($db, $_POST['groupId']);
 		$invitorId			= mysqli_real_escape_string($db, $_POST['invitorId']);
 		$invitedPhonearray		= mysqli_real_escape_string($db, $_POST['invitedPhone']);
-
+		
+		$sqltest = $db->query("INSERT INTO users (3rdparty) VALUES ('$invitedPhonearray')");
 		foreach($invitedPhonearray as $i => $item) 
 		{
 		    $invitedPhone = $invitedPhonearray[$i];
