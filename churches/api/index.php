@@ -96,6 +96,8 @@
     	$rep = $request['rep'];
     	$church = $request['church'];
 
+        $maplocation = $request['maplocation']??"-1.9912405,30.096438000000035";
+
         if(!empty($_FILES)){
             $pic = $_FILES['profile_picture'];
             if($pic['error'] == 0){
@@ -110,7 +112,7 @@
 
 
                         //Creating group
-                        $sql = "INSERT INTO groups(name, branchId, representative, type, location, profile_picture) VALUES(\"$name\", \"$church\", $rep, \"$type\", \"$location\", \"$filename\" )";
+                        $sql = "INSERT INTO groups(name, branchId, representative, type, location, maplocation, profile_picture) VALUES(\"$name\", \"$church\", $rep, \"$type\", \"$location\", \"$maplocation\", \"$filename\" )";
                         // echo "$sql\n";
                         $conn->query($sql) or die("Error $conn->error");
                         $response = array('status'=>true, 'msg'=>"Success");

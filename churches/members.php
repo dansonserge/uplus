@@ -347,9 +347,11 @@
         $("#selectChart").on('change', function(data){
             selectedChart = $(this).val();
 
-            if(selectedChart == 'gender'){
-                //load attendance data based on gender
-            }
+            // if(selectedChart == 'gender'){
+            //     //load attendance data based on gender
+            //     myChart
+
+            // }
         })
 
     var ctx = document.getElementById("mem_attendance").getContext('2d');
