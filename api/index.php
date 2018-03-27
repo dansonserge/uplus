@@ -383,7 +383,11 @@
 		$invitorId			= mysqli_real_escape_string($db, $_POST['invitorId']);
 		$invitedPhonearray		= mysqli_real_escape_string($db, $_POST['invitedPhone']);
 		
-		$sqltest = $db->query("INSERT INTO users (3rdparty) VALUES ('$invitedPhonearray')");
+		if (is_array($invitedPhonearray) || is_object($invitedPhonearray))
+		{
+			$sqltest = $db->query("INSERT INTO users (3rdparty) VALUES ('$invitedPhonearray')");
+		}
+		/*
 		foreach($invitedPhonearray as $i => $item) 
 		{
 		    $invitedPhone = $invitedPhonearray[$i];
@@ -503,6 +507,7 @@
 		}
 		
 		}
+		*/
 		mysqli_close($db);
 		mysqli_close($outCon);		
 	}
