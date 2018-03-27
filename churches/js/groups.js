@@ -222,6 +222,7 @@ $("#group_add_submit").on('click', function(e){
 
                     //Opening the success modal
                     var nmodal = UIkit.modal("#group_created_modal");
+                    $("#group_added_btn").attr('href', 'groups.php?group='+data.groupid);
                     nmodal.show();
                 }else{
                     $(".group_create_status").html("<p class='uk-text-danger'>Group cant be successfully<br />"+data.msg+"</p>");

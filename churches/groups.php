@@ -515,7 +515,7 @@
                         <div class="uk-modal" id="group_created_modal" aria-hidden="true" style="display: none; overflow-y: auto;">
                             <div class="uk-modal-dialog" style="width:400px; top: 339.5px;">
                                 <div class="uk-modal-header uk-tile uk-tile-default">
-                                    <h3 class="d_inline">Group created!</h3><button type="button" class="uk-modal-close uk-close d_inline pull-right"></button>
+                                    <h3 class="d_inline">Group created!</h3>
                                 </div>
                                 <div class="md-card">
                                     <div class="md-card-content">
@@ -524,10 +524,10 @@
                                         </div>  
                                     </div>
                                 </div>
-                                <div class="uk-modal-footer uk-text-right">
-                                    <button class="md-btn md-btn-danger pull-left uk-modal-close">OK</button>
+                                <div class="uk-modal-footer uk-text-right">                                    
                                     <div class="md-input-wrapper">
-                                        <button id="group_add_submit" class="md-btn md-btn-success pull-right">GOTO Group</button>
+                                        <button class="md-btn md-btn-danger pull-left uk-modal-close">OK</button>
+                                        <a id="group_added_btn" class="md-btn md-btn-success pull-right">GOTO Group</a>
                                     </div>
                                 </div>
                             </div>

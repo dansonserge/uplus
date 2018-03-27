@@ -115,7 +115,7 @@
                         $sql = "INSERT INTO groups(name, branchId, representative, type, location, maplocation, profile_picture) VALUES(\"$name\", \"$church\", $rep, \"$type\", \"$location\", \"$maplocation\", \"$filename\" )";
                         // echo "$sql\n";
                         $conn->query($sql) or die("Error $conn->error");
-                        $response = array('status'=>true, 'msg'=>"Success");
+                        $response = array('status'=>true, 'msg'=>"Success", 'groupid'=>$conn->insert_id);
 
                     }else $response = array('status'=>false, 'msg'=>"Error keeping file on server\nPlease try again");
                 }else{
