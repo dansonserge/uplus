@@ -490,7 +490,7 @@
                                                         </div>
                                                         <div class="uk-form-row">
                                                             <label>Group image</label>
-                                                            <input type="file" id="input-fgroup-pic" class="dropify" data-allowed-file-extensions="xls xlsx"/>
+                                                            <input type="file" id="input-fgroup-pic" class="dropify" data-allowed-file-extensions="png jpgeg jpg"/>
                                                         </div>
                                                         <div class="uk-form-row">
                                                             <div class="group_create_status"></div>
