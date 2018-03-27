@@ -1,8 +1,8 @@
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
-<?php include("header.php");?>
-<?php 
+<?php
+	include("header.php");
     if(isset($_GET['brancId'])){
     	$brancId = $_GET['brancId'];
     	$sqlGetBranch = $db->query("SELECT * FROM `branches` WHERE id = '$brancId'")or die (mysqli_error());
