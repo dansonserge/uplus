@@ -94,7 +94,8 @@
                                 </div>
                                 <div class="md-input-wrapper">
                                     <label>Description</label>
-                                    <input type="text" id="podcast-intro" class="md-input">
+                                    <textarea id="podcast-intro" class="md-input"></textarea>
+                                    <!-- <input type="text"  c> -->
                                     <span class="md-input-bar "></span>
                                 </div>
                                 <div class="md-input-wrapper">
