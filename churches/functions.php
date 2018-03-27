@@ -252,7 +252,7 @@
         include 'db.php';
         //Getting details of the message log
 
-        $det = $conn->query("SELECT email, subject, token, members.phone as receiver, message.message as message, channel FROM messageslog JOIN message ON messageslog.message = message.id JOIN members ON messageslog.receiver = members.id WHERE messageslog.id = \"$logID\" LIMIT 1 ")or die("can get log data ".mysqli_error($conn));
+        $det = $conn->query("SELECT email, subject, token, sender, members.phone as receiver, message.message as message, channel FROM messageslog JOIN message ON messageslog.message = message.id JOIN members ON messageslog.receiver = members.id WHERE messageslog.id = \"$logID\" LIMIT 1 ")or die("can get log data ".mysqli_error($conn));
 
         if(mysqli_num_rows($det)){
             $smsdet = mysqli_fetch_assoc($det);
@@ -260,9 +260,18 @@
             $receiver = $smsdet['receiver'];
             $message = $smsdet['message'];
 
+            $messageSender = $smsdet['sender'];
+
             if($channel == 'sms'){
                 //Sending sms
                 $smsstatus = sendsms($receiver, $message);
+
+
+                //reducing SMS
+                if($smsstatus == 'Yes'){
+                  $query = $db->query("UPDATE smsbalance SET balance = balance-1 WHERE church = (SELECT church FROM users JOIN message on users.id = message.sender WHERE message.sender = \"$messageSender\" LIMIT 1 )");
+                }
+
             }else if($channel == 'app'){
                 $token = $smsdet['token'];
                 $sendstatus = send_notification(array($token), array("message" => $message));
@@ -270,7 +279,7 @@
                 $sendstatus = json_decode($sendstatus, 1);
                 if($sendstatus['success'] == 1)
                 {
-                   $smsstatus = "Yes"; 
+                  $smsstatus = "Yes"; 
                 }else
                 {
                 $smsstatus = "No";
@@ -289,8 +298,7 @@
                 }else
                 {
                 $smsstatus = "No";
-               }
-                
+               }                
             }
 
             if($smsstatus == "Yes")
@@ -308,6 +316,37 @@
         {
             return false;
         }       
+    }
+    function sendsms($phone, $message, $subject=""){
+      $recipients     = $phone;
+      $data = array(
+          "sender"        =>'Church',
+          "recipients"    =>$recipients,
+          "message"       =>$message,
+      );
+      $url = "https://www.intouchsms.co.rw/api/sendsms/.json";
+      $data = http_build_query ($data);
+      $username="cmuhirwa";
+      $password="clement123";
+      $ch = curl_init();
+      curl_setopt($ch,CURLOPT_URL, $url);
+      curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);
+      curl_setopt($ch,CURLOPT_POST,true);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+      curl_setopt($ch,CURLOPT_POSTFIELDS, $data);
+      $result = curl_exec($ch);
+      $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+      curl_close($ch);
+              
+      if($httpcode == 200)
+      {
+          return "Yes";
+      }
+      else
+      {
+          return "No";
+      }
     }
     function list_groups($churchID){
       global $conn;
@@ -413,37 +452,7 @@
         echo json_encode($data);
     }
 
-    function sendsms($phone, $message, $subject=""){
-        $recipients     = $phone;
-        $data = array(
-            "sender"        =>'Church',
-            "recipients"    =>$recipients,
-            "message"       =>$message,
-        );
-        $url = "https://www.intouchsms.co.rw/api/sendsms/.json";
-        $data = http_build_query ($data);
-        $username="cmuhirwa";
-        $password="clement123";
-        $ch = curl_init();
-        curl_setopt($ch,CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);
-        curl_setopt($ch,CURLOPT_POST,true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($ch,CURLOPT_POSTFIELDS, $data);
-        $result = curl_exec($ch);
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-                
-        if($httpcode == 200)
-        {
-            return "Yes";
-        }
-        else
-        {
-            return "No";
-        }
-    }
+    
     function church_podcasts($church){
       //Get all the podcasts of a church
       global $conn;
