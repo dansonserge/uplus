@@ -39,10 +39,10 @@
                                     <form class="-form">
                                         <div class="uk--select"  data-uk-form-select>
                                             <select id="selectChart" class="md-input">
-                                                <option>Service</option>
-                                                <option>Gender</option>
-                                                <option>Days</option>
-                                                <option>Time interval</option>
+                                                <option value="service">Service</option>
+                                                <option value="gender">Gender</option>
+                                                <option value="days">Days</option>
+                                                <option value="time">Time interval</option>
                                             </select>
                                         </div>
                                     </form>
@@ -342,6 +342,15 @@
     }
     ?>
     <script>
+
+        //scripts
+        $("#selectChart").on('change', function(data){
+            selectedChart = $(this).val();
+
+            if(selectedChart == 'gender'){
+                //load attendance data based on gender
+            }
+        })
 
     var ctx = document.getElementById("mem_attendance").getContext('2d');
     var myChart = new Chart(ctx, {
