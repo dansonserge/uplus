@@ -1882,6 +1882,12 @@ a.uk-datepicker-table-muted {
     top: auto;
     bottom: 8px
 }
+progress.uk-progress[value]::-webkit-progress-bar {
+  background-color: #fff;
+  border-radius: 2px;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
 
 .uk-notify-message {
     background: #323232;

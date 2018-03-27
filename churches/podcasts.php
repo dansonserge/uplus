@@ -99,9 +99,15 @@
                                 </div>
                                 <div class="md-input-wrapper">
                                     <label>File</label>
-                                    <input type="file" id="podcast-file" class="dropify" data-allowed-file-extensions="mp3 aac"/>
+                                    <input type="file" id="podcast-file" class="dropify" data-allowed-file-extensions="mp3 aac mp4"/>
+                                    <progress id="podcast-upload-progress" class="uk-progress display-none" value="0" max="100" style="width: 100%"></progress>
                                     <span class="md-input-bar "></span>
                                 </div>
+                                <!-- <div class="md-input-wrapper">
+                                    <label>File</label>
+                                    <input type="file" id="podcast-file" data-allowed-file-extensions="mp3 aac"/>
+                                    <span class="md-input-bar "></span>
+                                </div> -->
                             </div>                        
                         </div>
                         <div class="uk-modal-footer uk-text-right">
@@ -135,6 +141,9 @@
 
     <!--  dashbord functions -->
 
+    <!-- Dropzone -->
+    <script type="text/javascript" src="assets/js/dropzone.js"></script>
+
     <!-- Dropify -->
     <script src="bower_components/dropify/dist/js/dropify.min.js"></script>
     <script type="text/javascript">
@@ -143,6 +152,7 @@
                 'default': 'Drag and drop a podcast here or click',
             }
         });
+
         $("#file_add_form").on('submit', function(e){
             //Adding podcasts
             //Getting inputs
@@ -163,6 +173,9 @@
                 for (var prop in fields) {
                     formdata.append(prop, fields[prop]);
                 }
+
+                //Showing progress bar
+                $("#podcast-upload-progress").removeClass('display-none');
 
                 var ajax = new XMLHttpRequest();
                 ajax.addEventListener("load", function(){
@@ -186,6 +199,16 @@
                         console.log(e);
                     }
 
+                }, false);
+                ajax.upload.addEventListener("progress", function(evt){
+                    uploaded = evt.loaded;
+                    total = evt.total;
+
+                    percentage = (total/uploaded)*100;
+                    
+                    $("#podcast-upload-progress").attr('value', percentage);
+
+                    console.log(percentage)
                 }, false);
                 ajax.open("POST", "api/index.php");
                 ajax.send(formdata);

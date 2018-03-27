@@ -16,12 +16,12 @@
         //checking file
         if($_FILES['members-file']['size']>0){
 
-            $target_dir = "uploads/churchmembers/";
-            $tmp_file = basename($_FILES["members-file"]['tmp_name']);
-            $target_file = $target_dir.basename($_FILES["members-file"]['name']);
-            $uploadOk = 1;
-            $FileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-            move_uploaded_file(basename($_FILES["members-file"]['tmp_name']), $target_file);
+        $target_dir = "uploads/churchmembers/";
+        $tmp_file = basename($_FILES["members-file"]['tmp_name']);
+        $target_file = $target_dir.basename($_FILES["members-file"]['name']);
+        $uploadOk = 1;
+        $FileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+        move_uploaded_file(basename($_FILES["members-file"]['tmp_name']), $target_file);
         }else{
             echo "No file uploaded";
         }       
