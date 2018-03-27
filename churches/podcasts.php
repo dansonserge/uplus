@@ -154,6 +154,30 @@
             }
         });
 
+        // $("#file_add_form").on('submit', function(e){
+        //     //Adding podcasts
+        //     e.preventDefault();
+        //     var formdata = new FormData();
+        //     var ajax = new XMLHttpRequest();
+
+        //     var pname = $("#podcast-name").val();
+        //     var pintro = $("#podcast-intro").val();
+        //     var podcatsfile = document.querySelector("#podcast-file").files[0];
+
+        //     //checking essential fields
+        //     if(pname && pintro){
+        //         formdata.append('action', 'add_podcast');
+        //         formdata.append('name', pname);
+        //         formdata.append('church', <?php echo $churchID; ?>);
+        //         formdata.append('intro', pintro);
+        //         formdata.append('file', podcatsfile);
+        //     }
+
+        //     ajax.open("POST", "api/index.php");
+            
+        //     ajax.send(formdata);
+        // })
+
         $("#file_add_form").on('submit', function(e){
             //Adding podcasts
             //Getting inputs
@@ -212,10 +236,9 @@
                     console.log(percentage)
                 }, false);
                 ajax.open("POST", "api/index.php");
-                ajax.setRequestHeader('Content-Type', 'multipart/form-data;charset=UTF-8');
+                // ajax.setRequestHeader('Content-Type', 'multipart/form-data;charset=UTF-8');
                 ajax.send(formdata);
             }
-
         })
     </script>
     

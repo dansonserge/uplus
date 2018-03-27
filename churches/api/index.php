@@ -304,7 +304,6 @@
         $name  = $request['name']??"";
         $church = $request['church']??"";
         $intro = $request['intro']??"";
-        // $representative = $request['representative']??"";
 
         if(!empty($name) && !empty($church) ){
             //checking file
