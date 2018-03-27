@@ -673,7 +673,7 @@
                                         ?>
                                         <li data-gmap-lat="<?php echo $maplocation[0] ?>"  data-gmap-lon="<?php echo $maplocation[1] ?>" data-gmap-user="<?php echo $group['name']; ?>" data-gmap-user-company="<?php echo $branchname ?>">
                                             <div class="md-list-addon-element">
-                                                <img class="md-user-image md-list-addon-avatar" src="<?php echo $profile_picture ?>" alt=""/>
+                                                <img class="md-user-image group-image-thumbnail-small md-list-addon-avatar" src="<?php echo $profile_picture ?>" alt=""/>
                                             </div>
                                             <div class="md-list-content">
                                                 <span class="md-list-heading"><?php echo $group['name']; ?></span>

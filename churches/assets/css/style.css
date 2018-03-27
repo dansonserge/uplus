@@ -123,7 +123,10 @@
         padding-left:48px
     }
 }
-
+.group-image-thumbnail-small {
+    width: 34px;
+    height: 34px;
+}
 .uk-comment-header {
     padding: 16px 8px 8px;
     border: none;
