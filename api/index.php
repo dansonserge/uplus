@@ -385,11 +385,11 @@
 		
 		$invitedPhonearray = explode(',', $invitedPhonearray);
 		
+			
+		
 		if (is_array($invitedPhonearray) || is_object($invitedPhonearray))
 		{
-			$sqltest = $db->query("INSERT INTO users (3rdparty) VALUES ('$invitedPhonearray')");
-		}
-		/*
+		
 		foreach($invitedPhonearray as $i => $item) 
 		{
 		    $invitedPhone = preg_replace( '/[^0-9]/', '', $invitedPhonearray[$i] );;
@@ -509,7 +509,7 @@
 		}
 		
 		}
-		*/
+		}
 		mysqli_close($db);
 		mysqli_close($outCon);		
 	}
