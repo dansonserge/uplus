@@ -31,7 +31,25 @@
                 <div class="uk-width-large-4-4">
                     <div class="md-card">
                         <div class="md-card-content">
-                            <h4 class="heading_c uk-margin-bottom">Members attendance</h4>
+                            <div class=" uk-grid">
+                                <div class="uk-width-3-4">
+                                    <h4 class="heading_c uk-margin-bottom">Members attendance</h4>
+                                </div>
+                                <div class="uk-width-1-4">
+                                    <form class="uk-form">
+                                        <div class="uk-form-row uk--select"  data-uk-form-select>
+                                            <select id="selectChart">
+                                                <option>Service</option>
+                                                <option>Gender</option>
+                                                <option>Days</option>
+                                                <option>Time interval</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                            
                             <canvas id="mem_attendance" class="attendance" width="400" height="80"></canvas>
                             <div ></div>
                         </div>
