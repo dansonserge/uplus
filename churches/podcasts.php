@@ -189,7 +189,7 @@
                             $("#branch_create .act-dialog[data-role=done]").removeClass('display-none');
 
                             setTimeout(function(){
-                                // location.reload();
+                                location.reload();
                             }, 1000)
 
                         }else{
@@ -204,13 +204,14 @@
                     uploaded = evt.loaded;
                     total = evt.total;
 
-                    percentage = (total/uploaded)*100;
+                    percentage = (uploaded/total)*100;
                     
                     $("#podcast-upload-progress").attr('value', percentage);
 
                     console.log(percentage)
                 }, false);
                 ajax.open("POST", "api/index.php");
+                ajax.setRequestHeader('Content-Type', 'multipart/form-data;charset=UTF-8');
                 ajax.send(formdata);
             }
 

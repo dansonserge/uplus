@@ -399,7 +399,7 @@
             $response = array('status'=>false, 'msg'=>"Provide all the details");
         }
     }else{
-    	$response = array('status'=>false, 'msg'=>"Provide action");
+    	$response = array('status'=>false, 'msg'=>"Provide action - $action");
     }
 
     echo json_encode($response);
