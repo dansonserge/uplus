@@ -236,7 +236,7 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <div class="group_map" data-location="<?php echo $grp_location; ?>" data-group-id="<?php echo $group_id; ?>"></div>
+                                            <div class="group_map" style="height: 450px" data-location="<?php echo $grp_location; ?>" data-group-id="<?php echo $group_id; ?>"></div>
                                             <div class="">                                                
                                                 <div style="position: absolute;bottom:15px; right: 2%">
                                                     <button class="md-btn md-btn-info" id="saveGroupChangesBtn" data-uk-modal="{target:'#saveGroupChangesModal'}"><i class="material-icons">save</i></button>                                                    
@@ -433,7 +433,7 @@
                                 <div class="uk-modal-header uk-tile uk-tile-default">
                                     <h3 class="d_inline">New Group</h3>
                                 </div>
-                                <form action="operations.php" method="POST">
+                                <form method="POST">
                                     <div class="md-card">
                                         <div class="md-card-content">
                                             <div class="uk-grid">                  
@@ -442,59 +442,59 @@
                                                         $group_types = group_types();
                                                     ?>
 
-                                                        <div class="uk-form-row">
-                                                            <div class="md-input-wrapper md-input-filled">
-                                                                <select id="group_type_select" class="md-input">
-                                                                    <option value="" disabled="" selected="" hidden="">Select type...</option>
-                                                                    <?php
-                                                                        for($n=0; $n<count($group_types); $n++){
-                                                                            $group_name = $group_types[$n]['name'];
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper md-input-filled">
+                                                            <select id="group_type_select" class="md-input">
+                                                                <option value="" disabled="" selected="" hidden="">Select type...</option>
+                                                                <?php
+                                                                    for($n=0; $n<count($group_types); $n++){
+                                                                        $group_name = $group_types[$n]['name'];
+                                                                        ?>
+                                                                            <option value="<?php echo $group_name; ?>"><?php echo $group_name; ?> group</option>
+                                                                        <?php
+                                                                    }
+                                                                ?>
+                                                            </select>
+                                                            <span class="md-input-bar "></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="uk-form-row">
+                                                        <div class="uk-grid" data-uk-grid-margin="">
+                                                            <div class="uk-width-medium-2-2 uk-row-first">
+                                                                <div class="md-input-wrapper" id="group_name-cont"><label>Group name</label><input type="text" id="group_name" class="md-input"><span class="md-input-bar "></span></div>                                       
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper"><label>Enter location</label><input type="text" id="group_location" class="md-input"><span class="md-input-bar "></span></div>     
+                                                    </div>
+                                                    <div class="uk-form-row">
+                                                        <div class="uk-grid" data-uk-grid-margin="">
+                                                            <div class="uk-width-medium-2-2 uk-row-first">
+                                                                <div class="md-input-wrapper md-input-filled change_selectize">
+                                                                    <select id="group_rep" class="md-input">
+                                                                      <option value="">Choose a representative</option>
+                                                                      <?php
+                                                                        //Going tp add members of the churches
+                                                                        $members = church_members($churchID);
+                                                                        foreach ($members as $key => $member) {
                                                                             ?>
-                                                                                <option value="<?php echo $group_name; ?>"><?php echo $group_name; ?> group</option>
+                                                                                <option value="<?php echo $member['id']; ?>"><?php echo $member['name']; ?></option>
                                                                             <?php
                                                                         }
-                                                                    ?>
-                                                                </select>
-                                                                <span class="md-input-bar "></span>
+                                                                      ?>
+                                                                    </select>
+                                                                </div>                            
                                                             </div>
                                                         </div>
-                                                        <div class="uk-form-row">
-                                                            <div class="uk-grid" data-uk-grid-margin="">
-                                                                <div class="uk-width-medium-2-2 uk-row-first">
-                                                                    <div class="md-input-wrapper" id="group_name-cont"><label>Group name</label><input type="text" id="group_name" class="md-input"><span class="md-input-bar "></span></div>                                       
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="uk-form-row">
-                                                            <div class="md-input-wrapper"><label>Enter location</label><input type="text" id="group_location" class="md-input"><span class="md-input-bar "></span></div>     
-                                                        </div>
-                                                        <div class="uk-form-row">
-                                                            <div class="uk-grid" data-uk-grid-margin="">
-                                                                <div class="uk-width-medium-2-2 uk-row-first">
-                                                                    <div class="md-input-wrapper md-input-filled change_selectize">
-                                                                        <select id="group_rep" class="md-input">
-                                                                          <option value="">Choose a representative</option>
-                                                                          <?php
-                                                                            //Going tp add members of the churches
-                                                                            $members = church_members($churchID);
-                                                                            foreach ($members as $key => $member) {
-                                                                                ?>
-                                                                                    <option value="<?php echo $member['id']; ?>"><?php echo $member['name']; ?></option>
-                                                                                <?php
-                                                                            }
-                                                                          ?>
-                                                                        </select>
-                                                                    </div>                            
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="uk-form-row">
-                                                            <label>Group image</label>
-                                                            <input type="file" id="input-fgroup-pic" class="dropify" data-allowed-file-extensions="png jpgeg jpg"/>
-                                                        </div>
-                                                        <div class="uk-form-row">
-                                                            <div class="group_create_status"></div>
-                                                        </div>
+                                                    </div>
+                                                    <div class="uk-form-row">
+                                                        <label>Group image</label>
+                                                        <input type="file" id="input-fgroup-pic" class="dropify" data-allowed-file-extensions="png jpgeg jpg"/>
+                                                    </div>
+                                                    <div class="uk-form-row">
+                                                        <div class="group_create_status"></div>
+                                                    </div>
                                                 </div>
                                                 <div class="uk-width-medium-1-2">
                                                     <div id="group_map"></div>
@@ -505,7 +505,7 @@
 
                                     <div class="uk-modal-footer uk-text-right">
                                         <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
-                                        <button id="member_add_submit1" class="md-btn md-btn-success pull-right">Create</button>
+                                        <button id="group_add_submit" class="md-btn md-btn-success pull-right">Create</button>
                                     </div>
                                 </form> 
                             </div>

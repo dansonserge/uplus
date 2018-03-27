@@ -184,7 +184,6 @@ $(".removemember").on('click', function(){
     }
 })
 
-
 $("#group_add_submit").on('click', function(e){
     e.preventDefault();
     //when the group is to be created
@@ -194,14 +193,14 @@ $("#group_add_submit").on('click', function(e){
     groupname = $("#group_name").val();
     grouplocation = $("#group_location").val();
     rep = $("#group_rep").val();
-    file = _("input-fgroup-pic").files[0];
+    var file = document.getElementById("input-fgroup-pic").files[0];
 
     churchID = 1; //todo
 
     if(grouptype && groupname && grouplocation && rep){
         fields = {action:'create_group', name:groupname, type:grouptype, location:grouplocation, profile_picture:file, rep:rep, church:churchID};
 
-        var file = _("input-fgroup-pic").files[0];
+        // var file = _("input-fgroup-pic").files[0];
         var formdata = new FormData();
 
         for (var prop in fields) {
@@ -244,6 +243,7 @@ $("#group_add_submit").on('click', function(e){
         return 0;
     }
 });
+
 $("#input-fgroup-pic").dropify();
 
 //Beautifying the representative pick-up
