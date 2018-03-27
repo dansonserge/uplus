@@ -1,5 +1,5 @@
-<?php ob_start(); session_start(); include('db.php');?>
 <?php
+	ob_start(); session_start(); include('db.php');
 if (!isset($_SESSION["phone1"])) 
 {
 	header("location: logout.php"); 
