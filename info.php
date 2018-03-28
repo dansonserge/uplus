@@ -1,3 +1,4 @@
+Max file
 <?php
 phpinfo();
 ?>
