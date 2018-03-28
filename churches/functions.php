@@ -458,7 +458,7 @@
       global $conn;
 
       $church = $conn->real_escape_string($church);
-      $query = $conn->query("SELECT * FROM podcasts WHERE church =\"$church\" ") or die("Error getting church podcats $conn->error");
+      $query = $conn->query("SELECT * FROM podcasts WHERE church =\"$church\" AND status = 'active' ") or die("Error getting church podcats $conn->error");
       $pods = array();
 
       while ($data = $query->fetch_assoc()) {

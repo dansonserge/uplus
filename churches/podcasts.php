@@ -55,14 +55,12 @@
                         <div class="uk-margin-bottom uk-row-first">
                             <div class="md-card md-card">
                                 <div class="md-card-toolbar">
-                                    <!-- <div class="md-card-toolbar-actions">
-                                        <i class="md-icon material-icons md-color-blue-grey-500"></i>
-                                        <i class="md-icon material-icons md-color-light-blue-500"></i>
-                                        <i class="md-icon material-icons md-color-green-500">people</i>
-                                    </div> -->
                                     <h3 class="md-card-toolbar-heading-text">
                                         <?php echo $podcast['name']; ?>
                                     </h3>
+                                    <div class="md-card-toolbar-actions">
+                                        <i class="md-icon material-icons md-color-red-500 podcast_remove" title="Remove podcast" data-podcast="<?php echo $podcast['id']; ?>">delete</i>                                        
+                                    </div>
                                 </div>                                
                                 <div class="md-card-content">
                                 	<audio style="height: 30px" src="<?php echo $podcast['file']; ?>" controls></audio>
@@ -100,7 +98,7 @@
                                 </div>
                                 <div class="md-input-wrapper">
                                     <label>File</label>
-                                    <input type="file" id="podcast-file" class="dropify" data-allowed-file-extensions="mp3 aac mp4"/>
+                                    <input type="file" id="podcast-file" class="dropify" data-allowed-file-extensions="mp3 aac mp4" data-max-file-size="100M"/>
                                     <progress id="podcast-upload-progress" class="uk-progress display-none" value="0" max="100" style="width: 100%"></progress>
                                     <span class="md-input-bar "></span>
                                 </div>
@@ -239,6 +237,27 @@
                 // ajax.setRequestHeader('Content-Type', 'multipart/form-data;charset=UTF-8');
                 ajax.send(formdata);
             }
+        });
+
+
+        //removing podcast
+        $(".podcast_remove").on('click', function(){
+            podcastId = $(this).data("podcast");
+            parent_elem = $(this).parents('.uk-margin-bottom');
+
+            del_prompt = window.confirm("Delete this podcast?");
+            if(del_prompt){
+                $.post('api/index.php', {action:'delete_podcast', podcast:podcastId}, function(data){
+                    ret = JSON.parse(data)
+                    if(ret.status){
+                        // parent container cleanin
+                        
+                        parent_elem.hide(100);
+                        // $(this).parents('.uk-margin-bottom').remove();
+                    }
+                });
+            }
+            
         })
     </script>
     

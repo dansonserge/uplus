@@ -313,7 +313,7 @@
                     //file has no error
                     //checking if it's image
                     $ext = strtolower(pathinfo($pic['name'], PATHINFO_EXTENSION));
-                    if($ext == 'mp3' || $ext == 'aac'){
+                    if($ext == 'mp3' || $ext == 'aac' || $ext == 'mp4'){
                         //moving file to disk
                         $filename = "gallery/podcasts/$name"."_".time().".$ext";
                         // $filename = "../api/podcasts/$name"."_".time().".$ext";
@@ -334,7 +334,7 @@
                         }else $response = array('status'=>false, 'msg'=>"Error keeping file on server\nPlease try again");
                     }else{
                         //We dont recognize this file format
-                        $response = array('status'=>false, 'msg'=>"The file uploaded seems to be not an audio file, $ext only mp3 and aac are allowed\nPlease try again");
+                        $response = array('status'=>false, 'msg'=>"The file uploaded seems to be not an audio or video(mp4 only) file, $ext only mp3 and aac are allowed\nPlease try again");
                     }
                 }else{
                     $response = array('status'=>false, 'msg'=>"Error uploading group image\nPlease try again");
@@ -345,6 +345,21 @@
 
             
 
+        }else{
+            $response = array('status'=>false, 'message'=>'fillin all the details');
+        }
+    }else if($action == "delete_podcast"){
+        //adding podcast
+        $podcast_id = $request['podcast']??"";
+
+        if(!empty($podcast_id) ){
+            $q = $conn->query("UPDATE podcasts p SET status = 'archive' WHERE p.id = \"$podcast_id\" ");
+            if($q){
+                $response = array('status'=>true);
+            }else{
+                $response = array('status'=>false, 'message'=>"Error $conn->error");
+            }
+            
         }else{
             $response = array('status'=>false, 'message'=>'fillin all the details');
         }
