@@ -98,7 +98,7 @@
                                 </div>
                                 <div class="md-input-wrapper">
                                     <label>File</label>
-                                    <input type="file" id="podcast-file" class="dropify" data-allowed-file-extensions="mp3 aac mp4" data-max-file-size="100M"/>
+                                    <input type="file" id="podcast-file" class="dropify" data-allowed-file-extensions="mp3 aac mp4" data-max-file-size="<?php echo ini_get('upload_max_filesize'); ?>"/>
                                     <progress id="podcast-upload-progress" class="uk-progress display-none" value="0" max="100" style="width: 100%"></progress>
                                     <span class="md-input-bar "></span>
                                 </div>
