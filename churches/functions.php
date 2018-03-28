@@ -248,6 +248,17 @@
       $data = $query->fetch_assoc();
       return $data['balance'];
     }
+    function churchSMSname($churchID){
+      //SMS Balance
+      global $conn;
+
+      if(!$churchID)
+        return false;
+
+      $query = $conn->query("SELECT COALESCE(smsName, name) smsName FROM church WHERE id = \"$churchID\" LIMIT 1 ") or die("Cant get the sms name $conn->error");
+      $data = $query->fetch_assoc();
+      return substr($data['smsName'], 0, 12);
+    }
     function msend($logID){
         include 'db.php';
         //Getting details of the message log
@@ -319,8 +330,13 @@
     }
     function sendsms($phone, $message, $subject=""){
       $recipients     = $phone;
+      global $churchID;
+
+      $smsName = !empty( churchSMSname($churchID) )?churchSMSname($churchID):"Uplus";
+      return false;
+
       $data = array(
-          "sender"        =>'Church',
+          "sender"        =>$smsName,
           "recipients"    =>$recipients,
           "message"       =>$message,
       );

@@ -38,7 +38,12 @@
 
     <div id="page_content">
         <div id="page_content_inner">
-            <h4 class="heading_b uk-margin-bottom"><?php echo $churchname; ?> - Broadcasts</h4>        
+            <h4 class="heading_b uk-margin-bottom"><?php echo $churchname; ?> - Broadcasts</h4>
+            <div class="uk-grid">
+                <div class="uk-width-1-1">
+                    SMS Name: <?php echo(churchSMSname($churchID)); ?> &nbsp;<a href="settings.php"><i class="material-icons">build</i></a>
+                </div>
+            </div> 
             <div class="pagesCont" data-page='send'>            
             </div>
         </div>

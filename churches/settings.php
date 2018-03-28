@@ -6,6 +6,18 @@
         $title = "Settings";
         //Including common head configuration
         include_once "head.php";
+
+        $action = $_GET['action']??"";
+
+        if($action == 'sms'){
+            $smsname = $_POST['smsname']??"";
+
+            if($smsname){
+                //update content
+                $conn->query("UPDATE church SET smsName = \"$smsname\" WHERE id = \"$churchID\" ");
+                header("location:settings.php");
+            }
+        }
     ?>
 </head>
 <body class="disable_transitions sidebar_main_open sidebar_main_swipe">
@@ -69,6 +81,24 @@
                                     </form>
                                 </li>
                             </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="md-card">
+                        <div class="md-card-toolbar">
+                            <h3 class="md-card-toolbar-heading-text"><i class="material-icons">message</i> &nbsp;Messages settings</h3>
+                        </div>
+                        <div class="md-card-content">
+                            <div class="uk-input-group">
+
+                                <form method="POST" action="settings.php?action=sms">                                    
+                                    <div class="md-input-wrapper md-input-filled"><label>SMS sender name</label><input type="text" maxlength="12" value="<?php echo(churchSMSname($churchID)); ?>" class="md-input" name='smsname'><span class="md-input-bar "></span></div>
+                                    <div class="md-input-wrapper">
+                                        <span class="uk-input-group-addon"><button type="submit" class="md-btn">Save</button></span>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
