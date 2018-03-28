@@ -38,7 +38,7 @@
             }else{
                 ?>
                 <div id="page_content_inner">
-                    <h3 class="heading_b uk-margin-bottom"><?php echo $churchname; ?> - Podcasts and media</h3>
+                    <h3 class="heading_b uk-margin-bottom"><?php echo $churchname; ?> - Feeds and media</h3>
                     <div class="uk-grid uk-grid-width-medium-1-3" data-uk-grid-margin="">
                         <?php
                             //getting podcasts
