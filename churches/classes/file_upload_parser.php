@@ -55,7 +55,7 @@ function testupload(){
 				VALUES ('$names', '$phone', '$location', '$type', NOW());") or die($conn->error);
 		$n++;
 		}
-		echo '<a href="allmembers.php">'.$n.' uploaded! Click Here.</a><br/>'.$queries;
+		echo '<a href="allmembers.php">'.$n.' uploaded! Click Here.</a><br/>';
 	}
 }
 ?>
