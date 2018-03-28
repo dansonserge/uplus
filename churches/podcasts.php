@@ -111,7 +111,7 @@
                         </div>
                         <div class="uk-modal-footer uk-text-right">
                             <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
-                            <button class="md-btn md-btn-success pull-right" id="create-branch-btn">UPLOAD</button>
+                            <button class="md-btn md-btn-success pull-right" type="submit" id="upload-podcast-btn">UPLOAD</button>
                         </div>
                     </form>
                 </div>
@@ -189,6 +189,9 @@
             if(pname && pintro){
                 //Here we can upload
 
+                //disabling submit button
+                $("#upload-podcast-btn").attr('disabled', 'disabled')
+
                 var formdata = new FormData();
 
                 fields = {action:'add_podcast', church:<?php echo $churchID; ?>, name:pname, intro:pintro, file:file};
@@ -253,7 +256,7 @@
                         // parent container cleanin
                         
                         parent_elem.hide(100);
-                        // $(this).parents('.uk-margin-bottom').remove();
+                        $(this).parents('.uk-margin-bottom').remove();
                     }
                 });
             }
