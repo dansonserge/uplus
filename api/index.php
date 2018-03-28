@@ -1389,9 +1389,6 @@
 						}
 						elseif($countApprovals < $neededNoT)
 						{
-							$outCon->query("
-							INSERT INTO requestsdecisions(requestId, vote, createdBy, createdDate, updatedBy, updatedDate) 
-							VALUES ($requestId, 'YES', '$treasurerId', now(), '$treasurerId', now())")or die(mysqli_error($outCon));
 							echo 'Thanks for Approving this request, One more treasurer to confirm.';
 						}
 						else
@@ -1420,7 +1417,7 @@
 						}
 						else
 						{
-							echo 'Thanks for rejecting this request, One more treasurer to confirm.';
+							echo 'Thanks for rejecting this request, One more treasurer to reject.';
 						}
 					}
 				}
