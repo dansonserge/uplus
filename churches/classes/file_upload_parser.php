@@ -49,10 +49,10 @@ function testupload(){
 			members 
 			(name, phone, location, type, createdDate) 
 			VALUES ('$names', '$phone', '$location', '$type', NOW());<br/>";
-		$sql = $db->query("INSERT INTO 
-			members 
-			(name, phone, locationId, type, createdDate) 
-			VALUES ('$names', '$phone', '$location', '$type', NOW());") or die($conn->error);
+			$sql = $db->query("INSERT INTO 
+				members 
+				(name, phone, branchId, type, createdDate) 
+				VALUES ('$names', '$phone', '$location', '$type', NOW());") or die($conn->error);
 		$n++;
 		}
 		echo '<a href="allmembers.php">'.$n.' uploaded! Click Here.</a><br/>'.$queries;

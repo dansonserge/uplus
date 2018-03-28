@@ -4,6 +4,7 @@
 <head>
     <?php
         $title = "Invoices";
+
         //Including common head configuration
         include_once "head.php";
         include_once "class.user.php";
@@ -18,6 +19,7 @@
     ?>
     <meta http-equiv="Content-Type" content="text/pdf">
 </head>
+a
 <body class="disable_transitions sidebar_main_open sidebar_main_swipe">
     <!-- main header -->
     <?php

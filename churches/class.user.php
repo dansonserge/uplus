@@ -14,7 +14,8 @@
 	    function church($userID){
 	        //Function to find user's church from $userID
 	        global $conn;
-	        $query = $conn->query("SELECT church FROM users WHERE id = \"$userID\"")  or die($conn->error());
+	        $sql = "SELECT church FROM users WHERE id = \"$userID\"";
+	        $query = $conn->query($sql)  or die("error getting church ".$conn->error());
 	        if($query->num_rows){
 	        	$data = $query->fetch_assoc();
 	        	return $data['church'];

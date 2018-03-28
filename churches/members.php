@@ -55,6 +55,7 @@
                         </div>
                     </div>
                     <div class="md-card">
+                        <div id="status"></div>
                         <div class="md-card-content">
                             <div class="dt_colVis_buttons">
                             </div>
