@@ -11,6 +11,38 @@
             return $userId;
         }else return false;
     }
+
+    function checkType($user){
+      global $conn;
+
+      //checks user type
+      $query = $conn->query("SELECT type FROM users WHERE Id = \"$user\" ");
+      if($query){
+        $userData = $query->fetch_assoc();
+        return $userData['type'];
+      }else return false;
+    }
+
+    function checkLogin($userType){
+      //function to check if logged in person is $userType
+      global $conn;
+      $user = getUser();
+      if(!$user)
+        return false;
+
+      //checking the type
+      $query = $conn->query("SELECT * FROM users WHERE Id = \"$user\" LIMIT 1 ") or die("usercheck error $conn->error");
+      $userData = $query->fetch_assoc();
+
+      return $userData;
+
+      //ignored for now
+
+      if($userData['type'] == $userType){
+        return $userData;
+      }else return false;
+    }
+
     function user_details($userid){
         //Function to get user's details
         global $conn;
@@ -19,6 +51,7 @@
         $user = $user->fetch_assoc();
         return $user;
     }
+
     function church_event($churchID){
       global $conn;
       $events = array();
@@ -97,6 +130,14 @@
       }
       var_dump($query);
     }
+
+    function getChurch($church){
+      global $conn;
+      //get church details
+      $query = $conn->query("SELECT * FROM church WHERE id = \"$church\" ") or trigger_error("Can't get church $conn->error");
+      return $query->fetch_assoc();
+    }
+
     function group_members($group){
       //members details
       global $conn;
@@ -122,15 +163,18 @@
 
     
     function church_branches($church){
-		//Getting branches
-		global $conn;
-		$branchesQuery = $conn->query(  "SELECT * FROM branches WHERE church = $church ") or die("Can't get branches ".$conn->error);
-		$branches = array();
-		while ($data = $branchesQuery->fetch_assoc()) {
-			$branches[] = $data;
-        }
-        return $branches;
+  		//Getting branches
+  		global $conn;
+  		$branchesQuery = $conn->query(  "SELECT * FROM branches WHERE church = $church ") or die("Can't get branches ".$conn->error);
+  		$branches = array();
+
+  		while ($data = $branchesQuery->fetch_assoc()) {
+  			$branches[] = $data;
+      }
+      return $branches;
     }
+
+
     function church_donations($church){
       //Function to return church donations
       global $conn;
@@ -142,6 +186,33 @@
         $donations[] = $data;
       }
       return $donations;
+    }
+
+    function church_services($church, $branch=''){
+      //function for services of church even in branch
+      global $conn;
+
+      //if branch was not specified
+      if(empty($branch)){
+            $temp = array();
+            $branches = churchbranches($church);
+            for($n=0; $n<count($branches); $n++){
+              $temp[] = $branches[$n]['id'];
+            }
+            $branch = $temp;
+      }else{
+            $branch = array($branch);
+        };
+
+
+        $sql = "SELECT * FROM church_service WHERE church_service.branchid IN (".implode(", ", $branch).") ";
+        $query = $conn->query($sql) or die("Can't get cservices $conn->error");
+
+        $services = array();
+        while ($data = $query->fetch_assoc()) {
+            $services[]= $data;
+        }
+        return $services;
     }
 
     function get_branch($branch){
@@ -165,39 +236,14 @@
     }
 
     function service_details($service_id){
-        //Function to get user's details
-        global $conn;
-        $service = $conn->query("SELECT * FROM service WHERE id = \"$service_id\" LIMIT 1 ") or die("Errror getting sevice's details $conn->error");
+      //Function to get user's details
+      global $conn;
+      $service = $conn->query("SELECT * FROM service WHERE id = \"$service_id\" LIMIT 1 ") or die("Errror getting sevice's details $conn->error");
 
-        $service = $service->fetch_assoc();
-        return $service;
+      $service = $service->fetch_assoc();
+      return $service;
     }
-    function church_services($church, $branch=''){
-    	//function for services of church even in branch
-    	global $conn;
-
-    	//if branch was not specified
-    	if(empty($branch)){
-            $temp = array();
-        		$branches = churchbranches($church);
-            for($n=0; $n<count($branches); $n++){
-              $temp[] = $branches[$n]['id'];
-            }
-            $branch = $temp;
-    	}else{
-            $branch = array($branch);
-        };
-
-
-        $sql = "SELECT * FROM church_service WHERE church_service.branchid IN (".implode(", ", $branch).") ";
-        $query = $conn->query($sql) or die("Can't get cservices $conn->error");
-
-        $services = array();
-        while ($data = $query->fetch_assoc()) {
-            $services[]= $data;
-        }
-        return $services;
-    }
+    
     function donations_by_service($church){
       //status of donations by service on church
       global $conn;
@@ -223,22 +269,22 @@
     }
 
     function logMessages($messageID, $receivers, $status='pending'){
-        global $conn;
+      global $conn;
 
-        $receivers = is_array($receivers)?$receivers:array($receivers);
+      $receivers = is_array($receivers)?$receivers:array($receivers);
 
-        //Buildiing query - insert values
-        $sql = "INSERT INTO messageslog(message, receiver, status) VALUES ";
-        $iquery = '';
-        for($n=0; $n<count($receivers); $n++){
-           $iquery .= "('$messageID', '$receivers[$n]', '$status'), ";
-        }
-        $iquery = trim($iquery,  ', ');
-        $sql .= $iquery;
+      //Buildiing query - insert values
+      $sql = "INSERT INTO messageslog(message, receiver, status) VALUES ";
+      $iquery = '';
+      for($n=0; $n<count($receivers); $n++){
+         $iquery .= "('$messageID', '$receivers[$n]', '$status'), ";
+      }
+      $iquery = trim($iquery,  ', ');
+      $sql .= $iquery;
 
-        $query = $conn->query($sql) or die($conn->error());
+      $query = $conn->query($sql) or die($conn->error());
 
-        return true;
+      return true;
     }
     function smsbalance($churchID){
       //SMS Balance

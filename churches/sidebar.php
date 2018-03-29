@@ -21,11 +21,24 @@
         <ul>
             <li title="Dashboard">
                 <a href="index.php">
-                    <span class="menu_icon"><i class="material-icons">&#xE871;</i></span>
+                    <span class="menu_icon"><i class="material-icons">dashboard</i></span>
                     <span class="menu_title">Dashboard</span>
                 </a>
                 
             </li>
+
+
+            <?php if($userType == 'admin'){?>
+                <li title="Church">
+                    <a href="branches.php">
+                        <span class="menu_icon">
+                        <i class="material-icons">call_to_action</i>
+                        </span>
+                        <span class="menu_title">Churches</span>
+                    </a>
+                </li>
+            <?php } ?>
+
             <li title="Members">
                 <a href="members.php">
                     <span class="menu_icon">

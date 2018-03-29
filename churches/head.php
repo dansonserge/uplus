@@ -2,19 +2,27 @@
 	include_once("db.php");
     include_once("functions.php");
 	session_start();
-    $userId ='';
     define("SMS_PRICE", 13); //Constant for SMS price
 
-    if (isset($_SESSION['loginusername'])) {
-        $loginusername = $_SESSION['loginusername'];
-        $loginpassword = $_SESSION['loginpassword'];
-        $sql = "SELECT *, church.name as churchname FROM users JOIN church ON users.church = church.id WHERE loginName='$loginusername' AND loginpsw='$loginpassword'";
-        $selectid = $db ->query($sql) or die("Error 1 ".$conn->error);
-        $fetchid = mysqli_fetch_array($selectid);
-        $userId = $fetchid['Id'];
-        $churchname = $fetchid['churchname'];
-        $churchID = $fetchid['church'];
-        $adminImage = $fetchid['profileImage'];
+    $userType = $userType??'church';
+
+    //users Hierachy
+
+    $userId = getUser();
+
+    $userType = checkType($userId);
+
+    if ($userId) {
+        $userData = checkLogin($userType);
+        $churchID = $userData['church'];
+
+        $churchData = getChurch($churchID);
+
+        $churchname = $churchData['name'];
+        
+        $churchID = $userData['church'];
+
+        $adminImage = $userData['profileImage'];
     }else{
     	header("location: login.php");
     }
@@ -29,7 +37,6 @@
 <link rel="icon" type="image/png" href="assets/img/favicon-32x32.png" sizes="32x32">
 
 <title><?php echo !empty($title)?$title." | ":"" ?> U+ Church</title>
-
 
 <!-- uikit -->
 <link rel="stylesheet" href="bower_components/uikit/css/uikit.almost-flat.min.css" media="all">

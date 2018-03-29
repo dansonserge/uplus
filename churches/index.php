@@ -5,14 +5,14 @@
 
 <head>
     <!-- additional styles for plugins -->
-        <!-- weather icons -->
-        <link rel="stylesheet" href="bower_components/weather-icons/css/weather-icons.min.css" media="all">
-        <!-- metrics graphics (charts) -->
-        <link rel="stylesheet" href="bower_components/metrics-graphics/dist/metricsgraphics.css">
-        <!-- chartist -->
-        <link rel="stylesheet" href="bower_components/chartist/dist/chartist.min.css">
-        <?php include_once "head.php" ?>
-        <!-- dropify -->
+    <!-- weather icons -->
+    <link rel="stylesheet" href="bower_components/weather-icons/css/weather-icons.min.css" media="all">
+    <!-- metrics graphics (charts) -->
+    <link rel="stylesheet" href="bower_components/metrics-graphics/dist/metricsgraphics.css">
+    <!-- chartist -->
+    <link rel="stylesheet" href="bower_components/chartist/dist/chartist.min.css">
+    <?php include_once "head.php" ?>
+    <!-- dropify -->
     <link rel="stylesheet" href="assets/skins/dropify/css/dropify.css">
 
 </head>
