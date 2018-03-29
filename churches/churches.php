@@ -3,7 +3,7 @@
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
 <head>
     <?php
-        $title = "Branches";
+        $title = "Churches";
         //Including common head configuration
         include_once "head.php";
     ?>
@@ -38,16 +38,14 @@
             }else{
                 ?>
                 <div id="page_content_inner">
-                    <h3 class="heading_b uk-margin-bottom"><?php echo $churchname; ?> - Branches</h3>
+                    <h3 class="heading_b uk-margin-bottom">Churches</h3>
                     <div class="uk-grid uk-grid-width-medium-1-3" data-uk-grid-margin="">
                         <?php
                             //Getting branches
-                            $branches = churchbranches($churchID);
-                            for($n=0; $n<count($branches); $n++){
-                                $branch = $branches[$n];
-
-                                //getting representative
-                                $rep = user_details($branch['repId']);
+                            $churches = getChurchList();
+                            for($n=0; $n<count($churches); $n++){
+                                $church = $churches[$n];
+                                $churchAdmin = churchAdmin($church['id']);
                         ?>
                         <div class="uk-margin-bottom uk-row-first">
                             <div class="md-card md-card">
@@ -58,14 +56,14 @@
                                         <i class="md-icon material-icons md-color-green-500">people</i>
                                     </div> -->
                                     <h3 class="md-card-toolbar-heading-text">
-                                        <?php echo $branch['name']; ?>
+                                        <?php echo $church['name']; ?>
                                     </h3>
                                 </div>
-                                <a href="branch_profile.php?branch=<?php echo $branch['id']; ?>"><img class="img-full branch_img" src="<?php echo $branch['profile_picture']; ?>" /></a>
+                                <a href="branch_profile.php?branch=<?php echo $church['id']; ?>"><img class="img-full branch_img" src="<?php echo $church['profile_picture']; ?>" /></a>
                                 <div class="md-card-content">
-                                    <p>Representative:<span><?php echo $rep['name'] ?></span></p> 
-                                    <p>Phone:<span><?php echo $branch['phone']; ?></span></p>
-                                    <p>Email:<span><?php echo $branch['mail']; ?></span></p>
+                                    <p>Leader:<span><?php echo $churchAdmin['name'] ?></span></p> 
+                                    <p>Phone:<span><?php echo $churchAdmin['userphone']; ?></span></p>
+                                    <p>Email:<span><?php echo $churchAdmin['useremail']; ?></span></p>
                                 </div>
                             </div>
                         </div>

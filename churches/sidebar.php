@@ -30,7 +30,7 @@
 
             <?php if($userType == 'admin'){?>
                 <li title="Church">
-                    <a href="branches.php">
+                    <a href="churches.php">
                         <span class="menu_icon">
                         <i class="material-icons">call_to_action</i>
                         </span>

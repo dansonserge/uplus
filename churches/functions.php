@@ -1,5 +1,6 @@
 <?php
     include_once("db.php");
+
     function getUser(){
         global $conn;
         if (isset($_SESSION['loginusername'])) {
@@ -138,6 +139,16 @@
       return $query->fetch_assoc();
     }
 
+    function churchAdmin($churchID){
+    	global $conn;
+
+    	$query = $conn->query("SELECT *, CONCAT(fname, ' ', lname)  as name FROM users WHERE type = 'church' AND church = \"$churchID\" LIMIT 1 ") or trigger_error($conn->error);
+
+    	if($query->num_rows)
+    		return $query->fetch_assoc();
+    	else return false;
+    }
+
     function group_members($group){
       //members details
       global $conn;
@@ -160,7 +171,6 @@
       }
       return $leaders;
     }
-
     
     function church_branches($church){
   		//Getting branches
@@ -173,7 +183,6 @@
       }
       return $branches;
     }
-
 
     function church_donations($church){
       //Function to return church donations
@@ -286,6 +295,7 @@
 
       return true;
     }
+
     function smsbalance($churchID){
       //SMS Balance
       global $conn;
@@ -294,6 +304,7 @@
       $data = $query->fetch_assoc();
       return $data['balance'];
     }
+
     function churchSMSname($churchID){
       //SMS Balance
       global $conn;
@@ -305,6 +316,7 @@
       $data = $query->fetch_assoc();
       return substr($data['smsName'], 0, 12);
     }
+
     function msend($logID){
         include 'db.php';
         //Getting details of the message log
@@ -374,6 +386,7 @@
             return false;
         }       
     }
+
     function sendsms($phone, $message, $subject=""){
       $recipients     = $phone;
       global $churchID;
@@ -410,6 +423,7 @@
           return "No";
       }
     }
+
     function list_groups($churchID){
       global $conn;
       $query = $conn->query("SELECT groups.*, branches.name as branchname FROM groups JOIN branches ON groups.branchid = branches.id WHERE branches.church = \"$churchID\" ") or die("Cant get groups ".$conn->error);
@@ -421,6 +435,7 @@
       }
       return $churches;
     }
+
     function branch_groups($branch){
       global $conn;
       $query = $conn->query("SELECT * FROM groups WHERE branchid = \"$branch\" ") or die("Cant branch get groups ".$conn->error);
@@ -432,6 +447,7 @@
       }
       return $branches;
     }
+
     function email($email, $subject, $body, $header=''){
     }
 
@@ -445,6 +461,21 @@
     		$members[] = $data;
     	}
     	return $members;
+    }
+
+    function getChurchList(){
+    	global $conn;
+
+    	$query = $conn->query("SELECT * FROM church") or trigger_error($conn->error);
+
+    	$churches = array();
+
+
+    	while ($data = $query->fetch_assoc()) {
+    		$churches[] = $data;
+    	}
+
+    	return $churches;
     }
 
     function church_members($churchid){
@@ -513,8 +544,7 @@
 
         echo json_encode($data);
     }
-
-    
+  
     function church_podcasts($church){
       //Get all the podcasts of a church
       global $conn;
@@ -574,6 +604,7 @@
         }
         return $branches;
     }
+
     function send_notification ($tokens, $message)
     {
         $url = 'https://fcm.googleapis.com/fcm/send';
