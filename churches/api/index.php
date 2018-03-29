@@ -49,7 +49,7 @@
                     $response = array('status'=>false, 'msg'=>"Can't create: $conn->error");
                 }
 
-                $response = array('status'=>true, 'msg'=>"Success");
+                $response = array('status'=>true, 'msg'=>"Success", 'churchid'=>$conn->insert_id);
 
             }else $response = array('status'=>false, 'msg'=>"Error keeping file on server\nPlease try again");
 

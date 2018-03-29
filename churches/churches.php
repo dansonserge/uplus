@@ -23,16 +23,110 @@
 
     <div id="page_content">
         <?php
-            if(!empty($_GET['branch'])){
-                $branchid = $_GET['branch'];
-                $branch_data = get_branch($branchid);
-                $branch_name = $branch_data['name'];
+            if(!empty($_GET['setup'])){
+                $church = $_GET['setup'];
+                $churchData = getChurch($church);
+                $churchname = $churchData['name'];
 
-                $branch_representative = branch_leader($branchid, 'representative');
+                $churchAdmin = churchAdmin($church); 
 
                 ?>
                     <div id="page_content_inner">
-                        <h3 class="heading_b uk-margin-bottom"><?php echo $churchname." - $"; ?></h3>
+                        <h3 class="heading_b uk-margin-bottom"><?php echo "Editing ".$churchname; ?></h3>
+
+                        <div class="uk-grid" data-uk-grid-margin="">
+                            <div class="uk-width-medium-1-3 uk-row-first">
+                                <div class="md-card">
+                                    <div class="md-card-content">
+                                        <h4 class="heading_c uk-margin-bottom">Church details</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="uk-width-large-1-3 uk-grid-margin uk-row-first">
+                                <div class="md-card md-card-uplus">
+                                    <div class="md-card-toolbar">
+                                        <h3 class="md-card-toolbar-heading-text">
+                                            Church Branches
+                                        </h3>
+                                    </div>
+                                    <div class="md-card-content">
+                                        <table class="uk-table uk-table-hover">
+                                            <tbody>
+                                                <tr>
+                                                    <td>MTN Mobile money</td>
+                                                    <td>10,000 Frw</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tigo Cash</td>
+                                                    <td>350,000 Frw</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Visa Cards</td>
+                                                    <td>0 Frw</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Master Cards</td>
+                                                    <td>250,000 Frw</td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td><b>Total</b></td>
+                                                    <td><b>610,000</b> Frw</td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    <br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="uk-width-large-1-3 uk-grid-margin uk-row-first">
+                                <div class="md-card md-card-uplus">
+                                    <div class="md-card-toolbar">
+                                        <h3 class="md-card-toolbar-heading-text">
+                                            Church Leader
+                                        </h3>
+                                    </div>
+                                    <div class="md-card-content">
+                                        <table width="100%">
+                                            <tbody><tr>
+                                                <td>
+                                                    Holder Bank:
+                                                </td> 
+                                                <td>
+                                                    <div class="md-input-wrapper md-input-wrapper-disabled md-input-filled"><select class="md-input" disabled="">
+                                                        <option>Bank Of Kigali</option>
+                                                    </select><span class="md-input-bar "></span></div> 
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Beneficialy:
+                                                </td> 
+                                                <td>
+                                                    <div class="md-input-wrapper md-input-wrapper-disabled md-input-filled"><input type="text" class="md-input" name="wacc" value="New Life Gospel Church" disabled=""><span class="md-input-bar "></span></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Account Number:
+                                                </td> 
+                                                <td>
+                                                    <div class="md-input-wrapper md-input-wrapper-disabled md-input-filled"><input type="text" class="md-input" name="wacc" value="04-344BG/789" disabled=""><span class="md-input-bar "></span></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                   <button class="md-btn md-btn-success">Change</button>
+                                                </td> 
+                                                <td>
+                                                </td>
+                                        </tr></tbody></table>
+                                        <br> <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 <?php
             }else{
@@ -171,7 +265,7 @@
                             $("#church_create .act-dialog[data-role=done]").removeClass('display-none');
 
                             setTimeout(function(){
-                                // location.reload();
+                                location = 'churches.php?setup='+ret.churchid;
                             }, 1000)
 
                         }else{
