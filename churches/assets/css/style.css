@@ -66,6 +66,10 @@
 .uk-badge-danger {
     background: #e53935
 }
+.card-img-thumb, .branch_img {
+    height: 170px;
+    width: 100%;
+}
 
 .uk-badge-warning {
     background: #ffa000
