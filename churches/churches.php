@@ -28,7 +28,9 @@
                 $churchData = getChurch($church);
                 $churchname = $churchData['name'];
 
-                $churchAdmin = churchAdmin($church); 
+                $churchAdmin = churchAdmin($church);
+
+                $churchBranches = churchbranches($church);
 
                 ?>
                     <div id="page_content_inner">
@@ -40,6 +42,31 @@
                                     <div class="md-card-content">
                                         <h4 class="heading_c uk-margin-bottom">Church details</h4>
                                     </div>
+                                    <form style="padding: 12px">
+                                        <div class="uk-form-row">
+                                            <div class="uk-grid" data-uk-grid-margin="">
+                                                <div class="uk-width-medium-1-1">
+                                                    <div class="md-input-wrapper md-input-filled md-input-wrapper-disabled">
+                                                        <label>Church name</label>
+                                                        <input type="text" class="md-input label-fixed" value="<?php echo $churchname ?>" disabled="disabled">
+                                                        <span class="md-input-bar "></span>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-form-row">
+                                            <div class="uk-grid" data-uk-grid-margin="">
+                                                <div class="uk-width-medium-1-1">
+                                                    <div class="md-input-wrapper md-input-filled">
+                                                        <label>SMS Name</label>
+                                                        <input type="text" maxlength="12" class="md-input label-fixed" id="smsnameInput" value="<?php echo churchSMSname($church) ?>">
+                                                        <span class="md-input-bar "></span>
+                                                    </div>                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                             <div class="uk-width-large-1-3 uk-grid-margin uk-row-first">
@@ -52,30 +79,23 @@
                                     <div class="md-card-content">
                                         <table class="uk-table uk-table-hover">
                                             <tbody>
-                                                <tr>
-                                                    <td>MTN Mobile money</td>
-                                                    <td>10,000 Frw</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Tigo Cash</td>
-                                                    <td>350,000 Frw</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Visa Cards</td>
-                                                    <td>0 Frw</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Master Cards</td>
-                                                    <td>250,000 Frw</td>
-                                                </tr>
+                                                <?php
+                                                    foreach($churchBranches as $branch){
+                                                ?>
+                                                    <tr>
+                                                        <td><?php echo $branch['name']; ?></td>
+                                                        <td><?php echo $branch['location']; ?></td>
+                                                    </tr>
+                                                <?php } ?>
                                             </tbody>
                                             <tfoot>
                                                 <tr>
                                                     <td><b>Total</b></td>
-                                                    <td><b>610,000</b> Frw</td>
+                                                    <td><b><?php echo count($churchBranches) ?></b></td>
                                                 </tr>
                                             </tfoot>
                                         </table>
+                                        <a class="md-btn" href="branches.php">ADD</a>
                                     <br>
                                     </div>
                                 </div>
@@ -89,7 +109,8 @@
                                     </div>
                                     <div class="md-card-content">
                                         <table width="100%">
-                                            <tbody><tr>
+                                            <tbody>
+                                                <tr>
                                                 <td>
                                                     Holder Bank:
                                                 </td> 
@@ -140,6 +161,7 @@
                             for($n=0; $n<count($churches); $n++){
                                 $church = $churches[$n];
                                 $churchAdmin = churchAdmin($church['id']);
+                                $churchLink = "?setup=$church[id]";
                         ?>
                         <div class="uk-margin-bottom uk-row-first">
                             <div class="md-card md-card">
@@ -153,7 +175,7 @@
                                         <?php echo $church['name']; ?>
                                     </h3>
                                 </div>
-                                <a href="branch_profile.php?branch=<?php echo $church['id']; ?>"><img class="img-full branch_img" src="<?php echo $church['profile_picture']; ?>" /></a>
+                                <a href="<?php echo $churchLink; ?>"><img class="img-full branch_img" src="<?php echo $church['profile_picture']; ?>" /></a>
                                 <div class="md-card-content">
                                     <p>Leader:<span><?php echo $churchAdmin['name'] ?></span></p> 
                                     <p>Phone:<span><?php echo $churchAdmin['userphone']; ?></span></p>
