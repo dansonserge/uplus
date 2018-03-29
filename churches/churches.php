@@ -74,13 +74,13 @@
             }
         ?>
                     
-        <div class="uk-modal" id="branch_create" aria-hidden="true" style="display: none; overflow-y: auto;">
+        <div class="uk-modal" id="church_create" aria-hidden="true" style="display: none; overflow-y: auto;">
             <div class="uk-modal-dialog" style="max-width:800px;">
                 <div class="act-dialog" data-role="init">
                     <div class="uk-modal-header uk-tile uk-tile-default">
-                        <h3 class="d_inline">Add branch</h3>
+                        <h3 class="d_inline">Add church</h3>
                     </div>
-                    <form method="POST" enctype="multipart/form-data" id="branch_create_form">
+                    <form method="POST" enctype="multipart/form-data" id="church_create_form">
                         <div class="md-card">
                             <div class="md-card-content">
                                 <div class="md-input-wrapper">
@@ -90,32 +90,12 @@
                                 </div>
                                 <div class="md-input-wrapper">
                                     <label>Location</label>
-                                    <input type="text" id="branch-location" class="md-input">
+                                    <input type="text" id="church-location" class="md-input">
                                     <span class="md-input-bar "></span>
-                                </div>
-                                <div class="uk-form-row">
-                                    <div class="uk-grid" data-uk-grid-margin="">
-                                        <div class="uk-width-medium-2-2 uk-row-first">
-                                            <div class="md-input-wrapper md-input-filled change_selectize">
-                                                <select id="branch-representative" class="md-input">
-                                                  <option value="">Choose a representative</option>
-                                                  <?php
-                                                    //Going tp add members of the churches
-                                                    $members = church_members($churchID);
-                                                    foreach ($members as $key => $member) {
-                                                        ?>
-                                                            <option value="<?php echo $member['id']; ?>"><?php echo $member['name']; ?></option>
-                                                        <?php
-                                                    }
-                                                  ?>
-                                                </select>
-                                            </div>                            
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="md-input-wrapper">
                                     <label>Image</label>
-                                    <input type="file" id="input-branch-pic" class="dropify" data-allowed-file-extensions="png jpg"/>
+                                    <input type="file" id="input-church-pic" class="dropify" data-allowed-file-extensions="png jpg"/>
                                     <span class="md-input-bar "></span>
                                 </div>
                             </div>                        
@@ -128,8 +108,8 @@
                 </div>
                 <div class="act-dialog display-none" style="max-width:400px;" data-role="done">
                     <div class="uk-modal-header uk-tile uk-tile-default">
-                        <h3 class="d_inline">Branch</h3>
-                        <p class="uk-text-success">Congratulations! Branch added successfully!</p>
+                        <h3 class="d_inline">Church</h3>
+                        <p class="uk-text-success">Congratulations! church was added successfully!</p>
                     </div>
                 </div>
                 </div>
@@ -137,7 +117,7 @@
         </div>
         <div class="md-fab-wrapper ">
             <!-- <a class="md-fab md-fab-primary" href="javascript:void(0)"><i class="material-icons">add</i></a> -->
-            <button class="md-fab md-fab-primary d_inline" id="launch_branch_create" href="javascript:void(0)" data-uk-modal="{target:'#branch_create'}"><i class="material-icons">home</i></button>
+            <button class="md-fab md-fab-primary d_inline" id="launch_church_create" href="javascript:void(0)" data-uk-modal="{target:'#church_create'}"><i class="material-icons">home</i></button>
         </div>
     </div>
     <!-- common functions -->
@@ -156,26 +136,25 @@
     <script type="text/javascript">
         $('.dropify').dropify({
             messages: {
-                'default': 'Drag and drop a group image here or click',
+                'default': 'Drag and drop a church image here or click',
             }
         });
-        $("#branch_create_form").on('submit', function(e){
+        $("#church_create_form").on('submit', function(e){
             //Creating branch
             //Getting inputs
             e.preventDefault();
 
-            bname = $("#branch-name").val();
-            blocation = $("#branch-location").val();
-            brepresentative = $("#branch-representative").val()
-            bpic = $("#branch-pic").val();
-            file = document.querySelector("#input-branch-pic").files[0];
+            cname = $("#branch-name").val();
+            clocation = $("#church-location").val();
+            bpic = $("#church-pic").val();
+            file = document.querySelector("#input-church-pic").files[0];
 
-            if(bname && blocation && brepresentative){
-                //Here we can create branch
+            if(cname && clocation){
+                //Here we can create church
 
                 var formdata = new FormData();
 
-                fields = {action:'create_branch', church:<?php echo $churchID; ?>, name:bname, location:blocation, representative:brepresentative, picture:file};
+                fields = {action:'create_church', name:cname, location:clocation, picture:file};
 
                 for (var prop in fields) {
                     formdata.append(prop, fields[prop]);
@@ -187,9 +166,9 @@
                         ret = JSON.parse(response);
                         if(ret.status){
                             //create successfully(Giving notification and closing the modal);
-                            $("#branch_create .act-dialog[data-role=init]").hide();
+                            $("#church_create .act-dialog[data-role=init]").hide();
 
-                            $("#branch_create .act-dialog[data-role=done]").removeClass('display-none');
+                            $("#church_create .act-dialog[data-role=done]").removeClass('display-none');
 
                             setTimeout(function(){
                                 // location.reload();

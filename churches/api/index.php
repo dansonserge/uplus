@@ -26,6 +26,40 @@
         }else{
             echo "No file uploaded";
         }       
+    }else if($action ==  'create_church'){
+        //creating church
+        $name = $request['name']??"";
+        $location = $request['location']??"";
+
+        $pic = $_FILES['picture'];
+
+        //checking file image
+        $ext = strtolower(pathinfo($pic['name'], PATHINFO_EXTENSION)); //extensin
+        if($ext == 'png' || $ext == 'jpg'){
+            $filename = "gallery/podcasts/$name"."_".time().".$ext";
+
+            if(move_uploaded_file($pic['tmp_name'], "../$filename")){
+                //Creating church
+                $sql = "INSERT INTO church(name, profile_picture) VALUES(\"$name\", \"$filename\") ";
+                $insert = $conn->query($sql);
+
+                if($insert){
+                    $response = array('status'=>true, 'msg'=>"Created");
+                }else{
+                    $response = array('status'=>false, 'msg'=>"Can't create: $conn->error");
+                }
+
+                $response = array('status'=>true, 'msg'=>"Success");
+
+            }else $response = array('status'=>false, 'msg'=>"Error keeping file on server\nPlease try again");
+
+        }else{
+            //We dont recognize this file format
+            $response = array('status'=>false, 'msg'=>"Please upload an image png and jpg not $ext");
+        }
+
+
+
     }else if($action == "add_member"){
         $church_id = $request['church'];
         $name = $request['name']??"";
