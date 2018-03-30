@@ -37,7 +37,7 @@
         //checking file image
         $ext = strtolower(pathinfo($pic['name'], PATHINFO_EXTENSION)); //extensin
         if($ext == 'png' || $ext == 'jpg'){
-            $filename = "gallery/churches/$name"."_".time().".$ext";
+            $filename = "gallery/church/$name"."_".time().".$ext";
 
             if(move_uploaded_file($pic['tmp_name'], "../$filename")){
                 //Creating church
