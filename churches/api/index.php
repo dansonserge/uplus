@@ -64,13 +64,13 @@
         //Elisaa want random groupps
         //give the church ID u want groups of
         $church = $request['church']??1; //1 is for Elisaa 's testing'
-        $query = $conn->query("SELECT * FROM groups WHERE church =\"$church\"");
+        $query = $conn->query("SELECT * FROM groups as g JOIN branches  as b ON g.branchid = b.id WHERE b.church =\"$church\"") or trigger_error($conn->error);
 
         $groups = array();
         while ($data = $query->fetch_assoc()) {
             $groups[] = $data;
         }
-        
+
         $response = array('status'=>true, 'data'=>$groups);
 
     }else if($action == "add_member"){
