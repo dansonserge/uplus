@@ -58,9 +58,9 @@
             //We dont recognize this file format
             $response = array('status'=>false, 'msg'=>"Please upload an image png and jpg not $ext");
         }
-    }if($action == "list_churches"){
+    }else if($action == "list_churches"){
         $response = getChurchList();
-    }if($action == "get_groups"){
+    }else if($action == "get_groups"){
         //Elisaa want random groupps
         //give the church ID u want groups of
         $church = $request['church']??1; //1 is for Elisaa 's testing'
