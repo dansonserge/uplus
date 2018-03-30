@@ -23,18 +23,56 @@
 
     <div id="page_content">
         <?php
-            if(!empty($_GET['setup'])){
-                $church = $_GET['setup'];
+            if(isset($_GET['setup'])){
+                $church = $_GET['setup']??"";
+
+                //if churchID aint set then the user could be church admin
+
+                if(!$church && $userType == 'church'){
+                    $church = $churchID;
+                }else if(!$church){
+                    header("location:index.php");
+                }
+
                 $churchData = getChurch($church);
                 $churchname = $churchData['name'];
 
                 $churchAdmin = churchAdmin($church);
-
                 $churchBranches = churchbranches($church);
 
                 ?>
                     <div id="page_content_inner">
                         <h3 class="heading_b uk-margin-bottom"><?php echo "Editing ".$churchname; ?></h3>
+
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <?php
+                                    //handling the form submission
+                                    if($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['subt'])){
+                                        $fname = $_POST['fname'];
+                                        $lname = $_POST['lname'];
+                                        $uname = $_POST['uname'];
+                                        $phone = $_POST['phone_input'];
+                                        $email = $_POST['email-input'];
+                                        $pwd = $_POST['password'];
+
+                                        if($churchAdmin){
+                                            //here we are upldating the church admin
+                                            die("Update is not allowed now");
+                                        }else{
+                                            //creating the church admin
+                                            $query = $conn->query("INSER INTO users(lname, fname, loginName, loginpsw, userphone, useremail, type, church) VALUES(\"$fname\", \"$lname\", \"$uname\", \"$pwd\", \"$phone\", \"$email\", 'church', \"$church\") ") or trigger_error($conn->error);
+
+                                            ?>
+                                                <p class="uk-text-success">User added to leader</p>
+                                            <?php
+                                        }
+
+
+                                    }
+                                ?>
+                            </div>
+                        </div>
 
                         <div class="uk-grid" data-uk-grid-margin="">
                             <div class="uk-width-medium-1-3 uk-row-first">
@@ -42,7 +80,8 @@
                                     <div class="md-card-content">
                                         <h4 class="heading_c uk-margin-bottom">Church details</h4>
                                     </div>
-                                    <form style="padding: 12px">
+                                    <form style="padding: 12px" method="POST" action='<?php echo $_SERVER['REQUEST_URI']; ?>'>
+                                        <input type="hidden" name="subt" value="<?php echo md5(time()*rand(0,1)) ?>">
                                         <div class="uk-form-row">
                                             <div class="uk-grid" data-uk-grid-margin="">
                                                 <div class="uk-width-medium-1-1">
@@ -108,41 +147,87 @@
                                         </h3>
                                     </div>
                                     <div class="md-card-content">
-                                        <table width="100%">
-                                            <tbody>
-                                                <tr>
-                                                <td>
-                                                    Holder Bank:
-                                                </td> 
-                                                <td>
-                                                    <div class="md-input-wrapper md-input-wrapper-disabled md-input-filled"><select class="md-input" disabled="">
-                                                        <option>Bank Of Kigali</option>
-                                                    </select><span class="md-input-bar "></span></div> 
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Beneficialy:
-                                                </td> 
-                                                <td>
-                                                    <div class="md-input-wrapper md-input-wrapper-disabled md-input-filled"><input type="text" class="md-input" name="wacc" value="New Life Gospel Church" disabled=""><span class="md-input-bar "></span></div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Account Number:
-                                                </td> 
-                                                <td>
-                                                    <div class="md-input-wrapper md-input-wrapper-disabled md-input-filled"><input type="text" class="md-input" name="wacc" value="04-344BG/789" disabled=""><span class="md-input-bar "></span></div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                   <button class="md-btn md-btn-success">Change</button>
-                                                </td> 
-                                                <td>
-                                                </td>
-                                        </tr></tbody></table>
+                                        <?php if($userType == 'admin'){ ?>
+                                            <form style="padding: 12px" method="POST" action='<?php echo trim($_SERVER['REQUEST_URI'],'/'); ?>'>
+                                                <div class="uk-form-row">
+                                                    <div class="uk-grid" data-uk-grid-margin="">
+                                                        <div class="uk-width-medium-1-1">
+                                                            <div class="md-input-wrapper md-input-filled">
+                                                                <label>First Name</label>
+                                                                <input type="text" class="md-input label-fixed" id="smsnameInput" value="<?php echo $churchAdmin['fname']??"" ?>" name="fname">
+                                                                <span class="md-input-bar "></span>
+                                                            </div>                                                    
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-form-row">
+                                                    <div class="uk-grid" data-uk-grid-margin="">
+                                                        <div class="uk-width-medium-1-1">
+                                                            <div class="md-input-wrapper md-input-filled">
+                                                                <label>Last Name</label>
+                                                                <input type="text" class="md-input label-fixed" id="smsnameInput" value="<?php echo $churchAdmin['lname']??"" ?>" name='lname'>
+                                                                <span class="md-input-bar "></span>
+                                                            </div>                                                    
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-form-row">
+                                                    <div class="uk-grid" data-uk-grid-margin="">
+                                                        <div class="uk-width-medium-1-1">
+                                                            <div class="md-input-wrapper md-input-filled">
+                                                                <label>username</label>
+                                                                <input type="text" maxlength="12" class="md-input label-fixed" id="smsnameInput" value="<?php echo $churchAdmin['loginName']??"" ?>" name="uname">
+                                                                <span class="md-input-bar "></span>
+                                                            </div>                                                    
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-form-row">
+                                                    <div class="uk-grid" data-uk-grid-margin="">
+                                                        <div class="uk-width-medium-1-1">
+                                                            <div class="md-input-wrapper md-input-filled">
+                                                                <label>Phone</label>
+                                                                <input type="number" class="md-input label-fixed" id="phone_input" value="<?php echo $churchAdmin['userphone']??"" ?>">
+                                                                <span class="md-input-bar " name="phone"></span>
+                                                            </div>                                                    
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-form-row">
+                                                    <div class="uk-grid" data-uk-grid-margin="">
+                                                        <div class="uk-width-medium-1-1">
+                                                            <div class="md-input-wrapper md-input-filled">
+                                                                <label>Email</label>
+                                                                <input type="email" class="md-input label-fixed" id="email-input" value="<?php echo $churchAdmin['useremail']??"" ?>">
+                                                                <span class="md-input-bar " name="email"></span>
+                                                            </div>                                                    
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-form-row">
+                                                    <div class="uk-grid" data-uk-grid-margin="">
+                                                        <div class="uk-width-medium-1-1">
+                                                            <div class="md-input-wrapper md-input-filled">
+                                                                <label>Change password</label>
+                                                                <input type="password" class="md-input label-fixed" id="smsnameInput" value="<?php echo md5(time()*rand(0, 88)) ?>" disabled>
+                                                                <span class="md-input-bar" name="password"></span>
+                                                            </div>                                                    
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-form-row">
+                                                    <div class="md-input-wrapper md-input-filled">
+                                                        <a class="md-btn md-btn-success" type="submit" href="branches.php">SUBMIT</a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        <?php }else{
+                                            ?>
+                                                <p class="uk-text-success">You are the leader</p>
+                                                <p><a class="md-btn" href="settins.php">Profile</a></p>
+                                            <?php
+
+                                        }?>
                                         <br> <br>
                                     </div>
                                 </div>
