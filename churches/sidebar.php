@@ -37,6 +37,14 @@
                         <span class="menu_title">Churches</span>
                     </a>
                 </li>
+                <li title="Church">
+                    <a href="churches.php">
+                        <span class="menu_icon">
+                        <i class="material-icons">call_to_action</i>
+                        </span>
+                        <span class="menu_title">Forums</span>
+                    </a>
+                </li>
             <?php } ?>
 
             <li title="Members">

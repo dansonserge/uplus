@@ -462,6 +462,15 @@
         }else{
             $response = array('status'=>false, 'msg'=>"Provide all the details");
         }
+    }else if($action == 'list_forums'){
+        //listing forums
+        $query = $conn->query("SELECT * FROM forums");
+        $forums = array();
+
+        while ($data = $query->fetch_assoc()) {
+            $forums[] = $data;
+        }
+        $response = array('status'=>true, 'msg'=>$forums);
     }else{
     	$response = array('status'=>false, 'msg'=>"Provide action - $action");
     }

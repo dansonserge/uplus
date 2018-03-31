@@ -43,37 +43,35 @@
                 ?>
                     <div id="page_content_inner">
                         <h3 class="heading_b uk-margin-bottom"><?php echo "Editing ".$churchname; ?></h3>
+                        <?php
+                            //handling the form submission
+                            if($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['subt'])){
+                                $fname = $_POST['fname'];
+                                $lname = $_POST['lname'];
+                                $uname = $_POST['uname'];
+                                $phone = $_POST['phone_input'];
+                                $email = $_POST['email-input'];
 
-                        <div class="md-card">
-                            <div class="md-card-content">
-                                <?php
-                                    //handling the form submission
-                                    if($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['subt'])){
-                                        $fname = $_POST['fname'];
-                                        $lname = $_POST['lname'];
-                                        $uname = $_POST['uname'];
-                                        $phone = $_POST['phone_input'];
-                                        $email = $_POST['email-input'];
-                                        $pwd = $_POST['password'];
+                                if(!empty($_POST['password_changed'])){
+                                    $pwd = $_POST['password'];
+                                }
+                                
 
-                                        if($churchAdmin){
-                                            //here we are upldating the church admin
-                                            die("Update is not allowed now");
-                                        }else{
-                                            //creating the church admin
-                                            $query = $conn->query("INSER INTO users(lname, fname, loginName, loginpsw, userphone, useremail, type, church) VALUES(\"$fname\", \"$lname\", \"$uname\", \"$pwd\", \"$phone\", \"$email\", 'church', \"$church\") ") or trigger_error($conn->error);
+                                if($churchAdmin){
+                                    //here we are updating the church admin
+                                    die("Update is not allowed now");
+                                }else{
+                                    //creating the church admin
+                                    $query = $conn->query("INSER INTO users(lname, fname, loginName, loginpsw, userphone, useremail, type, church) VALUES(\"$fname\", \"$lname\", \"$uname\", \"$pwd\", \"$phone\", \"$email\", 'church', \"$church\") ") or trigger_error($conn->error);
 
-                                            ?>
-                                                <p class="uk-text-success">User added to leader</p>
-                                            <?php
-                                        }
+                                    ?>
+                                        <p class="uk-text-success">User added to leader</p>
+                                    <?php
+                                }
 
 
-                                    }
-                                ?>
-                            </div>
-                        </div>
-
+                            }
+                        ?>
                         <div class="uk-grid" data-uk-grid-margin="">
                             <div class="uk-width-medium-1-3 uk-row-first">
                                 <div class="md-card">
@@ -154,7 +152,7 @@
                                                         <div class="uk-width-medium-1-1">
                                                             <div class="md-input-wrapper md-input-filled">
                                                                 <label>First Name</label>
-                                                                <input type="text" class="md-input label-fixed" id="smsnameInput" value="<?php echo $churchAdmin['fname']??"" ?>" name="fname">
+                                                                <input type="text" class="md-input label-fixed" value="<?php echo $churchAdmin['fname']??"" ?>" name="fname">
                                                                 <span class="md-input-bar "></span>
                                                             </div>                                                    
                                                         </div>
@@ -165,7 +163,7 @@
                                                         <div class="uk-width-medium-1-1">
                                                             <div class="md-input-wrapper md-input-filled">
                                                                 <label>Last Name</label>
-                                                                <input type="text" class="md-input label-fixed" id="smsnameInput" value="<?php echo $churchAdmin['lname']??"" ?>" name='lname'>
+                                                                <input type="text" class="md-input label-fixed" value="<?php echo $churchAdmin['lname']??"" ?>" name='lname'>
                                                                 <span class="md-input-bar "></span>
                                                             </div>                                                    
                                                         </div>
@@ -176,7 +174,7 @@
                                                         <div class="uk-width-medium-1-1">
                                                             <div class="md-input-wrapper md-input-filled">
                                                                 <label>username</label>
-                                                                <input type="text" maxlength="12" class="md-input label-fixed" id="smsnameInput" value="<?php echo $churchAdmin['loginName']??"" ?>" name="uname">
+                                                                <input type="text" maxlength="12" class="md-input label-fixed" value="<?php echo $churchAdmin['loginName']??"" ?>" name="uname">
                                                                 <span class="md-input-bar "></span>
                                                             </div>                                                    
                                                         </div>
@@ -209,7 +207,7 @@
                                                         <div class="uk-width-medium-1-1">
                                                             <div class="md-input-wrapper md-input-filled">
                                                                 <label>Change password</label>
-                                                                <input type="password" class="md-input label-fixed" id="smsnameInput" value="<?php echo md5(time()*rand(0, 88)) ?>" disabled>
+                                                                <input type="password" class="md-input label-fixed" value="<?php echo md5(time()*rand(0, 88)) ?>" id="password_input">
                                                                 <span class="md-input-bar" name="password"></span>
                                                             </div>                                                    
                                                         </div>
@@ -224,7 +222,7 @@
                                         <?php }else{
                                             ?>
                                                 <p class="uk-text-success">You are the leader</p>
-                                                <p><a class="md-btn" href="settins.php">Profile</a></p>
+                                                <p><a class="md-btn" href="settings.php">Profile</a></p>
                                             <?php
 
                                         }?>
@@ -387,6 +385,12 @@
                 ajax.send(formdata);
             }
 
+        })
+
+
+        //admin changing password
+        $("#password_input").on('change', function(data){
+            //signal
         })
     </script>
     
