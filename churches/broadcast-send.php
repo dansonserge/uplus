@@ -1,3 +1,4 @@
+
 <?php
     include 'db.php';
     include 'functions.php';
@@ -43,6 +44,8 @@
                     </div>
 
                     <div class="md-input-wrapper">
+                        <div><label class="fancy">Sender Name: </label>
+                        <input type="text" name="senderName" value="<?php echo(churchSMSname($churchID)); ?>"></div>
                         <div><label class="fancy">Message: </label></div>
                         <textarea placeholder="Enter SMS to send - Limited to 160 characters" rows="3" cols="40" name="msg" id="broadcastMsg" class="md-input autosized"></textarea>
                         <span class="md-input-bar "></span>
