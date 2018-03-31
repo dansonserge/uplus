@@ -473,10 +473,9 @@
 			"forumTitle"	=> $group['forumtitle']
 			);
 	}
-	//header('Content-Type: application/json');
 	$forums = json_encode($forums);
-		echo $forums;
-	//echo $forums;
+	header('Content-Type: application/json');
+	echo $forums;
     }else{
     	$response = array('status'=>false, 'msg'=>"Provide action - $action");
     }
