@@ -3154,14 +3154,14 @@
 	function list_forums()
 	{
 		require('db.php');
-		$query = $churchDb->query("SELECT * FROM forums")or die(mysqli_error($conn));
+		$query = $churchDb->query("SELECT * FROM forums")or die(mysqli_error($churchDb));
 		$forums = array();
-		while ($data = mysqli_fetch_array($query))
+		while ($forum = mysqli_fetch_array($query))
 		{
 		    $forums[] = array(
-			"forumId"		=> $group['id'],
-				"forumTitle"	=> $group['forumtitle']
-				);
+				"forumId"	=> $forum['id'],
+				"forumTitle"	=> $forum['forumtitle']
+			);
 		}
 		header('Content-Type: application/json');
 		$forums = json_encode($forums);
