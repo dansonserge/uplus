@@ -24,6 +24,12 @@ ini_set('display_errors', 1);
 		die('Uplus is currently not available in your country!');
 	}
 
+	$churchDb = new mysqli("localhost", "clement", "clement123" , "churches");
+	
+	if($churchDb->connect_errno){
+		die('having some problems with the uplus churchDb!');
+	}
+
 
 ?>
 
