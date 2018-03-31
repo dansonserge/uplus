@@ -43,8 +43,8 @@
                     </div>
 
                     <div class="md-input-wrapper">
-                        <div><label class="fancy">Sender Name: </label>
-                        <input class="md-input autosized" type="text"  name="senderName"/><span class="md-input-bar "></span></div><br/>
+                        <div><label class="fancy">Sender Name: </label></div>
+                        <input class="md-input autosized" type="text"  name="senderName">
                         <div><label class="fancy">Message: </label></div>
                         <textarea placeholder="Enter SMS to send - Limited to 160 characters/SMS" rows="3" cols="40" name="msg" id="broadcastMsg" class="md-input autosized"></textarea>
                         <span class="md-input-bar "></span>
@@ -127,7 +127,9 @@
                         //         <input type="checkbox" data-target="'.$thisinfo['name'].'" id="check'.strtolower($thisinfo['name']).'" class="controlOption" value="'.$thisinfo['id'].'" name="group"> <label for="check'.strtolower($thisinfo['name']).'">'.$thisinfo['name'].'</label>&nbsp;';
                         // }
                         ?>
-                        <div class="inlineb list-sep">
+
+                        <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
+                            <div class="inlineb list-sep">
                                 <input type="checkbox" value="all" class="selectall controlOption uk-checkbox" data-target="all" name="all"><label> All&nbsp;</label>
                             </div>
                             <div class="inlineb list-sep">
@@ -145,9 +147,8 @@
                                     <label for="check<?php echo strtolower($data['name']); ?>"><?php echo $data['name']; ?>&nbsp;</label>
                                 </div>
 
-                                <?php } ?>  
+                                <?php } ?>    
 
-                        <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th class="sorthead"># <span class="caret"> </span></th>
