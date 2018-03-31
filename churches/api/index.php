@@ -466,10 +466,11 @@
         //listing forums
         $query = $conn->query("SELECT * FROM forums");
 	$forums = array();
-	while ($data = $query->fetch_assoc()) {
+	while ($data = mysqli_fetch_array($query))
+	{
 	    $forums[] = array(
-		"forumId"		=> $group['id'],
-			"forumTitle"		=> $group['forumtitle']
+		"forumId"		=> $data['id'],
+			"forumTitle"	=> $data['forumtitle']
 			);
 	}
 	header('Content-Type: application/json');
