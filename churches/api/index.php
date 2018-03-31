@@ -465,12 +465,16 @@
     }elseif($action == 'list_forums'){
         //listing forums
         $query = $conn->query("SELECT * FROM forums");
-        $forums = array();
-
-        while ($data = $query->fetch_assoc()) {
-            $forums[] = $data;
-        }
-        $response = array('status'=>true, 'msg'=>$forums);
+	$forums = array();
+	while ($data = $query->fetch_assoc()) {
+	    $forums[] = array(
+		"forumId"		=> $group['id'],
+			"forumTitle"		=> $group['forumtitle']
+			);
+	}
+	header('Content-Type: application/json');
+	$forums = json_encode($forums);
+	echo $forums;
     }else{
     	$response = array('status'=>false, 'msg'=>"Provide action - $action");
     }
