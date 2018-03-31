@@ -291,7 +291,7 @@
         }else{
             $response = array('status'=>false, 'message'=>'fillin all the details');
         }
-    }else if($action == "add_event"){
+    }elseif($action == "add_event"){
         //creating church event
         $name  = $request['name']??"";
         $church = $request['church']??"";
@@ -347,7 +347,7 @@
         }else{
             $response = array('status'=>false, 'message'=>'fillin all the details');
         }
-    }else if($action == "add_podcast"){
+    }elseif($action == "add_podcast"){
         //adding podcast
         $name  = $request['name']??"";
         $church = $request['church']??"";
@@ -396,7 +396,7 @@
         }else{
             $response = array('status'=>false, 'message'=>'fillin all the details');
         }
-    }else if($action == "delete_podcast"){
+    }elseif($action == "delete_podcast"){
         //adding podcast
         $podcast_id = $request['podcast']??"";
 
@@ -411,7 +411,7 @@
         }else{
             $response = array('status'=>false, 'message'=>'fillin all the details');
         }
-    }else if($action == "listBaskets"){
+    }elseif($action == "listBaskets"){
         //listing the baskets
         $church = $request['church']??"";
         $query = $conn->query("SELECT * FROM service WHERE church = \"$church\" ");
@@ -424,7 +424,7 @@
         }else{
           $response = array('status'=>false, 'msg'=>"Error: $conn->error");  
         }
-    }else if($action == "addDonation"){
+    }elseif($action == "addDonation"){
         //adding donation
         $church = $request['church']??"";
         $branch = $request['branch']??"";
@@ -440,7 +440,7 @@
         }else{
             $response = array('status'=>false, 'msg'=>"Error: $conn->error"); 
         }
-    }else if($action == "record_headcount"){
+    }elseif($action == "record_headcount"){
         //head counts recording
         $church = $request['church']??"";
         $service = $request['service']??"";
@@ -462,7 +462,7 @@
         }else{
             $response = array('status'=>false, 'msg'=>"Provide all the details");
         }
-    }else if($action == 'list_forums'){
+    }elseif($action == 'list_forums'){
         //listing forums
         $query = $conn->query("SELECT * FROM forums");
         $forums = array();
