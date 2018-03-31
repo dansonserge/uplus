@@ -1,0 +1,11 @@
+UPLUS API V1.1 DOCUMENTATION
+
+--START FORUM--
+	list_forums
+		->
+			phoneNumber
+		<-
+			forumId
+      forumTitle
+      
+--END FORUM--
