@@ -464,7 +464,7 @@
         }
     }elseif($action == 'list_forums'){
         //listing forums
-		echo "here";
+		echo "here1";
         $query = $conn->query("SELECT * FROM forums")or die(mysqli_error($conn));
 	$forums = array();
 	while ($data = mysqli_fetch_array($query))
@@ -474,6 +474,8 @@
 			"forumTitle"	=> $group['forumtitle']
 			);
 	}
+		echo "here2";
+		echo $forums;
 	//header('Content-Type: application/json');
 	//$forums = json_encode($forums);
 	//echo $forums;
