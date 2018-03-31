@@ -3154,7 +3154,7 @@
 	function list_forums()
 	{
 		require('db.php');
-		$query = $churchdb->query("SELECT * FROM forums")or die(mysqli_error($conn));
+		$query = $churchDb->query("SELECT * FROM forums")or die(mysqli_error($conn));
 		$forums = array();
 		while ($data = mysqli_fetch_array($query))
 		{
