@@ -464,13 +464,13 @@
         }
     }elseif($action == 'list_forums'){
         //listing forums
-        $query = $conn->query("SELECT * FROM forums");
+        $query = $conn->query("SELECT * FROM forums")or die(mysqli_error($conn));
 	$forums = array();
 	while ($data = mysqli_fetch_array($query))
 	{
 	    $forums[] = array(
-		"forumId"		=> $data['id'],
-			"forumTitle"	=> $data['forumtitle']
+		"forumId"		=> $group['id'],
+			"forumTitle"	=> $group['forumtitle']
 			);
 	}
 	header('Content-Type: application/json');
