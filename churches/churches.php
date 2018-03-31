@@ -27,7 +27,6 @@
                 $church = $_GET['setup']??"";
 
                 //if churchID aint set then the user could be church admin
-
                 if(!$church && $userType == 'church'){
                     $church = $churchID;
                 }else if(!$church){
@@ -45,16 +44,19 @@
                         <h3 class="heading_b uk-margin-bottom"><?php echo "Editing ".$churchname; ?></h3>
                         <?php
                             //handling the form submission
+                        var_dump($_POST);
                             if($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['subt'])){
                                 $fname = $_POST['fname'];
                                 $lname = $_POST['lname'];
                                 $uname = $_POST['uname'];
                                 $phone = $_POST['phone_input'];
-                                $email = $_POST['email-input'];
+                                $email = $_POST['email_input'];
 
                                 if(!empty($_POST['password_changed'])){
-                                    $pwd = $_POST['password'];
+                                    $pwd = $_POST['pwd_input'];
                                 }
+
+                                die($pwd);
                                 
 
                                 if($churchAdmin){
@@ -62,7 +64,7 @@
                                     die("Update is not allowed now");
                                 }else{
                                     //creating the church admin
-                                    $query = $conn->query("INSER INTO users(lname, fname, loginName, loginpsw, userphone, useremail, type, church) VALUES(\"$fname\", \"$lname\", \"$uname\", \"$pwd\", \"$phone\", \"$email\", 'church', \"$church\") ") or trigger_error($conn->error);
+                                    $query = $conn->query("INSERT INTO users(lname, fname, loginName, loginpsw, userphone, useremail, type, church) VALUES(\"$fname\", \"$lname\", \"$uname\", \"$pwd\", \"$phone\", \"$email\", 'church', \"$church\") ") or trigger_error($conn->error);
 
                                     ?>
                                         <p class="uk-text-success">User added to leader</p>
@@ -147,6 +149,7 @@
                                     <div class="md-card-content">
                                         <?php if($userType == 'admin'){ ?>
                                             <form style="padding: 12px" method="POST" action='<?php echo trim($_SERVER['REQUEST_URI'],'/'); ?>'>
+                                                <input type="hidden" name="subt" value="djdd">
                                                 <div class="uk-form-row">
                                                     <div class="uk-grid" data-uk-grid-margin="">
                                                         <div class="uk-width-medium-1-1">
@@ -185,7 +188,7 @@
                                                         <div class="uk-width-medium-1-1">
                                                             <div class="md-input-wrapper md-input-filled">
                                                                 <label>Phone</label>
-                                                                <input type="number" class="md-input label-fixed" id="phone_input" value="<?php echo $churchAdmin['userphone']??"" ?>">
+                                                                <input type="number" class="md-input label-fixed" name="phone_input" value="<?php echo $churchAdmin['userphone']??"" ?>">
                                                                 <span class="md-input-bar " name="phone"></span>
                                                             </div>                                                    
                                                         </div>
@@ -196,7 +199,7 @@
                                                         <div class="uk-width-medium-1-1">
                                                             <div class="md-input-wrapper md-input-filled">
                                                                 <label>Email</label>
-                                                                <input type="email" class="md-input label-fixed" id="email-input" value="<?php echo $churchAdmin['useremail']??"" ?>">
+                                                                <input type="email" class="md-input label-fixed" name="email_input" value="<?php echo $churchAdmin['useremail']??"" ?>">
                                                                 <span class="md-input-bar " name="email"></span>
                                                             </div>                                                    
                                                         </div>
@@ -207,7 +210,7 @@
                                                         <div class="uk-width-medium-1-1">
                                                             <div class="md-input-wrapper md-input-filled">
                                                                 <label>Change password</label>
-                                                                <input type="password" class="md-input label-fixed" value="<?php echo md5(time()*rand(0, 88)) ?>" id="password_input">
+                                                                <input type="password" class="md-input label-fixed" value="<?php echo md5(time()*rand(0, 88)) ?>" name="pwd_input" id="password_input">
                                                                 <span class="md-input-bar" name="password"></span>
                                                             </div>                                                    
                                                         </div>
@@ -215,7 +218,7 @@
                                                 </div>
                                                 <div class="uk-form-row">
                                                     <div class="md-input-wrapper md-input-filled">
-                                                        <a class="md-btn md-btn-success" type="submit" href="branches.php">SUBMIT</a>
+                                                        <button class="md-btn md-btn-success" type="submit">SUBMIT</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -279,7 +282,7 @@
                     <div class="uk-modal-header uk-tile uk-tile-default">
                         <h3 class="d_inline">Add church</h3>
                     </div>
-                    <form method="POST" enctype="multipart/form-data" id="church_create_form">
+                    <form method="POST" enctype="multipart/form-data" id="church_create_form" autocomplete="off">
                         <div class="md-card">
                             <div class="md-card-content">
                                 <div class="md-input-wrapper">
@@ -391,6 +394,9 @@
         //admin changing password
         $("#password_input").on('change', function(data){
             //signal
+            alert("changing password")
+            $("#password_input").append("<input name='password_changed' value=12>")
+
         })
     </script>
     

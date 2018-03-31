@@ -3,6 +3,9 @@
 	include "../class.message.php";
     include '../functions.php';
 
+    //return JSON Content-Type
+    header('Content-Type: application/json');
+
 	$Message = new broadcast();
 	$request = array_merge($_POST, $_GET); //$_GET for devt nd $_POST for production
     	$response = array();
@@ -465,13 +468,23 @@
     }elseif($action == 'list_forums'){
         //listing forums
         $query = $conn->query("SELECT * FROM forums")or die(mysqli_error($conn));
-	$forums = array();
-	while ($data = mysqli_fetch_array($query))
-	{
-	    $forums[] = $data;
-	}
-	header('Content-Type: application/json');
-	echo json_encode($forums);
+        $forums = array();
+        while ($data = mysqli_fetch_array($query))
+        {
+            $forums[] = $data;
+        }
+        header('Content-Type: application/json');
+        echo json_encode($forums);
+    }elseif($action == 'list_feeds'){
+        //listing FEEDS - all feeds
+        //TODO: pagination
+        $query = $conn->query("SELECT * FROM posts ORDER BY postedDate")or die(mysqli_error($conn));
+        $posts = array();
+        while ($data = mysqli_fetch_array($query))
+        {
+            $posts[] = $data;
+        }
+        $response = $posts;
     }else{
     	$response = array('status'=>false, 'msg'=>"Provide action - $action");
     }
