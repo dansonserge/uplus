@@ -43,8 +43,8 @@
                     </div>
 
                     <div class="md-input-wrapper">
-                        <div><label class="fancy">Sender Name: </label></div>
-                        <input class="md-input autosized" type="text"  name="senderName"/><br/>
+                        <div><label class="fancy">Sender Name: </label>
+                        <input class="md-input autosized" type="text"  name="senderName"/><span class="md-input-bar "></span></div><br/>
                         <div><label class="fancy">Message: </label></div>
                         <textarea placeholder="Enter SMS to send - Limited to 160 characters/SMS" rows="3" cols="40" name="msg" id="broadcastMsg" class="md-input autosized"></textarea>
                         <span class="md-input-bar "></span>
