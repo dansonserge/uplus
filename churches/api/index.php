@@ -464,19 +464,19 @@
         }
     }elseif($action == 'list_forums'){
         //listing forums
-        $sqlgroups 		= $conn->query("SELECT * FROM forums")or die(mysqli_error());
-	$groups 		= array();
-	WHILE($group 	= mysqli_fetch_array($sqlgroups))
+		echo "here";
+        $query = $conn->query("SELECT * FROM forums")or die(mysqli_error($conn));
+	$forums = array();
+	while ($data = mysqli_fetch_array($query))
 	{
-		$groups[] = array(
-			"adminName"			=> $group['adminName'],
-			"groupDesc"			=> $group['groupDesc'],
-			"groupBalance"		=> $gBalanceRow['groupBalance']
-		);
+	    $forums[] = array(
+		"forumId"		=> $group['id'],
+			"forumTitle"	=> $group['forumtitle']
+			);
 	}
-	header('Content-Type: application/json');
-	$groups = json_encode($groups);
-	echo $groups;
+	//header('Content-Type: application/json');
+	//$forums = json_encode($forums);
+	//echo $forums;
     }else{
     	$response = array('status'=>false, 'msg'=>"Provide action - $action");
     }
