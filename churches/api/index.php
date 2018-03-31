@@ -468,14 +468,10 @@
 	$forums = array();
 	while ($data = mysqli_fetch_array($query))
 	{
-	    $forums[] = array(
-		"forumId"		=> $group['id'],
-			"forumTitle"	=> $group['forumtitle']
-			);
+	    $forums[] = $data;
 	}
-	$forums = json_encode($forums);
 	header('Content-Type: application/json');
-	echo $forums;
+	echo json_encode($forums);
     }else{
     	$response = array('status'=>false, 'msg'=>"Provide action - $action");
     }
