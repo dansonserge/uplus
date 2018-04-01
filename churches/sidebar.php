@@ -45,75 +45,67 @@
                         <span class="menu_title">Forums</span>
                     </a>
                 </li>
-            <?php } ?>
+            <?php }else if($userType == 'church'){?>
 
-            <li title="Members">
-                <a href="members.php">
-                    <span class="menu_icon">
-                    <i class="material-icons"></i>
-                    </span>
-                    <span class="menu_title">Members</span>
-                </a>
-            </li>
-            <li title="Branches">
-                <a href="branches.php">
-                    <span class="menu_icon">
-                    <i class="material-icons"></i>
-                    </span>
-                    <span class="menu_title">Branches</span>
-                </a>
-            </li>
-            <li title="Groups">
-                <a href="groups.php">
-                    <span class="menu_icon">
-                    <i class="material-icons">group</i>
-                    </span>
-                    <span class="menu_title">Groups</span>
-                </a>
-                
-            </li>
-            <li title="Finance">
-                <a href="donations.php">
-                    <span class="menu_icon"><i class="material-icons">&#xE8CB;</i></span>
-                    <span class="menu_title">Donations</span>
-                </a>
-            </li>
-            <li title="Communication">
-                <a class="nolink" href="">
-                    <span class="menu_icon"><i class="material-icons">comment</i></span>
-                    <span class="menu_title">Communication</span>
-                </a>
-                <ul>
-                    <li>
-                        <a href="prayer_request.php">Prayer Requests</a>
-                    </li>
-                    <li>
-                        <a href="broadcast.php">Broadcast</a>
-                    </li>
-                    <li>
-                        <a href="invoices.php">Invoices</a>
-                    </li>
-                    <li>
-                        <a href="podcasts.php">Feeds</a>
-                    </li>
-                </ul>
-            </li>
-            <li title="Events">
-                <a href="events.php">
-                    <span class="menu_icon">
-                    <i class="material-icons"></i>
-                    </span>
-                    <span class="menu_title">Events</span>
-                </a>
-            </li>
-            <!-- <li title="Events">
-                <a href="settings.php">
-                    <span class="menu_icon">
-                    <i class="material-icons">settings</i>
-                    </span>
-                    <span class="menu_title">Settings</span>
-                </a>
-            </li> -->
+                <li title="Members">
+                    <a href="members.php">
+                        <span class="menu_icon">
+                        <i class="material-icons"></i>
+                        </span>
+                        <span class="menu_title">Members</span>
+                    </a>
+                </li>
+                <li title="Branches">
+                    <a href="branches.php">
+                        <span class="menu_icon">
+                        <i class="material-icons"></i>
+                        </span>
+                        <span class="menu_title">Branches</span>
+                    </a>
+                </li>
+                <li title="Groups">
+                    <a href="groups.php">
+                        <span class="menu_icon">
+                        <i class="material-icons">group</i>
+                        </span>
+                        <span class="menu_title">Groups</span>
+                    </a>                
+                </li>
+                <li title="Finance">
+                    <a href="donations.php">
+                        <span class="menu_icon"><i class="material-icons">&#xE8CB;</i></span>
+                        <span class="menu_title">Donations</span>
+                    </a>
+                </li>
+                <li title="Communication">
+                    <a class="nolink" href="">
+                        <span class="menu_icon"><i class="material-icons">comment</i></span>
+                        <span class="menu_title">Communication</span>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="prayer_request.php">Prayer Requests</a>
+                        </li>
+                        <li>
+                            <a href="broadcast.php">Broadcast</a>
+                        </li>
+                        <li>
+                            <a href="invoices.php">Invoices</a>
+                        </li>
+                        <li>
+                            <a href="podcasts.php">Feeds</a>
+                        </li>
+                    </ul>
+                </li>
+                <li title="Events">
+                    <a href="events.php">
+                        <span class="menu_icon">
+                        <i class="material-icons"></i>
+                        </span>
+                        <span class="menu_title">Events</span>
+                    </a>
+                </li>
+            <?php } ?>
         </ul>
     </div>
 </aside><!-- main sidebar end -->

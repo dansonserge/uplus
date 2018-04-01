@@ -55,8 +55,6 @@
                                 if(!empty($_POST['password_changed'])){
                                     $pwd = $_POST['pwd_input'];
                                 }
-
-                                die($pwd);
                                 
 
                                 if($churchAdmin){
