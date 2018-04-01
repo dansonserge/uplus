@@ -465,13 +465,13 @@
     }elseif($action == 'list_forums'){
         //listing forums
         $query = $conn->query("SELECT * FROM forums")or die(mysqli_error($conn));
-	$forums = array();
-	while ($data = mysqli_fetch_array($query))
-	{
-	    $forums[] = $data;
-	}
-	header('Content-Type: application/json');
-	echo json_encode($forums);
+    	$forums = array();
+    	while ($data = mysqli_fetch_array($query))
+    	{
+    	    $forums[] = $data;
+    	}
+    	header('Content-Type: application/json');
+    	echo json_encode($forums);
     }else{
     	$response = array('status'=>false, 'msg'=>"Provide action - $action");
     }
