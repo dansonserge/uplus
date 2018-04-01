@@ -27,7 +27,6 @@
                 $church = $_GET['setup']??"";
 
                 //if churchID aint set then the user could be church admin
-
                 if(!$church && $userType == 'church'){
                     $church = $churchID;
                 }else if(!$church){
@@ -62,7 +61,7 @@
                                     die("Update is not allowed now");
                                 }else{
                                     //creating the church admin
-                                    $query = $conn->query("INSER INTO users(lname, fname, loginName, loginpsw, userphone, useremail, type, church) VALUES(\"$fname\", \"$lname\", \"$uname\", \"$pwd\", \"$phone\", \"$email\", 'church', \"$church\") ") or trigger_error($conn->error);
+                                    $query = $conn->query("INSERT INTO users(lname, fname, loginName, loginpsw, userphone, useremail, type, church) VALUES(\"$fname\", \"$lname\", \"$uname\", \"$pwd\", \"$phone\", \"$email\", 'church', \"$church\") ") or trigger_error($conn->error);
 
                                     ?>
                                         <p class="uk-text-success">User added to leader</p>
@@ -215,7 +214,7 @@
                                                 </div>
                                                 <div class="uk-form-row">
                                                     <div class="md-input-wrapper md-input-filled">
-                                                        <a class="md-btn md-btn-success" type="submit" href="branches.php">SUBMIT</a>
+                                                        <button class="md-btn md-btn-success" type="submit">SUBMIT</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -391,6 +390,8 @@
         //admin changing password
         $("#password_input").on('change', function(data){
             //signal
+            $("#password_input").append("<input name='password_changed' value=12>")
+
         })
     </script>
     
