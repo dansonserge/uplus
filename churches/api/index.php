@@ -476,8 +476,9 @@
         header('Content-Type: application/json');
         echo json_encode($forums);
     }elseif($action == 'list_feeds'){
-        //listing forums
-        $query = $conn->query("SELECT * FROM posts")or die(mysqli_error($conn));
+        //listing FEEDS - all feeds
+        //TODO: pagination
+        $query = $conn->query("SELECT * FROM posts ORDER BY postedDate")or die(mysqli_error($conn));
         $posts = array();
         while ($data = mysqli_fetch_array($query))
         {
