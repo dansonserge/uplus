@@ -468,13 +468,22 @@
     }elseif($action == 'list_forums'){
         //listing forums
         $query = $conn->query("SELECT * FROM forums")or die(mysqli_error($conn));
-    	$forums = array();
-    	while ($data = mysqli_fetch_array($query))
-    	{
-    	    $forums[] = $data;
-    	}
-    	header('Content-Type: application/json');
-    	echo json_encode($forums);
+        $forums = array();
+        while ($data = mysqli_fetch_array($query))
+        {
+            $forums[] = $data;
+        }
+        header('Content-Type: application/json');
+        echo json_encode($forums);
+    }elseif($action == 'list_feeds'){
+        //listing forums
+        $query = $conn->query("SELECT * FROM posts")or die(mysqli_error($conn));
+        $posts = array();
+        while ($data = mysqli_fetch_array($query))
+        {
+            $posts[] = $data;
+        }
+        $response = $posts;
     }else{
     	$response = array('status'=>false, 'msg'=>"Provide action - $action");
     }
