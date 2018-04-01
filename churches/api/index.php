@@ -3,6 +3,9 @@
 	include "../class.message.php";
     include '../functions.php';
 
+    //return JSON Content-Type
+    header('Content-Type: application/json');
+
 	$Message = new broadcast();
 	$request = array_merge($_POST, $_GET); //$_GET for devt nd $_POST for production
     	$response = array();
