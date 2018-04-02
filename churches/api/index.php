@@ -36,15 +36,20 @@
         $location = $request['location']??"";
 
         $pic = $_FILES['picture'];
+        $logo = $_FILES['logo'];
 
         //checking file image
         $ext = strtolower(pathinfo($pic['name'], PATHINFO_EXTENSION)); //extensin
-        if($ext == 'png' || $ext == 'jpg'){
-            $filename = "gallery/church/$name"."_".time().".$ext";
+        $logo_ext = strtolower(pathinfo($logo['name'], PATHINFO_EXTENSION)); //extensin
 
-            if(move_uploaded_file($pic['tmp_name'], "../$filename")){
+
+        if( ($ext == 'png' || $ext == 'jpg') && ($logo_ext == 'png' || $logo_ext == 'jpg') ){
+            $filename = "gallery/church/$name"."_".time().".$ext";
+            $logo_filename = "gallery/church/$name"."_logo_".time().".$ext";
+
+            if(move_uploaded_file($pic['tmp_name'], "../$filename") && move_uploaded_file($logo['tmp_name'], "../$logo_filename")){
                 //Creating church
-                $sql = "INSERT INTO church(name, profile_picture) VALUES(\"$name\", \"$filename\") ";
+                $sql = "INSERT INTO church(name, profile_picture, logo) VALUES(\"$name\", \"$filename\", \"$logo_filename\") ";
                 $insert = $conn->query($sql);
 
                 if($insert){
@@ -55,7 +60,7 @@
 
                 $response = array('status'=>true, 'msg'=>"Success", 'churchid'=>$conn->insert_id);
 
-            }else $response = array('status'=>false, 'msg'=>"Error keeping file on server\nPlease try again");
+            }else $response = array('status'=>false, 'msg'=>"Error keeping file on server\nPlease try again".json_encode($_FILES));
 
         }else{
             //We dont recognize this file format

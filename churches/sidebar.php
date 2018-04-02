@@ -38,7 +38,7 @@
                     </a>
                 </li>
                 <li title="Church">
-                    <a href="churches.php">
+                    <a href="forums.php">
                         <span class="menu_icon">
                         <i class="material-icons">call_to_action</i>
                         </span>

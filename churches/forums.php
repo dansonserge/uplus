@@ -3,7 +3,7 @@
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
 <head>
     <?php
-        $title = "Members";
+        $title = "Forums";
         //Including common head configuration
         include_once "head.php";
     ?>
@@ -19,21 +19,23 @@
     <?php
         include_once "sidebar.php";
         $church_services = church_services($churchID);
+
+
     ?>
 
     <div id="page_content">
         <div id="page_content_inner">
             <div class="heading_a uk-grid uk-margin-bottom uk-grid-width-large-1-2">
-                <div class="uk-row-first"><h4 class="">All members</h4></div>
+                <div class="uk-row-first"><h4 class="">All forums</h4></div>
             </div>
 
             <div class=" uk-grid uk-margin-bottom uk-grid-medium" data-uk-grid-margin>   
                 <div class="uk-width-large-4-4">
-                    <div class="md-card">
+                    <!-- <div class="md-card">
                         <div class="md-card-content">
                             <div class=" uk-grid">
                                 <div class="uk-width-3-4">
-                                    <h4 class="heading_c uk-margin-bottom">Members attendance Analysis</h4>
+                                    <h4 class="heading_c uk-margin-bottom">Forums engagement</h4>
                                 </div>
                                 <div class="uk-width-1-4">
                                     <form class="-form">
@@ -53,7 +55,7 @@
                             <canvas id="mem_attendance" class="attendance" width="400" height="80"></canvas>
                             <div ></div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="md-card">
                         <div id="status"></div>
                         <div class="md-card-content">
@@ -63,36 +65,28 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name</th>
-                                        <th>Branch</th>
-                                        <th>Phone</th>
-                                        <th>Email</th>
-                                        <th>Address</th>
-                                        <th>Type</th>
-                                        <th>Date In</th>
+                                        <th>Forum title</th>
+                                        <th>Created By</th>
+                                        <th>Date created</th>
+                                        <th>Date created</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php 
                                     $n=0;
-                                    $sqlGetMembers = $db->query("SELECT * FROM `members` ORDER BY id DESC")or die ($db->error);
-                                    while($rowMember = mysqli_fetch_array($sqlGetMembers))
+                                    $sqlGetMembers = $db->query("SELECT * FROM `forums` ORDER BY id DESC")or die ($db->error);
+                                    while($data = mysqli_fetch_array($sqlGetMembers))
                                         {
-                                            $branchid = $rowMember['branchid'];
-                                            $sqlGetMembersloc = $db->query("SELECT * FROM `branches` WHERE id = '$branchid'")or die ($db->error);
-                                            $branches = mysqli_fetch_array($sqlGetMembersloc);
+                                            $admin  = staff_details($data['admin']);
                                             $n++;
                                             echo '<tr>
                                             <td>'.$n.'</td>
-                                            <td>'.$rowMember['name'].'</td>
-                                            <td>'.$branches['name'].'</td>
-                                            <td>'.$rowMember['phone'].'</td>
-                                            <td>'.$rowMember['email'].'</td>
-                                            <td>'.$rowMember['address'].'</td>
-                                            <td>'.$rowMember['type'].'</td>
-                                            <td>'.$rowMember['createdDate'].'</td>
-                                            <td><a href="editmember.php?id='.$rowMember['id'].'"><i class="material-icons">mode_edit</i></a></td>
+                                            <td>'.$admin['fname'].'</td>
+                                            <td>'.$data['forumtitle'].'</td>
+                                            <td>'.$data['addedDate'].'</td>
+                                            <td>'.$data['status'].'</td>
+                                            <td><a href="forums.php?id='.$data['id'].'"><i class="material-icons">mode_edit</i></a></td>
                                             </tr>';
                                         }
                                     ?> 

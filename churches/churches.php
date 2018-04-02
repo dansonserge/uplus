@@ -36,6 +36,9 @@
                 $churchData = getChurch($church);
                 $churchname = $churchData['name'];
 
+                $churchlogo = $churchData['logo'];
+                $churchpic = $churchData['profile_picture'];
+
                 $churchAdmin = churchAdmin($church);
                 $churchBranches = churchbranches($church);
 
@@ -44,7 +47,6 @@
                         <h3 class="heading_b uk-margin-bottom"><?php echo "Editing ".$churchname; ?></h3>
                         <?php
                             //handling the form submission
-                        var_dump($_POST);
                             if($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['subt'])){
                                 $fname = $_POST['fname'];
                                 $lname = $_POST['lname'];
@@ -54,8 +56,7 @@
 
                                 if(!empty($_POST['password_changed'])){
                                     $pwd = $_POST['pwd_input'];
-                                }
-                                
+                                }                                
 
                                 if($churchAdmin){
                                     //here we are updating the church admin
@@ -83,12 +84,31 @@
                                         <div class="uk-form-row">
                                             <div class="uk-grid" data-uk-grid-margin="">
                                                 <div class="uk-width-medium-1-1">
-                                                    <div class="md-input-wrapper md-input-filled md-input-wrapper-disabled">
+                                                    <div class="md-input-wrapper md-input-filled">
                                                         <label>Church name</label>
-                                                        <input type="text" class="md-input label-fixed" value="<?php echo $churchname ?>" disabled="disabled">
+                                                        <input type="text" class="md-input label-fixed" value="<?php echo $churchname ?>">
                                                         <span class="md-input-bar "></span>
-                                                    </div>
-                                                    
+                                                    </div>                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-form-row">
+                                            <div class="uk-grid" data-uk-grid-margin="">
+                                                <div class="uk-width-medium-1-4">
+                                                    <div class="md-input-wrapper md-input-filled">
+                                                        <label>Logo</label>
+                                                        <img src="<?php echo $churchlogo; ?>">
+                                                        <input type="text" class="md-input label-fixed" value="<?php echo $churchname ?>">
+                                                        <span class="md-input-bar "></span>
+                                                    </div>                                                    
+                                                </div>
+                                                <div class="uk-width-medium-3-4">
+                                                    <div class="md-input-wrapper md-input-filled">
+                                                        <label>Church name</label>
+                                                        <img src="<?php echo $churchpic; ?>">
+                                                        <input type="text" class="md-input label-fixed" value="<?php echo $churchname ?>">
+                                                        <span class="md-input-bar "></span>
+                                                    </div>                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -281,22 +301,27 @@
                         <h3 class="d_inline">Add church</h3>
                     </div>
                     <form method="POST" enctype="multipart/form-data" id="church_create_form" autocomplete="off">
-                        <div class="md-card">
-                            <div class="md-card-content">
+                        <div class="md-card1">
+                            <div class="md-card-content1">
                                 <div class="md-input-wrapper">
-                                    <label>Name</label>
+                                    <label>Church Name</label>
                                     <input type="text" id="branch-name" class="md-input" required="required">
                                     <span class="md-input-bar "></span>
                                 </div>
                                 <div class="md-input-wrapper">
                                     <label>Location</label>
-                                    <input type="text" id="church-location" class="md-input">
+                                    <input type="text" id="church-location" class="md-input" required="required">
                                     <span class="md-input-bar "></span>
                                 </div>
+
+                                <div class="">
+                                    <h4>Logo</h4>
+                                    <input type="file" id="input-church-logo" style="max-width: 200px" data-height="100" data-height="100" class="dropify" data-allowed-file-extensions="png jpg" required="required"/>
+                                    <span class="md-input-bar ">
+                                </div>
                                 <div class="md-input-wrapper">
-                                    <label>Image</label>
+                                    <h4>Image</h4>
                                     <input type="file" id="input-church-pic" class="dropify" data-allowed-file-extensions="png jpg"/>
-                                    <span class="md-input-bar "></span>
                                 </div>
                             </div>                        
                         </div>
@@ -334,9 +359,14 @@
     <!-- Dropify -->
     <script src="bower_components/dropify/dist/js/dropify.min.js"></script>
     <script type="text/javascript">
-        $('.dropify').dropify({
+        $('.dropify#input-church-pic').dropify({
             messages: {
                 'default': 'Drag and drop a church image here or click',
+            }
+        });
+        $('.dropify#input-church-logo').dropify({
+            messages: {
+                'default': 'Drag and drop a church logo here or click',
             }
         });
         $("#church_create_form").on('submit', function(e){
@@ -349,12 +379,14 @@
             bpic = $("#church-pic").val();
             file = document.querySelector("#input-church-pic").files[0];
 
+            logo = document.querySelector("#input-church-logo").files[0];
+
             if(cname && clocation){
                 //Here we can create church
 
                 var formdata = new FormData();
 
-                fields = {action:'create_church', name:cname, location:clocation, picture:file};
+                fields = {action:'create_church', name:cname, location:clocation, picture:file, logo:logo};
 
                 for (var prop in fields) {
                     formdata.append(prop, fields[prop]);
