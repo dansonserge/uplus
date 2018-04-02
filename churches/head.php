@@ -40,6 +40,7 @@
 <title><?php echo !empty($title)?$title." | ":"" ?> U+ Church</title>
 
 <!-- uikit -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.40/css/uikit.min.css" /> -->
 <link rel="stylesheet" href="bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
 
 <!-- flag icons -->

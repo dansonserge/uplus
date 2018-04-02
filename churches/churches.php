@@ -22,6 +22,7 @@
     ?>
 
     <div id="page_content">
+
         <?php
             if(isset($_GET['setup'])){
                 $church = $_GET['setup']??"";
@@ -256,9 +257,9 @@
                 <?php
             }else{
                 ?>
-                <div id="page_content_inner">
+                <div id="page_content_inner" style="max-width: 1300px; margin: 0 auto">
                     <h3 class="heading_b uk-margin-bottom">Churches</h3>
-                    <div class="uk-grid uk-grid-width-medium-1-3" data-uk-grid-margin="">
+                    <div class="uk-grid"  data-uk-grid-margin="" uk-grid>
                         <?php
                             //Getting branches
                             $churches = getChurchList();
@@ -267,7 +268,7 @@
                                 $churchAdmin = churchAdmin($church['id']);
                                 $churchLink = "?setup=$church[id]";
                         ?>
-                        <div class="uk-margin-bottom uk-row-first">
+                        <div class="uk-margin-bottom uk-width-1-3 uk-width-1-2@s">
                             <div class="md-card md-card">
                                 <div class="md-card-toolbar">
                                     <!-- <div class="md-card-toolbar-actions">
@@ -289,6 +290,9 @@
                         </div>
                         <?php } ?>
                     </div>
+                </div>
+                <div class="md-fab-wrapper ">
+                    <button class="md-fab md-fab-primary d_inline" id="launch_church_create" href="javascript:void(0)" data-uk-modal="{target:'#church_create'}"><i class="material-icons">home</i></button>
                 </div>
                 <?php
             }
@@ -339,11 +343,7 @@
                 </div>
                 </div>
             </div>
-        </div>
-        <div class="md-fab-wrapper ">
-            <!-- <a class="md-fab md-fab-primary" href="javascript:void(0)"><i class="material-icons">add</i></a> -->
-            <button class="md-fab md-fab-primary d_inline" id="launch_church_create" href="javascript:void(0)" data-uk-modal="{target:'#church_create'}"><i class="material-icons">home</i></button>
-        </div>
+        </div>        
     </div>
     <!-- common functions -->
     <script src="assets/js/common.min.js"></script>
