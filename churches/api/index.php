@@ -524,6 +524,19 @@
             //We dont recognize this file format
             $response = array('status'=>false, 'msg'=>"Please upload an image png and jpg not $ext");
         }
+    }else if($action ==  'create_post'){
+        //post feeds
+        $userId = $request['user']??"";
+        $post_content = $request['content']??"";
+        // $attachments = 
+        $target_audience = $request['audience']??null;
+
+        //the type of person who posted - admin or member if empty it'll be elisaa app
+        $userType = $request['userType']??'member';
+
+        
+
+
     }else{
     	$response = array('status'=>false, 'msg'=>"Provide action - $action");
     }

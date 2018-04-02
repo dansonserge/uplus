@@ -68,7 +68,7 @@
                                         <th>Forum title</th>
                                         <th>Created By</th>
                                         <th>Date created</th>
-                                        <th>Date created</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -83,7 +83,7 @@
                                             echo '<tr>
                                             <td>'.$n.'</td>
                                             <td>'.$data['forumtitle'].'</td>
-                                            <td>'.$admin['fname'].'</td>
+                                            <td>'.$admin['name'].'</td>
                                             <td>'.$data['addedDate'].'</td>
                                             <td>'.$data['status'].'</td>
                                             <td><a href="forums.php?id='.$data['id'].'"><i class="material-icons">mode_edit</i></a></td>
@@ -116,8 +116,7 @@
                             <span class="md-input-bar "></span>
                         </div>
                         <div class="md-input-wrapper md-input-filled">
-                            <!-- <label>Introduction</label> -->
-                            <input type="file" id="input-forum-logo" name="logo" style="max-width: 200px" data-height="100" data-height="100" class="dropify" data-allowed-file-extensions="png jpg" required="required"/>
+                            <input type="file" id="input-forum-logo" name="logo" data-height="100" data-height="100" class="dropify" data-allowed-file-extensions="png jpg" required="required"/>
                             <span class="md-input-bar "></span>
                         </div>
                     </form>
@@ -188,10 +187,10 @@
     <script src="js/uploadFile.js"></script>
     <script type="text/javascript">
         var churchID  = <?php echo $churchID; ?>;
-        $('.dropify').dropify();
+        $('.dropify#input-forum-logo').dropify();
         $(".selectize").selectize();
 
-        $("#input-forum-logo").dropify();
+        // $("#input-forum-logo").dropify();
 
         function log(data){
             console.log(data)

@@ -78,7 +78,7 @@
     function staff_details($userid){
       //Function to return details for users
       global $conn;
-      $query = $conn->query("SELECT * FROM users WHERE Id = \"$userid\" LIMIT 1 ") or die("Can't get staff: $conn->error");
+      $query = $conn->query("SELECT *, CONCAT(fname, ' ', lname) as name FROM users WHERE Id = \"$userid\" LIMIT 1 ") or die("Can't get staff: $conn->error");
       return $query->fetch_assoc();
     }
 
