@@ -74,7 +74,7 @@
                             }
                         ?>
                         <div class="uk-grid" data-uk-grid-margin="">
-                            <div class="uk-width-medium-1-3 uk-row-first">
+                            <div class="uk-width-medium-1-3 .uk-width-1-4@l uk-row-first">
                                 <div class="md-card">
                                     <div class="md-card-content">
                                         <h4 class="heading_c uk-margin-bottom">Church details</h4>

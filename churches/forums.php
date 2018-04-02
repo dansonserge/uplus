@@ -82,8 +82,8 @@
                                             $n++;
                                             echo '<tr>
                                             <td>'.$n.'</td>
-                                            <td>'.$admin['fname'].'</td>
                                             <td>'.$data['forumtitle'].'</td>
+                                            <td>'.$admin['fname'].'</td>
                                             <td>'.$data['addedDate'].'</td>
                                             <td>'.$data['status'].'</td>
                                             <td><a href="forums.php?id='.$data['id'].'"><i class="material-icons">mode_edit</i></a></td>

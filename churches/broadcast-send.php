@@ -98,7 +98,7 @@
                     <tbody>
                         <?php 
                         $n=0;
-                        $sqlGetMembers = $db->query("SELECT *, (SELECT COUNT(*) FROM messageslog WHERE message = message.id) as number FROM message WHERE !ISNULL(scheduleTime) ORDER BY scheduleTime DESC") or die ($db->error);
+                        $sqlGetMembers = $db->query("SELECT *, (SELECT COUNT(*) FROM messageslog WHERE message = message.id) as number FROM message WHERE !ISNULL(scheduleTime) AND scheduleTime>'2011-00:00' ORDER BY scheduleTime DESC") or die ($db->error);
                         while($scheMessage = mysqli_fetch_array($sqlGetMembers))
                             {
                                 $messageId = $scheMessage['id'];

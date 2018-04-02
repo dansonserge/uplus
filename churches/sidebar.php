@@ -40,7 +40,7 @@
                 <li title="Church">
                     <a href="forums.php">
                         <span class="menu_icon">
-                        <i class="material-icons">call_to_action</i>
+                        <i class="material-icons">forum</i>
                         </span>
                         <span class="menu_title">Forums</span>
                     </a>
