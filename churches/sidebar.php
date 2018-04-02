@@ -93,7 +93,7 @@
                             <a href="invoices.php">Invoices</a>
                         </li>
                         <li>
-                            <a href="podcasts.php">Feeds</a>
+                            <a href="feeds.php">Feeds</a>
                         </li>
                     </ul>
                 </li>
