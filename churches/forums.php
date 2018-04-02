@@ -104,16 +104,20 @@
                     <div class="uk-modal-header uk-tile uk-tile-default">
                         <h3 class="d_inline">New Forum</h3>
                     </div>
-                    <form id="add_member_form">
+                    <form id="create_forum_form">
                         <div class="md-input-wrapper">
                             <label>Forum title</label>
-                            <input type="text" name="membername" id="name_input" class="md-input" required="required">
+                            <input type="text" name="membername" id="forumtitle_input" class="md-input" required="required">
                             <span class="md-input-bar "></span>
                         </div>
-                        <div class="md-input-wrapper">
+                        <div class="md-input-wrapper md-input-filled">
                             <!-- <label>Introduction</label> -->
-                            <textarea cols="30" rows="3" class="md-input autosized" placeholder="What's the forum about?" style="overflow-x: hidden; word-wrap: break-word;"></textarea>
-                            <input type="number" name="memberphone" id="phone_input" class="md-input">
+                            <textarea cols="30" rows="3" id="forum_intro" class="md-input autosized" placeholder="What's the forum about?" style="overflow-x: hidden; word-wrap: break-word;"></textarea>
+                            <span class="md-input-bar "></span>
+                        </div>
+                        <div class="md-input-wrapper md-input-filled">
+                            <!-- <label>Introduction</label> -->
+                            <input type="file" id="input-forum-logo" name="logo" style="max-width: 200px" data-height="100" data-height="100" class="dropify" data-allowed-file-extensions="png jpg" required="required"/>
                             <span class="md-input-bar "></span>
                         </div>
                     </form>
@@ -121,7 +125,7 @@
 
                     <div class="uk-modal-footer uk-text-right act-dialog" data-role='init'>
                         <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
-                        <button class="md-btn md-btn-success pull-right" id="add_member_btn">CREATE</button>
+                        <button class="md-btn md-btn-success pull-right" id="create_forum_btn">CREATE</button>
                     </div>
 
                     <div class="uk-modal-footer uk-text-right act-dialog display-none" data-role='done'>
@@ -180,139 +184,62 @@
     <script src="bower_components/dropify/dist/js/dropify.min.js"></script>
 
     <script type="text/javascript" src="js/Chart.min.js"></script>
-    <?php
-    //Gettig data for chart
-    $query = $db->query("SELECT SUM(num) as num, church_service.name as servicename FROM `attendance` JOIN church_service ON attendance.service = church_service.id JOIN branches ON attendance.branch = branches.id WHERE branches.church = \"$churchID\" GROUP BY servicename ") or die("Can'te get chart data $db->error");
-
-    $chart_data = array();
-    while ($data = $query->fetch_assoc()) {
-        $chart_data[$data['servicename']] = $data['num'];
-    }
-    ?>
-    <script>
-
-        //scripts
-        $("#selectChart").on('change', function(data){
-            selectedChart = $(this).val();
-
-            // if(selectedChart == 'gender'){
-            //     //load attendance data based on gender
-            //     myChart
-
-            // }
-        })
-
-    var ctx = document.getElementById("mem_attendance").getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: <?php echo json_encode(array_keys($chart_data)); ?>,
-            datasets: [{
-                label: '# of members(headcounts)',
-                data: <?php echo json_encode(array_values($chart_data)); ?>,
-                backgroundColor: [
-                    'rgba(0, 150, 136, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(0,150,136,1)',
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
-        }
-    });
-    </script>
 
     <script src="js/uploadFile.js"></script>
     <script type="text/javascript">
         var churchID  = <?php echo $churchID; ?>;
         $('.dropify').dropify();
-
-        $("#memExport").on('submit', function(e){
-            e.preventDefault();
-            uploadFile();
-
-        });
-
         $(".selectize").selectize();
+
+        $("#input-forum-logo").dropify();
 
         function log(data){
             console.log(data)
         }
 
-        $("#head_counts_form").on('submit', function(e){
-            e.preventDefault();
-
-            //head counts modal on submission
-            service = $("#service-input").val();
-            date = $("#date-input").val();
-            number = $("#number-input").val();
-            branch = $("#branch-input").val();
-
-            if(service && date && number){
-                //sending the data
-                $.post('api/index.php', {action:'record_headcount', church:<?php echo $churchID; ?>, branch:branch, service:service, date:date, number:number}, function(data){
-                        try{
-                            ret = JSON.parse(data);
-                            if(ret.status){
-                                //Saved
-                                $("#head_counts_form").html("Saved successfully!");
-                                setTimeout(function(){
-                                    location.reload();
-                                }, 700);
-                            }else{
-                                $("#head_counts_form").html("Error recording!<br />"+data.msg);
-                            }
-                        }catch(err){
-                            log(err)
-                        }
-                })
-            }            
-        });
-
-        $("#add_member_btn").on('click', function(e){
+        $("#create_forum_btn").on('click', function(e){
             e.preventDefault();
             //add individual user
-            name = $("#name_input").val();
-            phone = $("#phone_input").val();
-            email = $("#email_input").val();
-            branch = $("#branch_input").val();
-            address = $("#address_input").val();
-            type = $("#type_input").val();
+            title = $("#forumtitle_input").val();
+            intro = $("#forum_intro").val();
+            logo =  document.querySelector("#input-forum-logo").files[0];
 
-            if(name && branch && type){
-
+            if(title && intro && logo){
                 //Marking the progress
                 //Marking the sending process
                 $("#add_member_modal .act-dialog[data-role=init]").hide();
                 $("#add_member_modal .act-dialog[data-role=done]").removeClass('display-none');
 
-                //USer can be submitted
-                $.post('api/index.php', {action:'add_member', church:<?php echo $churchID; ?>, name:name, phone:phone, email:email, address:address, branch:branch, type:type}, function(data){
+                var formdata = new FormData();
+                fields = {action:'create_forum', title:title, intro:intro, admin:<?php echo $userId; ?>, logo:logo};
+
+                for (var prop in fields) {
+                    formdata.append(prop, fields[prop]);
+                }
+                var ajax = new XMLHttpRequest();
+
+                ajax.addEventListener("load", function(){
+                    response = this.responseText;
                     try{
-                        ret = JSON.parse(data);
+                        ret = JSON.parse(response);
                         if(ret.status){
                             //User done
                             //create successfully(Giving notification and closing the modal);
-                            $("#addStatus").html("<p class='uk-text-success'>Member added successfully!</p>");
+                            $("#addStatus").html("<p class='uk-text-success'>Forum added successfully!</p>");
                             
                             setTimeout(function(){
                                 UIkit.modal($("#add_member_modal")).hide();
-                                window.location = 'members.php';
-                            }, 5000);
+                                location.reload();
+                            }, 3000);
                         }
                     }catch(e){
                         alert("error"+e)
                     }
-                })
+
+                }, false);
+
+                ajax.open("POST", "api/index.php");
+                ajax.send(formdata);
             }else{
                 alert("Provide user details")
             }

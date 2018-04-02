@@ -316,7 +316,7 @@
 
                                 <div class="">
                                     <h4>Logo</h4>
-                                    <input type="file" id="input-church-logo" style="max-width: 200px" data-height="100" data-height="100" class="dropify" data-allowed-file-extensions="png jpg" required="required"/>
+                                    <input type="file" id="input-church-logo" class="dropify" style="max-width: 200px" data-height="100" data-height="100" class="dropify" data-allowed-file-extensions="png jpg" required="required"/>
                                     <span class="md-input-bar ">
                                 </div>
                                 <div class="md-input-wrapper">

@@ -490,6 +490,40 @@
             $posts[] = $data;
         }
         $response = $posts;
+    }else if($action ==  'create_forum'){
+        //creating forum
+        $title = $request['title']??"";
+        $admin = $request['admin']??"";
+        $intro = $request['intro']??"";
+
+        $pic = $_FILES['logo'];
+
+        //checking file image
+        $ext = strtolower(pathinfo($pic['name'], PATHINFO_EXTENSION)); //extensin
+
+
+        if( ($ext == 'png' || $ext == 'jpg') ){
+            $filename = "gallery/church/$title"."_".time().".$ext";
+
+            if(move_uploaded_file($pic['tmp_name'], "../$filename")){
+                //Creating forum
+                $sql = "INSERT INTO forums(forumtitle, admin, intro, logo) VALUES(\"$title\", \"$admin\", \"$intro\", \"$filename\") ";
+                $insert = $conn->query($sql);
+
+                if($insert){
+                    $response = array('status'=>true, 'msg'=>"Created");
+                }else{
+                    $response = array('status'=>false, 'msg'=>"Can't create: $conn->error");
+                }
+
+                $response = array('status'=>true, 'msg'=>"Success", 'forumId'=>$conn->insert_id);
+
+            }else $response = array('status'=>false, 'msg'=>"Error keeping file on server\nPlease try again".json_encode($_FILES));
+
+        }else{
+            //We dont recognize this file format
+            $response = array('status'=>false, 'msg'=>"Please upload an image png and jpg not $ext");
+        }
     }else{
     	$response = array('status'=>false, 'msg'=>"Provide action - $action");
     }
