@@ -36,8 +36,9 @@
                             <li class="uk-tab-responsive uk-active uk-hidden" aria-haspopup="true" aria-expanded="false"><a>Active</a><div class="uk-dropdown uk-dropdown-small" aria-hidden="true"><ul class="uk-nav uk-nav-dropdown"></ul><div></div></div></li>
                         </ul>
                     </div>
-                    <div style="height: .3vh">
-                        <input type="text" placeholder="Sender Name" name="senderName" id="senderName" class="md-input label-fixed" value="<?php echo(churchSMSname($churchID)); ?>">
+
+                    <div class="md-input-wrapper sms-elem uk-width-medium-1-4" id="smsNameField">
+                        <input type="text" placeholder="Sender Name" name="senderName" id="senderName" value="<?php echo(churchSMSname($churchID)); ?>" class="md-input label-fixed" />
                         <span class="md-input-bar "></span>
                     </div>
 
