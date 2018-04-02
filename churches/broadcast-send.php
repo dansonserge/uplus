@@ -4,6 +4,7 @@
     include 'functions.php';
     include_once "class.user.php";
     include_once "class.sms.php";
+    include_once "head.php";
 ?>
 <div class="uk-grid uk-grid-medium" data-cont="send" id="page" data-uk-grid-margin>
     <div class="uk-width-large-2-4">
