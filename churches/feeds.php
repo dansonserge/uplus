@@ -43,14 +43,49 @@
                         <div class="uk-margin-bottom uk-row-first">
                             <div class="md-card">
                                 <div class="md-card-content">
-                                    <div class="uk-form-row">
-                                       <textarea cols="30" rows="4" class="md-input feeds-textarea" placeholder="Something to tell the church?"></textarea>
-                                       <div class="feeds-toolbar">
-                                       		<button class="md-btn md-btn-primary"><i class="material-icons">add</i></button>
-                                       		<button class="md-btn md-btn-primary"><i class="material-icons">add</i></button>
-                                       </div>
-                                    </div>
-                                    
+                                	<form>
+	                                    <div class="uk-form-row">
+	                                       <textarea cols="30" rows="4" class="md-input feeds-textarea" placeholder="Something to tell the church?" required="required"></textarea>
+	                                    </div>
+	                                    <div class="uk-form-row">
+	                                    	<!-- <div class="feeds-toolbar">
+		                                       	<button class="md-btn"><img src="gallery/upload_feed_icon.png"></button>
+		                                       	<div style="position: absolute; right: 2%; bottom: 12%">
+			                                       	<ul class="uk-list" style="list-style: none; display: inline-block; margin-right: 50px">
+			                                       		<li style="list-style: none; display: inline-block;">
+			                                       			<input type="radio" name="postTo" id="public_post" data-md-icheck required/>
+			                                        		<label for="public_post" class="inline-label">Public</label>
+			                                       		</li>
+			                                       		<li style="list-style: none; display: inline-block;">
+			                                       			<input type="radio" name="postTo" id="church_post" data-md-icheck required/>
+			                                        		<label for="church_post" class="inline-label">My church</label>
+			                                       		</li>
+			                                       	</ul>
+			                                       	<button class="md-btn md-btn-primary" type="submit">Post</button>
+			                                    </div>			                                    
+	                                       </div> -->
+	                                       <div class="uk-grid">
+		                                       	<div class="uk-width-1-4">
+		                                       		<button class="md-btn"><img src="gallery/upload_feed_icon.png"></button>
+		                                       	</div>
+											    <div class="uk-width-3-4">
+											    		<div style="position: absolute; right: 2%; bottom: 12%">
+													    	<ul class="uk-list" style="list-style: none; display: inline-block; margin-right: 50px">
+					                                       		<li style="list-style: none; display: inline-block;">
+					                                       			<input type="radio" name="postTo" id="public_post" data-md-icheck required/>
+					                                        		<label for="public_post" class="inline-label">Public</label>
+					                                       		</li>
+					                                       		<li style="list-style: none; display: inline-block;">
+					                                       			<input type="radio" name="postTo" id="church_post" data-md-icheck required/>
+					                                        		<label for="church_post" class="inline-label">My church</label>
+					                                       		</li>
+					                                       	</ul>
+					                                       	<button class="md-btn md-btn-primary" type="submit">Post</button>
+					                                    </div>
+											    </div>
+	                                       </div>
+	                                    </div>
+	                                </form>
                                 </div>
                             </div>
                         </div>
