@@ -97,18 +97,12 @@
                                             <div class="uk-grid" data-uk-grid-margin="">
                                                 <div class="uk-width-medium-1-4">
                                                     <div class="md-input-wrapper md-input-filled">
-                                                        <label>Logo</label>
                                                         <img src="<?php echo $churchlogo; ?>">
-                                                        <input type="text" class="md-input label-fixed" value="<?php echo $churchname ?>">
-                                                        <span class="md-input-bar "></span>
                                                     </div>                                                    
                                                 </div>
                                                 <div class="uk-width-medium-3-4">
                                                     <div class="md-input-wrapper md-input-filled">
-                                                        <label>Church name</label>
                                                         <img src="<?php echo $churchpic; ?>">
-                                                        <input type="text" class="md-input label-fixed" value="<?php echo $churchname ?>">
-                                                        <span class="md-input-bar "></span>
                                                     </div>                                                    
                                                 </div>
                                             </div>
@@ -122,6 +116,11 @@
                                                         <span class="md-input-bar "></span>
                                                     </div>                                                    
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-form-row">
+                                            <div class="md-input-wrapper md-input-filled">
+                                                <!-- <button class="md-btn md-btn-success" type="submit">UPDATE</button> -->
                                             </div>
                                         </div>
                                     </form>
@@ -229,7 +228,7 @@
                                                         <div class="uk-width-medium-1-1">
                                                             <div class="md-input-wrapper md-input-filled">
                                                                 <label>Change password</label>
-                                                                <input type="password" class="md-input label-fixed" value="<?php echo md5(time()*rand(0, 88)) ?>" name="pwd_input" id="password_input">
+                                                                <input type="password" class="md-input label-fixed" placeholder="******************" name="pwd_input" id="password_input">
                                                                 <span class="md-input-bar" name="password"></span>
                                                             </div>                                                    
                                                         </div>
