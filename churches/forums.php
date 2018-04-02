@@ -102,195 +102,48 @@
             <div class="uk-modal" id="add_member_modal" aria-hidden="true" style="display: none; overflow-y: auto;">
                 <div class="uk-modal-dialog" style="top: 339.5px;">
                     <div class="uk-modal-header uk-tile uk-tile-default">
-                        <h3 class="d_inline">New Member</h3>
+                        <h3 class="d_inline">New Forum</h3>
                     </div>
                     <form id="add_member_form">
-                        <div class="md-card">
-                            <div class="md-card-content">
-                                <div class="md-input-wrapper">
-                                    <label>Full Name</label>
-                                    <input type="text" name="membername" id="name_input" class="md-input" required="required">
-                                    <span class="md-input-bar "></span>
-                                </div>
-                                <div class="md-input-wrapper">
-                                    <label>Phone</label>
-                                    <input type="number" name="memberphone" id="phone_input" class="md-input">
-                                    <span class="md-input-bar "></span>
-                                </div>
-                                <div class="md-input-wrapper">
-                                    <label>E-mail</label>
-                                    <input type="email" name="memberemail" id="email_input" class="md-input">
-                                    <span class="md-input-bar "></span>
-                                </div>
-                                <div class="md-input-wrapper">
-                                    <label>Address</label>
-                                    <input type="text" name="memberaddress" id="address_input" class="md-input">
-                                    <span class="md-input-bar "></span>
-                                </div>
-                                <div class="md-input-wrapper">
-                                    <select name="memberlocation" class="md-input" required="required" id="branch_input">
-                                        <option value="">Branch...</option>
-                                        <?php
-                                            //Getting branches
-                                            $branchesQuery = $conn->query(  "SELECT * FROM branches WHERE church = $churchID ") or die("Can't get branches ".$conn->error);
-                                            $branches = array();
-                                            while ($data = $branchesQuery->fetch_assoc()) {
-                                                $branches[] = $data;
-                                                ?>
-                                                    <option value="<?php echo $data['id']; ?>"><?php echo $data['name']; ?></option>
-                                                <?php
-                                            }
-                                        ?>
-                                    </select>
-                                    <span class="md-input-bar "></span>
-                                </div>
-                                <div class="md-input-wrapper">
-                                    <select name="membertype" class="md-input"  required="required" id="type_input">
-                                        <option value="">Type...</option>
-                                        <?php
-                                            //getting types
-                                            $member_types = member_types();
-                                            for($n=0; $n<count($member_types); $n++){
-                                                $mtype = $member_types[$n]['name'];
-                                                ?>
-                                                    <option value="<?php echo $mtype; ?>"><?php echo ucfirst($mtype); ?></option>
-                                                <?php
-                                            } 
-                                        ?>
-                                    </select>
-                                    <span class="md-input-bar "></span>
-                                </div>
-                            </div>                            
+                        <div class="md-input-wrapper">
+                            <label>Forum title</label>
+                            <input type="text" name="membername" id="name_input" class="md-input" required="required">
+                            <span class="md-input-bar "></span>
+                        </div>
+                        <div class="md-input-wrapper">
+                            <!-- <label>Introduction</label> -->
+                            <textarea cols="30" rows="3" class="md-input autosized" placeholder="What's the forum about?" style="overflow-x: hidden; word-wrap: break-word;"></textarea>
+                            <input type="number" name="memberphone" id="phone_input" class="md-input">
+                            <span class="md-input-bar "></span>
                         </div>
                     </form>
                     <div id="addStatus" class="card mt-3" style="margin-top:20px"></div>
 
                     <div class="uk-modal-footer uk-text-right act-dialog" data-role='init'>
                         <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
-                        <button class="md-btn md-btn-success pull-right" id="add_member_btn">Save</button>
+                        <button class="md-btn md-btn-success pull-right" id="add_member_btn">CREATE</button>
                     </div>
 
                     <div class="uk-modal-footer uk-text-right act-dialog display-none" data-role='done'>
-                        <button type="button" class="md-btn md-btn-flat uk-modal-close"><img src="assets/img/rot_loader.gif" style="max-height: 50px"> Adddig member...</button>
+                        <button type="button" class="md-btn md-btn-flat uk-modal-close"><img src="assets/img/rot_loader.gif" style="max-height: 50px"> Creating a forum...</button>
                     </div>
 
-                </div>
-            </div>
-            <!-- head count modal -->
-            <div class="uk-modal" id="head_counts_modal" aria-hidden="true" style="display: none; overflow-y: auto;">
-                <div class="uk-modal-dialog" style="top: 339.5px;">
-                    <div class="uk-modal-header uk-tile uk-tile-default">
-                        <h3 class="d_inline">Enter head counts</h3>
-                    </div>
-                    <form method="POST" id="head_counts_form">
-                        <div class="md-card">
-                            <div class="md-card-content">
-                                <div class="md-input-wrapper">
-                                    <select name="service" class="md-input" required="required" id="service-input">
-                                        <option value="">Service...</option>
-                                        <?php
-                                            //Getting branches
-                                            for ($n=0; $n<count($church_services); $n++) {
-                                                $service = $church_services[$n];
-                                                ?>
-                                                    <option value="<?php echo $service['id']; ?>"><?php echo $service['name']; ?></option>
-                                                <?php
-                                            }
-                                        ?>
-                                    </select>
-                                    <span class="md-input-bar "></span>
-                                </div>
-                                <div class="md-input-wrapper">
-                                    <select name="service" class="md-input" id="branch-input">
-                                        <option value="">Branch...</option>
-                                        <?php
-                                            //Getting branches
-                                            $branches = church_branches($churchID);
-                                            for ($n=0; $n<count($branches); $n++) {
-                                                $branch = $branches[$n];
-                                                ?>
-                                                    <option value="<?php echo $branch['id']; ?>"><?php echo $branch['name']; ?></option>
-                                                <?php
-                                            }
-                                        ?>
-                                    </select>
-                                    <span class="md-input-bar "></span>
-                                </div>
-                                <div class="md-input-wrapper">
-                                    <label>Date</label>
-                                    <input type="text" name="date" class="md-input" id="date-input" data-uk-datepicker="{format:'YYYY-MM-DD', minDate: '2017-01-01'}>
-                                    <span class="md-input-bar "></span>
-                                </div>
-                                <div class="md-input-wrapper">
-                                    <label>Number</label>
-                                    <input type="number" name="membername" id="number-input" class="md-input" required="required">
-                                    <span class="md-input-bar "></span>
-                                </div>
-                            </div>                            
-                        </div>
-                        <div class="uk-modal-footer uk-text-right">
-                            <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
-                            <button class="md-btn md-btn-success pull-right">Record</button>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
-            <div class="uk-modal" id="modal_upload_members" aria-hidden="true" style="display: none; overflow-y: auto;">
-                <div class="uk-modal-dialog" style="top: 339.5px;">
-                    <div class="uk-modal-header uk-tile uk-tile-default">
-                        <h3 class="d_inline">Batch members upload</h3>
-                    </div>
-                    <form id="memExport" method="POST" enctype="multipart/form-data">
-                        <div class="md-card">
-                            <div class="md-card-content">
-                                <div class="md-input-wrapper">
-                                    <label>Choose Excel file of members you want to export</label>
-                                    <!-- <div class="dropify-wrapper">
-                                        <div class="dropify-message">
-                                            <span class="file-icon"></span> <p>Drag and drop a file here or click</p>
-                                            <p class="dropify-error">Ooops, something wrong appended.</p>
-                                        </div>
-                                        <div class="dropify-loader"></div>
-                                        <div class="dropify-errors-container">
-                                            <ul></ul>
-                                        </div>
-                                        <input name = "file1" type="file" data-allowed-file-extensions="xls xlsx" id="file1" class="dropify">
-                                        <button type="button" class="dropify-clear">Remove</button>
-                                        <div class="dropify-preview">
-                                            <span class="dropify-render"></span>
-                                            <div class="dropify-infos">
-                                                <div class="dropify-infos-inner"><p class="dropify-filename"><span class="file-icon"></span> <span class="dropify-filename-inner"></span></p><p class="dropify-infos-message">Drag and drop or click to replace</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> -->
-                                    <input type="file" id="file1" class="dropify" data-allowed-file-extensions="xls xlsx"/>
-                                    <span class="md-input-bar "></span>
-                                </div>                                            
-                                <input type="hidden" name="action" value="export_members">
-                                <input type="hidden" name="church" value="<?php echo $churchID; ?>">
-                                <input type="hidden" name="user" value="<?php echo $userId; ?>">                       
-                            </div>
-                        </div>
-                        <div class="uk-modal-footer uk-text-right">
-                            <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
-                            <button type="submit" class="md-btn md-btn-success pull-right">Save</button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
+    <div class="md-fab-wrapper">
+        <button class="md-fab md-fab-primary" href="javascript:void(0)" data-uk-modal="{target:'#add_member_modal'}"><i class="material-icons">add</i></button>
+    </div>
 
-    <div class="md-fab-wrapper md-fab-speed-dial-horizontal">
+    <!-- <div class="md-fab-wrapper md-fab-speed-dial-horizontal">
         <a class="md-fab md-fab-primary" href="javascript:void(0)"><i class="material-icons">add</i><i class="material-icons md-fab-action-close" style="display:none"></i></a>
         <div class="md-fab-wrapper-small">
             <button class="md-fab md-fab-small md-fab-warning d_inline" href="javascript:void(0)" data-uk-modal="{target:'#add_member_modal'}"><i class="material-icons">person_add</i></button>
             <a class="md-fab md-fab-small md-fab-danger d_inline" href="javascript:void(0)" data-uk-modal="{target:'#modal_upload_members'}"><i class="material-icons">file_upload</i></a>
             <a class="md-fab md-fab-small md-fab-success d_inline" href="javascript:void(0)" data-uk-modal="{target:'#head_counts_modal'}"><i class="material-icons">account_circle</i></a>
         </div>
-    </div>
+    </div> -->
 
     <!-- jQuery -->
     <script type="text/javascript" src="js/jquery.js"></script>
