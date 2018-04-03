@@ -66,7 +66,10 @@
 	                                       </div> -->
 	                                       <div class="uk-grid">
 		                                       	<div class="uk-width-1-4">
-		                                       		<button class="md-btn"><img src="gallery/upload_feed_icon.png"></button>
+		                                       		<div class="uk-form-file md-btn">
+		                                       			<img src="gallery/upload_feed_icon.png">
+						                                <input id="form-file" type="file">
+						                            </div>
 		                                       	</div>
 											    <div class="uk-width-3-4">
 											    		<div style="position: absolute; right: 2%; bottom: 12%">
@@ -189,6 +192,8 @@
     <script src="assets/js/altair_admin_common.min.js"></script>
 
     <!-- page specific plugins -->
+    <!--  forms_file_upload functions -->
+    <script src="assets/js/pages/forms_file_upload.min.js"></script>
 
     <!--  dashbord functions -->
 
@@ -214,6 +219,10 @@
 
         	if(!conf)
         		return false;
+
+
+        	//disabling submit button
+            $("#submit_feed").attr('disabled', 'disabled')
 
         	//we can save now
         	var formdata = new FormData();
@@ -275,9 +284,6 @@
 
             if(pname && pintro){
                 //Here we can upload
-
-                //disabling submit button
-                $("#upload-podcast-btn").attr('disabled', 'disabled')
 
                 var formdata = new FormData();
 

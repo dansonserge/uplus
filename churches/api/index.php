@@ -528,8 +528,7 @@
         //post feeds
         $userId = $request['user']??"";
         $post_content = $request['content']??"";
-
-        print_r($request);
+        
         // $attachments = 
 
         //if there targeted church
