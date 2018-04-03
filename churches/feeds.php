@@ -43,9 +43,9 @@
                         <div class="uk-margin-bottom uk-row-first">
                             <div class="md-card">
                                 <div class="md-card-content">
-                                	<form>
+                                	<form id="feed_create_form">
 	                                    <div class="uk-form-row">
-	                                       <textarea cols="30" rows="4" class="md-input feeds-textarea" placeholder="Something to tell the church?" required="required"></textarea>
+	                                       <textarea cols="30" rows="4" class="md-input feeds-textarea" id="post_content" placeholder="Something to tell the church?" required="required"></textarea>
 	                                    </div>
 	                                    <div class="uk-form-row">
 	                                    	<!-- <div class="feeds-toolbar">
@@ -72,15 +72,15 @@
 											    		<div style="position: absolute; right: 2%; bottom: 12%">
 													    	<ul class="uk-list" style="list-style: none; display: inline-block; margin-right: 50px">
 					                                       		<li style="list-style: none; display: inline-block;">
-					                                       			<input type="radio" name="postTo" id="public_post" data-md-icheck required/>
+					                                       			<input type="radio" name="postTo" id="public_post" value="0" data-md-icheck required/>
 					                                        		<label for="public_post" class="inline-label">Public</label>
 					                                       		</li>
 					                                       		<li style="list-style: none; display: inline-block;">
-					                                       			<input type="radio" name="postTo" id="church_post" data-md-icheck required/>
+					                                       			<input type="radio" name="postTo" id="church_post" value="<?php echo $churchID ?>" data-md-icheck required/>
 					                                        		<label for="church_post" class="inline-label">My church</label>
 					                                       		</li>
 					                                       	</ul>
-					                                       	<button class="md-btn md-btn-primary" type="submit">Post</button>
+					                                       	<button class="md-btn md-btn-primary" id="submit_feed" type="submit">Post</button>
 					                                    </div>
 											    </div>
 	                                       </div>
@@ -203,6 +203,36 @@
                 'default': 'Drag and drop a podcast here or click',
             }
         });
+
+
+        $("#feed_create_form").on('submit', function(e){
+        	e.preventDefault();
+
+        	//ask for confirmation
+        	conf = confirm("Do you want to post?");
+
+
+        	if(!conf)
+        		return false;
+
+        	//we can save now
+        	var formdata = new FormData();
+            var ajax = new XMLHttpRequest();
+
+            var post_content = $("#post_content").val();
+            var postTo = $("input[name='postTo']").val();
+
+            if(post_content && postTo){
+
+            }
+
+            formdata.append('action', 'add_podcast');
+            formdata.append('content', post_content);
+            formdata.append('action', 'add_podcast');
+
+            ajax.open("POST", "api/index.php");            
+            ajax.send(formdata);
+        })
 
         // $("#file_add_form").on('submit', function(e){
         //     //Adding podcasts

@@ -24,7 +24,7 @@
     <div id="page_content">
         <div id="page_content_inner">
             <div class="heading_a uk-grid uk-margin-bottom uk-grid-width-large-1-2">
-                <div class="uk-row-first"><h4 class="">All members</h4></div>
+                <div class="uk-row-first"><h4 class="">Members</h4></div>
             </div>
 
             <div class=" uk-grid uk-margin-bottom uk-grid-medium" data-uk-grid-margin>   
@@ -32,21 +32,55 @@
                     <div class="md-card">
                         <div class="md-card-content">
                             <div class=" uk-grid">
-                                <div class="uk-width-3-4">
-                                    <h4 class="heading_c uk-margin-bottom">Members attendance Analysis</h4>
+                                <div class="uk-width-1-6">
+                                    <h4 class="heading_c uk-margin-bottom">Church Growth</h4>
                                 </div>
-                                <div class="uk-width-1-4">
+                                <div class="uk-width-1-6">
                                     <form class="-form">
                                         <div class="uk--select"  data-uk-form-select>
                                             <select id="selectChart" class="md-input">
-                                                <option value="service">Service</option>
-                                                <option value="gender">Gender</option>
-                                                <option value="days">Days</option>
-                                                <option value="time">Time interval</option>
+                                                <option value="service">-- Any Service --</option>
+                                                <option value="gender">1st Service</option>
+                                                <option value="days">2nd Service</option>
+                                                <option value="time">3rd Service</option>
                                             </select>
                                         </div>
                                     </form>
                                 </div>
+                                <div class="uk-width-1-6">
+                                    <form class="-form">
+                                        <div class="uk--select"  data-uk-form-select>
+                                            <select id="selectChart" class="md-input">
+                                                <option value="service">-- Gender --</option>
+                                                <option value="gender">Male</option>
+                                                <option value="days">Female</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="uk-width-1-6">
+                                    <form class="-form">
+                                        <div class="md-input-wrapper">
+                                                <label>From</label>
+                                                <input type="text" name="date" class="md-input" id="date-input" data-uk-datepicker="{format:'YYYY-MM-DD', minDate: '2017-01-01'}>
+                                                <span class="md-input-bar "></span>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="uk-width-2-6">
+                                    <form class="-form">
+                                        <div class="uk-input-group">
+                            
+                      
+                                        <div class="md-input-wrapper">
+                                                <label>To</label>
+                                                <input type="text" name="date" class="md-input" id="date-input" data-uk-datepicker="{format:'YYYY-MM-DD', minDate: '2017-01-01'}>
+                                                <span class="md-input-bar "></span>
+                                        </div>
+                                        <span class="uk-input-group-addon"><a class="md-btn" href="#">Generate</a></span>  </div>
+                                    </form>
+                                </div>
+                                
                             </div>
                             
                             
