@@ -528,15 +528,31 @@
         //post feeds
         $userId = $request['user']??"";
         $post_content = $request['content']??"";
+
+        print_r($request);
         // $attachments = 
-        $target_audience = $request['audience']??null;
+
+        //if there targeted church
+        $target_audience = $request['church']??null;
+
+        //type of the post
+        $type = $request['type']??"";
 
         //the type of person who posted - admin or member if empty it'll be elisaa app
         $userType = $request['userType']??'member';
 
-        
+        if($userType == 'admin'){
+            $query = $conn->query("INSERT INTO posts(content, postedBy, type, postChurchAdmin, targetChurch) VALUES(\"$post_content\", 'admin', \"$type\", \"$userId\", \"$target_audience\") ");
+        }else{
+            $query = $conn->query("INSERT INTO posts(content, postedBy, type, postMemberId, targetChurch) VALUES(\"$post_content\", 'member', \"$type\", \"$userId\", \"$target_audience\") ");
+        }
 
 
+        if($query){
+            $response = array('status'=>true, 'msg'=>array('postId'=>$conn->insert_id));
+        }else{
+            $response = array('status'=>false, 'msg'=>"Error $conn->error");   
+        }
     }else{
     	$response = array('status'=>false, 'msg'=>"Provide action - $action");
     }

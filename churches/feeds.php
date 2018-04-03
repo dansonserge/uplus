@@ -72,7 +72,7 @@
 											    		<div style="position: absolute; right: 2%; bottom: 12%">
 													    	<ul class="uk-list" style="list-style: none; display: inline-block; margin-right: 50px">
 					                                       		<li style="list-style: none; display: inline-block;">
-					                                       			<input type="radio" name="postTo" id="public_post" value="0" data-md-icheck required/>
+					                                       			<input type="radio" name="postTo" id="public_post" value="<?php echo $churchID; ?>" data-md-icheck required/>
 					                                        		<label for="public_post" class="inline-label">Public</label>
 					                                       		</li>
 					                                       		<li style="list-style: none; display: inline-block;">
@@ -223,15 +223,20 @@
             var postTo = $("input[name='postTo']").val();
 
             if(post_content && postTo){
+            	formdata.append('action', 'create_post');
+	            formdata.append('content', post_content);
+	            formdata.append('user', <?php echo $userId; ?>);
+	            formdata.append('church', postTo);
+	            formdata.append('userType', 'admin');
+	            formdata.append('platform', 'web');
 
+	            ajax.open("POST", "api/index.php");            
+	            ajax.send(formdata);
+            }else{
+            	alert("Specify details")
             }
 
-            formdata.append('action', 'add_podcast');
-            formdata.append('content', post_content);
-            formdata.append('action', 'add_podcast');
-
-            ajax.open("POST", "api/index.php");            
-            ajax.send(formdata);
+            
         })
 
         // $("#file_add_form").on('submit', function(e){
