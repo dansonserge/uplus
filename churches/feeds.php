@@ -9,40 +9,6 @@
     ?>
     <!-- dropify -->
     <link rel="stylesheet" href="assets/skins/dropify/css/dropify.css">
-
-    <!-- Filepond -->
-    <link rel="stylesheet" href="assets/css/filepond.css">
-    <!-- Imag epreview filepond -->
-    <!-- <link rel="stylesheet" href="assets/css/filepond-plugin-image-preview.css"> -->
-
-    <style type="text/css">
-        /**
-     * FilePond Custom Styles
-     */
-    .filepond--drop-label {
-      color: #4c4e53;
-    }
-
-    .filepond--label-action {
-      -webkit-text-decoration-color: #babdc0;
-              text-decoration-color: #babdc0;
-    }
-
-    .filepond--panel-root {
-      border-radius: 2em;
-      background-color: #edf0f4;
-      height: 1em;
-    }
-
-    .filepond--item-panel {
-      background-color: #595e68;
-    }
-
-    .filepond--drip-blob {
-      background-color: #7f8a9a;
-    }
-    </style>
-
 </head>
 <body class="disable_transitions sidebar_main_open sidebar_main_swipe">
     <!-- main header -->
