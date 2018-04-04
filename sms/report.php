@@ -81,7 +81,7 @@
 		<?php
 			include 'db.php';
 
-			$sql = $db->query("SELECT * FROM smsreport WHERE status = 'Undeliverd'");
+			$sql = $db->query("SELECT * FROM smsreport WHERE status = 'Unsent'");
 			$n=0;
 			$data= array();
 			while ($row = mysqli_fetch_array($sql)) 
