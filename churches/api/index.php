@@ -552,8 +552,23 @@
         }else{
             $response = array('status'=>false, 'msg'=>"Error $conn->error");   
         }
+    }else if($action == "upload_feed_attachment"){
+        //uploading the file for attachments
+        $pic = $_FILES['filepond'];
+        $attachment = $_FILES['filepond'];
+        $sent_file_name = $attachment['name'];
+        $ext = strtolower(pathinfo($sent_file_name, PATHINFO_EXTENSION)); //extension
+
+        $allowed_extensions = array('preventerrorsguys_dont remove please', 'jpg', 'png', 'mp3', 'aac', 'mp4');
+
+        if(array_search($ext, $allowed_extensions)){
+            //we can now upload
+        }else{
+            $response = array('status'=>false, 'msg'=>"Invalid file type");
+        }
     }else{
     	$response = array('status'=>false, 'msg'=>"Provide action - $action");
+
     }
 
     echo json_encode($response);

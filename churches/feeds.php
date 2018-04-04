@@ -13,7 +13,35 @@
     <!-- Filepond -->
     <link rel="stylesheet" href="assets/css/filepond.css">
     <!-- Imag epreview filepond -->
-    <link rel="stylesheet" href="assets/css/filepond-plugin-image-preview.css">
+    <!-- <link rel="stylesheet" href="assets/css/filepond-plugin-image-preview.css"> -->
+
+    <style type="text/css">
+        /**
+     * FilePond Custom Styles
+     */
+    .filepond--drop-label {
+      color: #4c4e53;
+    }
+
+    .filepond--label-action {
+      -webkit-text-decoration-color: #babdc0;
+              text-decoration-color: #babdc0;
+    }
+
+    .filepond--panel-root {
+      border-radius: 2em;
+      background-color: #edf0f4;
+      height: 1em;
+    }
+
+    .filepond--item-panel {
+      background-color: #595e68;
+    }
+
+    .filepond--drip-blob {
+      background-color: #7f8a9a;
+    }
+    </style>
 
 </head>
 <body class="disable_transitions sidebar_main_open sidebar_main_swipe">
@@ -53,29 +81,12 @@
 	                                       <textarea cols="30" rows="4" class="md-input feeds-textarea" id="post_content" placeholder="Something to tell the church?" required="required"></textarea>
 	                                    </div>
 	                                    <div class="uk-form-row">
-	                                    	<!-- <div class="feeds-toolbar">
-		                                       	<button class="md-btn"><img src="gallery/upload_feed_icon.png"></button>
-		                                       	<div style="position: absolute; right: 2%; bottom: 12%">
-			                                       	<ul class="uk-list" style="list-style: none; display: inline-block; margin-right: 50px">
-			                                       		<li style="list-style: none; display: inline-block;">
-			                                       			<input type="radio" name="postTo" id="public_post" data-md-icheck required/>
-			                                        		<label for="public_post" class="inline-label">Public</label>
-			                                       		</li>
-			                                       		<li style="list-style: none; display: inline-block;">
-			                                       			<input type="radio" name="postTo" id="church_post" data-md-icheck required/>
-			                                        		<label for="church_post" class="inline-label">My church</label>
-			                                       		</li>
-			                                       	</ul>
-			                                       	<button class="md-btn md-btn-primary" type="submit">Post</button>
-			                                    </div>			                                    
-	                                       </div> -->
 	                                       <div class="uk-grid">
 		                                       	<div class="uk-width-1-4">
-		                                       		<!-- <div class="uk-form-file md-btn" style="box-shadow: 0 1px 3px rgba(0, 0, 0, 0), 0 1px 2px rgba(0, 0, 0, 0);">
+		                                       		<div class="uk-form-file md-btn" style="box-shadow: 0 1px 3px rgba(0, 0, 0, 0), 0 1px 2px rgba(0, 0, 0, 0);">
 		                                       			<img src="gallery/upload_feed_icon.png">
 						                                <input id="form-file" type="file">
-						                            </div> -->
-                                                    <input type="file" id="uploadMediaInput" name="filepond" multiple data-max-file-size="102MB" data-max-files="3">
+						                            </div>
 		                                       	</div>
 											    <div class="uk-width-3-4">
 											    		<div style="position: absolute; right: 2%; bottom: 12%">
@@ -225,15 +236,21 @@
 
         // Filepond for feeds attachment upload
         const inputElement = document.querySelector('#uploadMediaInput');
-        const pond = FilePond.create( inputElement );
+        const pond = FilePond.create(
+            inputElement,
+            {
+                labelIdle: `Drag & Drop your feed attachment or <span class="filepond--label-action">Browse</span>`,
+            }
+            );
 
         FilePond.setOptions({
-            server: 'uploadTest.php'
+            server: 'api/index.php?action=upload_feed_attachment',
+
         });
 
         FilePond.registerPlugin(    
             // encodes the file as base64 data
-          FilePondPluginFileEncode,
+            FilePondPluginFileEncode,
             
             // validates the size of the file
             FilePondPluginFileValidateSize,
