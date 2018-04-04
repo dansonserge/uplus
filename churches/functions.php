@@ -405,7 +405,6 @@
       global $churchID;
 
       $smsName = !empty( churchSMSname($churchID) )?churchSMSname($churchID):"Uplus";
-      return false;
 
       $data = array(
           "sender"        =>$smsName,
