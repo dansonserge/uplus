@@ -299,7 +299,7 @@
         }else{
             $response = array('status'=>false, 'message'=>'fillin all the details');
         }
-    }elseif($action == "add_event"){
+    }else if($action == "add_event"){
         //creating church event
         $name  = $request['name']??"";
         $church = $request['church']??"";
@@ -355,7 +355,7 @@
         }else{
             $response = array('status'=>false, 'message'=>'fillin all the details');
         }
-    }elseif($action == "add_podcast"){
+    }else if($action == "add_podcast"){
         //adding podcast
         $name  = $request['name']??"";
         $church = $request['church']??"";
@@ -404,7 +404,7 @@
         }else{
             $response = array('status'=>false, 'message'=>'fillin all the details');
         }
-    }elseif($action == "delete_podcast"){
+    }else if($action == "delete_podcast"){
         //adding podcast
         $podcast_id = $request['podcast']??"";
 
@@ -419,7 +419,7 @@
         }else{
             $response = array('status'=>false, 'message'=>'fillin all the details');
         }
-    }elseif($action == "listBaskets"){
+    }else if($action == "listBaskets"){
         //listing the baskets
         $church = $request['church']??"";
         $query = $conn->query("SELECT * FROM service WHERE church = \"$church\" ");
@@ -432,7 +432,7 @@
         }else{
           $response = array('status'=>false, 'msg'=>"Error: $conn->error");  
         }
-    }elseif($action == "addDonation"){
+    }else if($action == "addDonation"){
         //adding donation
         $church = $request['church']??"";
         $branch = $request['branch']??"";
@@ -448,7 +448,7 @@
         }else{
             $response = array('status'=>false, 'msg'=>"Error: $conn->error"); 
         }
-    }elseif($action == "record_headcount"){
+    }else if($action == "record_headcount"){
         //head counts recording
         $church = $request['church']??"";
         $service = $request['service']??"";
@@ -470,7 +470,7 @@
         }else{
             $response = array('status'=>false, 'msg'=>"Provide all the details");
         }
-    }elseif($action == 'list_forums'){
+    }else if($action == 'list_forums'){
         //listing forums
         $query = $conn->query("SELECT * FROM forums")or die(mysqli_error($conn));
         $forums = array();
@@ -480,7 +480,7 @@
         }
         header('Content-Type: application/json');
         echo json_encode($forums);
-    }elseif($action == 'list_feeds'){
+    }else if($action == 'list_feeds'){
         //listing FEEDS - all feeds
         //TODO: pagination
         $query = $conn->query("SELECT * FROM posts ORDER BY postedDate")or die(mysqli_error($conn));
