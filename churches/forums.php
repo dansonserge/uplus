@@ -67,12 +67,12 @@
                                                         $forum_logo = $_FILES['forum_logo'];
 
                                                         if($forum_logo['size']>10){
+
                                                             $ext = strtolower(pathinfo($forum_logo['name'], PATHINFO_EXTENSION)); //extensin
 
                                                             if($ext == 'png' || $ext == 'jpg'){
                                                                 $filename = "gallery/church/".strtolower(clean_string($title))."_".time().".$ext";
-
-                                                                if(!move_uploaded_file($pic['tmp_name'], "$filename")){
+                                                                if(!move_uploaded_file($forum_logo['tmp_name'], "$filename")){
                                                                     trigger_error("Error uploading the file");
                                                                     $filename = $forum_logo;
                                                                 }
