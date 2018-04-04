@@ -162,6 +162,14 @@
       return $posts;
     }
 
+    function getForum($forumId){
+      //returns forum data
+      global $conn;
+      $query = $conn->query("SELECT * FROM forums WHERE id = \"$forumId\" ") or trigger_error($conn->error);
+
+      return $query->fetch_assoc();
+    }
+
     function group_members($group){
       //members details
       global $conn;

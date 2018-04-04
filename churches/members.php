@@ -486,7 +486,6 @@
                 $.post('api/index.php', {action:'add_member', church:<?php echo $churchID; ?>, name:name, phone:phone, email:email, address:address, branch:branch, type:type}, function(data){
                     try{
                         if(typeof(data) != "object"){
-                            alert("Not JSON")
                             ret = JSON.parse(data);
                         }else{
                             ret = data;

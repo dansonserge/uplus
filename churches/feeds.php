@@ -85,10 +85,25 @@
 		                                       	<div class="uk-width-1-4">
 		                                       		<div class="uk-form-file md-btn" style="box-shadow: 0 1px 3px rgba(0, 0, 0, 0), 0 1px 2px rgba(0, 0, 0, 0);">
 		                                       			<img src="gallery/upload_feed_icon.png">
-						                                <input id="form-file" type="file">
+						                                <input id="feeds_attachment_input" type="file">
 						                            </div>
 		                                       	</div>
-											    <div class="uk-width-3-4">
+                                                <div class="uk-width-1-2">
+                                                    <div class="feed-thumbnail-upload">
+                                                        <div class='thumb-title'>Here <i class="material-icons" style="cursor: pointer;">close</i></div>
+                                                        <div class="thumb-content"></div>
+                                                        <div class="thumb-toolbar">
+                                                            <div class="uk-progress uk-progress-medium uk-progress-success uk-progress-striped uk-active">
+                                                                <div class="uk-progress-bar" style="width: 0%;">0%</div>
+                                                            </div>
+                                                            <div class="uk-grid">
+                                                                <div class="uploaded-size"> 0MB</div>
+                                                                <div class="total-size"> 100mb</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+											    <div class="uk-width-1-4">
 										    		<div style="position: absolute; right: 2%; bottom: 12%">
 												    	<ul class="uk-list" style="list-style: none; display: inline-block; margin-right: 50px">
 				                                       		<li style="list-style: none; display: inline-block;">
@@ -270,6 +285,25 @@
             }
         });
 
+        $("#feeds_attachment_input").on('change', function(data){
+            uploaded = document.querySelector("#feeds_attachment_input").files[0];
+            // log(uploaded);
+
+            filename = uploaded.name
+            file_size = uploaded.size
+
+            //here we want to check the extension
+            ext = filename.substr(-3).toLowerCase();
+
+            allowed_extensions = ['png', 'jpg', 'mp3', 'aac', 'mp4'];
+            if(allowed_extensions.indexOf(ext)>-1){
+                //file is allowed
+                //create an elemt thumbnail for file
+            }else{
+                alert("File of "+ext+ " type not allowed")
+            }
+        })
+
         $("#feed_create_form").on('submit', function(e){
         	e.preventDefault();
 
@@ -419,6 +453,10 @@
             // ie fixes
             altair_helpers.ie_fix();
         });
+
+        function log(data){
+            console.log(data);
+        }
     </script>
 </body>
 </html>

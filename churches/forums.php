@@ -20,121 +20,186 @@
         include_once "sidebar.php";
         $church_services = church_services($churchID);
 
-
-    ?>
-
-    <div id="page_content">
-        <div id="page_content_inner">
-            <div class="heading_a uk-grid uk-margin-bottom uk-grid-width-large-1-2">
-                <div class="uk-row-first"><h4 class="">All forums</h4></div>
-            </div>
-
-            <div class=" uk-grid uk-margin-bottom uk-grid-medium" data-uk-grid-margin>   
-                <div class="uk-width-large-4-4">
-                    <!-- <div class="md-card">
-                        <div class="md-card-content">
-                            <div class=" uk-grid">
-                                <div class="uk-width-3-4">
-                                    <h4 class="heading_c uk-margin-bottom">Forums engagement</h4>
-                                </div>
-                                <div class="uk-width-1-4">
-                                    <form class="-form">
-                                        <div class="uk--select"  data-uk-form-select>
-                                            <select id="selectChart" class="md-input">
-                                                <option value="service">Service</option>
-                                                <option value="gender">Gender</option>
-                                                <option value="days">Days</option>
-                                                <option value="time">Time interval</option>
-                                            </select>
+        //
+        $forum = $_GET['id']??"";
+        if(!empty($forum)){
+            $forumData = getForum($forum);
+            $forum_title = $forumData['forumtitle']??"";
+            ?>
+                <div id="page_content">
+                    <div id="page_content_inner">
+                        <form action="#" class="uk-form-stacked" id="user_edit_form">
+                            <div class="uk-grid" data-uk-grid-margin>
+                                <div class="uk-width-large-7-10">
+                                    <div class="md-card">
+                                        <div class="user_heading" data-uk-sticky="{ top: 48, media: 960 }">
+                                            <div class="user_heading_avatar fileinput fileinput-new" data-provides="fileinput">
+                                                <div class="fileinput-new thumbnail">
+                                                    <img src="<?php echo $forumData['logo']; ?>" alt="user avatar"/>
+                                                </div>
+                                                <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                                <div class="user_avatar_controls">
+                                                    <span class="btn-file">
+                                                        <span class="fileinput-new"><i class="material-icons">&#xE2C6;</i></span>
+                                                        <span class="fileinput-exists"><i class="material-icons">&#xE86A;</i></span>
+                                                        <input type="file" name="user_edit_avatar_control" id="user_edit_avatar_control">
+                                                    </span>
+                                                    <a href="#" class="btn-file fileinput-exists" data-dismiss="fileinput"><i class="material-icons">&#xE5CD;</i></a>
+                                                </div>
+                                            </div>
+                                            <div class="user_heading_content">
+                                                <h2 class="heading_b"><span class="uk-text-truncate" id="user_edit_uname"><?php echo $forum_title; ?></span><span class="sub-heading" id="user_edit_position">Started <?php echo $forumData['addedDate']; ?></span></h2>
+                                            </div>
+                                            <div class="md-fab-wrapper">
+                                                <div class="md-fab md-fab-toolbar md-fab-small md-fab-accent">
+                                                    <i class="material-icons">&#xE8BE;</i>
+                                                    <div class="md-fab-toolbar-actions">
+                                                        <button type="submit" id="user_edit_save" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'bottom'}" title="Save"><i class="material-icons md-color-white">&#xE161;</i></button>
+                                                        <button type="submit" id="user_edit_print" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'bottom'}" title="Print"><i class="material-icons md-color-white">&#xE555;</i></button>
+                                                        <button type="submit" id="user_edit_delete" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'bottom'}" title="Delete"><i class="material-icons md-color-white">&#xE872;</i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </form>
+                                        <div class="user_content">
+
+                                            Here
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="uk-width-large-3-10">
+                                    <div class="md-card">
+                                        <div class="md-card-content">
+                                            <h3 class="heading_c uk-margin-medium-bottom">Accessibility</h3>
+                                            <div class="uk-form-row">
+                                                <input type="checkbox" checked data-switchery id="user_edit_active" />
+                                                <label for="user_edit_active" class="inline-label">Forum Active</label>
+                                            </div>                                
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            
-                            
-                            <canvas id="mem_attendance" class="attendance" width="400" height="80"></canvas>
-                            <div ></div>
-                        </div>
-                    </div> -->
-                    <div class="md-card">
-                        <div id="status"></div>
-                        <div class="md-card-content">
-                            <div class="dt_colVis_buttons">
+                        </form>
+
+                    </div>
+                </div>
+            <?php
+        }else{
+    ?>
+        <div id="page_content">
+            <div id="page_content_inner">
+                <div class="heading_a uk-grid uk-margin-bottom uk-grid-width-large-1-2">
+                    <div class="uk-row-first"><h4 class="">All forums</h4></div>
+                </div>
+
+                <div class=" uk-grid uk-margin-bottom uk-grid-medium" data-uk-grid-margin>   
+                    <div class="uk-width-large-4-4">
+                        <!-- <div class="md-card">
+                            <div class="md-card-content">
+                                <div class=" uk-grid">
+                                    <div class="uk-width-3-4">
+                                        <h4 class="heading_c uk-margin-bottom">Forums engagement</h4>
+                                    </div>
+                                    <div class="uk-width-1-4">
+                                        <form class="-form">
+                                            <div class="uk--select"  data-uk-form-select>
+                                                <select id="selectChart" class="md-input">
+                                                    <option value="service">Service</option>
+                                                    <option value="gender">Gender</option>
+                                                    <option value="days">Days</option>
+                                                    <option value="time">Time interval</option>
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                
+                                
+                                <canvas id="mem_attendance" class="attendance" width="400" height="80"></canvas>
+                                <div ></div>
                             </div>
-                            <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Forum title</th>
-                                        <th>Created By</th>
-                                        <th>Date created</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php 
-                                    $n=0;
-                                    $sqlGetMembers = $db->query("SELECT * FROM `forums` ORDER BY id DESC")or die ($db->error);
-                                    while($data = mysqli_fetch_array($sqlGetMembers))
-                                        {
-                                            $admin  = staff_details($data['admin']);
-                                            $n++;
-                                            echo '<tr>
-                                            <td>'.$n.'</td>
-                                            <td>'.$data['forumtitle'].'</td>
-                                            <td>'.$admin['name'].'</td>
-                                            <td>'.$data['addedDate'].'</td>
-                                            <td>'.$data['status'].'</td>
-                                            <td><a href="forums.php?id='.$data['id'].'"><i class="material-icons">mode_edit</i></a></td>
-                                            </tr>';
-                                        }
-                                    ?> 
-                                    
-                                </tbody>
-                            </table>
+                        </div> -->
+                        <div class="md-card">
+                            <div id="status"></div>
+                            <div class="md-card-content">
+                                <div class="dt_colVis_buttons">
+                                </div>
+                                <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Forum title</th>
+                                            <th>Created By</th>
+                                            <th>Date created</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                                        $n=0;
+                                        $sqlGetMembers = $db->query("SELECT * FROM `forums` ORDER BY id DESC")or die ($db->error);
+                                        while($data = mysqli_fetch_array($sqlGetMembers))
+                                            {
+                                                $admin  = staff_details($data['admin']);
+                                                $n++;
+                                                echo '<tr>
+                                                <td>'.$n.'</td>
+                                                <td>'.$data['forumtitle'].'</td>
+                                                <td>'.$admin['name'].'</td>
+                                                <td>'.$data['addedDate'].'</td>
+                                                <td>'.$data['status'].'</td>
+                                                <td><a href="forums.php?id='.$data['id'].'"><i class="material-icons">mode_edit</i></a></td>
+                                                </tr>';
+                                            }
+                                        ?> 
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                </div>              
+                    </div>              
+                </div>
             </div>
-        </div>
-        <div class="modals">            
-            <div class="uk-modal" id="add_member_modal" aria-hidden="true" style="display: none; overflow-y: auto;">
-                <div class="uk-modal-dialog" style="top: 339.5px;">
-                    <div class="uk-modal-header uk-tile uk-tile-default">
-                        <h3 class="d_inline">New Forum</h3>
-                    </div>
-                    <form id="create_forum_form">
-                        <div class="md-input-wrapper">
-                            <label>Forum title</label>
-                            <input type="text" name="membername" id="forumtitle_input" class="md-input" required="required">
-                            <span class="md-input-bar "></span>
+            <div class="modals">            
+                <div class="uk-modal" id="add_member_modal" aria-hidden="true" style="display: none; overflow-y: auto;">
+                    <div class="uk-modal-dialog" style="top: 339.5px;">
+                        <div class="uk-modal-header uk-tile uk-tile-default">
+                            <h3 class="d_inline">New Forum</h3>
                         </div>
-                        <div class="md-input-wrapper md-input-filled">
-                            <!-- <label>Introduction</label> -->
-                            <textarea cols="30" rows="3" id="forum_intro" class="md-input autosized" placeholder="What's the forum about?" style="overflow-x: hidden; word-wrap: break-word;"></textarea>
-                            <span class="md-input-bar "></span>
+                        <form id="create_forum_form">
+                            <div class="md-input-wrapper">
+                                <label>Forum title</label>
+                                <input type="text" name="membername" id="forumtitle_input" class="md-input" required="required">
+                                <span class="md-input-bar "></span>
+                            </div>
+                            <div class="md-input-wrapper md-input-filled">
+                                <!-- <label>Introduction</label> -->
+                                <textarea cols="30" rows="3" id="forum_intro" class="md-input autosized" placeholder="What's the forum about?" style="overflow-x: hidden; word-wrap: break-word;"></textarea>
+                                <span class="md-input-bar "></span>
+                            </div>
+                            <div class="md-input-wrapper md-input-filled">
+                                <input type="file" id="input-forum-logo" name="logo" data-height="100" data-height="100" class="dropify" data-allowed-file-extensions="png jpg" required="required"/>
+                                <span class="md-input-bar "></span>
+                            </div>
+                        </form>
+                        <div id="addStatus" class="card mt-3" style="margin-top:20px"></div>
+
+                        <div class="uk-modal-footer uk-text-right act-dialog" data-role='init'>
+                            <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
+                            <button class="md-btn md-btn-success pull-right" id="create_forum_btn">CREATE</button>
                         </div>
-                        <div class="md-input-wrapper md-input-filled">
-                            <input type="file" id="input-forum-logo" name="logo" data-height="100" data-height="100" class="dropify" data-allowed-file-extensions="png jpg" required="required"/>
-                            <span class="md-input-bar "></span>
+
+                        <div class="uk-modal-footer uk-text-right act-dialog display-none" data-role='done'>
+                            <button type="button" class="md-btn md-btn-flat uk-modal-close"><img src="assets/img/rot_loader.gif" style="max-height: 50px"> Creating a forum...</button>
                         </div>
-                    </form>
-                    <div id="addStatus" class="card mt-3" style="margin-top:20px"></div>
 
-                    <div class="uk-modal-footer uk-text-right act-dialog" data-role='init'>
-                        <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
-                        <button class="md-btn md-btn-success pull-right" id="create_forum_btn">CREATE</button>
                     </div>
-
-                    <div class="uk-modal-footer uk-text-right act-dialog display-none" data-role='done'>
-                        <button type="button" class="md-btn md-btn-flat uk-modal-close"><img src="assets/img/rot_loader.gif" style="max-height: 50px"> Creating a forum...</button>
-                    </div>
-
                 </div>
             </div>
         </div>
-    </div>
+    <?php } ?>
     <div class="md-fab-wrapper">
         <button class="md-fab md-fab-primary" href="javascript:void(0)" data-uk-modal="{target:'#add_member_modal'}"><i class="material-icons">add</i></button>
     </div>
@@ -184,13 +249,17 @@
 
     <script type="text/javascript" src="js/Chart.min.js"></script>
 
+    <!-- file input -->
+    <script src="assets/js/custom/uikit_fileinput.min.js"></script>
+
+    <!--  user edit functions -->
+    <script src="assets/js/pages/page_user_edit.min.js"></script>
+
     <script src="js/uploadFile.js"></script>
     <script type="text/javascript">
         var churchID  = <?php echo $churchID; ?>;
         $('.dropify#input-forum-logo').dropify();
         $(".selectize").selectize();
-
-        // $("#input-forum-logo").dropify();
 
         function log(data){
             console.log(data)
