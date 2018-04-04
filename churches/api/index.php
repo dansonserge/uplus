@@ -96,6 +96,7 @@
         if(!empty($name) && !empty($branch) && !empty($type)){
             $sql = "INSERT INTO members(name, phone, email, branchid, address, type, createdDate) VALUES (\"$name\", \"$phone\", \"$email\", \"$branch\", \"$address\", \"$type\", '$date')";
             $query = $db->query($sql);
+            
             if($query){
                 $response = array('status'=>true);
             }else{

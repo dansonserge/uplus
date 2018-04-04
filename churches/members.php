@@ -485,7 +485,13 @@
                 //USer can be submitted
                 $.post('api/index.php', {action:'add_member', church:<?php echo $churchID; ?>, name:name, phone:phone, email:email, address:address, branch:branch, type:type}, function(data){
                     try{
-                        ret = JSON.parse(data);
+                        if(typeof(data) != "object"){
+                            alert("Not JSON")
+                            ret = JSON.parse(data);
+                        }else{
+                            ret = data;
+                        }
+
                         if(ret.status){
                             //User done
                             //create successfully(Giving notification and closing the modal);
@@ -494,7 +500,7 @@
                             setTimeout(function(){
                                 UIkit.modal($("#add_member_modal")).hide();
                                 window.location = 'members.php';
-                            }, 5000);
+                            }, 3000);
                         }
                     }catch(e){
                         alert("error"+e)
