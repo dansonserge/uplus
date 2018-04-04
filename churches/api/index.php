@@ -567,6 +567,17 @@
         }else{
             $response = array('status'=>false, 'msg'=>"Invalid file type");
         }
+    }else if($action == 'archive_forum' ){
+        $forum = $request['forum']??"";
+        $user = $request['user']??""; //someone who is deleting this forum
+        if($forum && $user){
+            $query = $conn->query("UPDATE forums SET status = 'archive', archiveDate = NOW(), archivedBy = \"$user\" WHERE id = \"$forum\" ");
+            if($query){
+                $response = array('status'=>true);
+            }else{
+                $response = array('status'=>false, 'msg'=>"$conn->error");
+            }
+        }
     }else{
     	$response = array('status'=>false, 'msg'=>"Provide action - $action");
 

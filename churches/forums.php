@@ -53,7 +53,7 @@
                                             </div>
                                             <div class="md-fab-wrapper">
                                                 <div class="md-fab md-fab-small md-fab-danger">
-                                                    <i class="material-icons md-color-red">&#xE872;</i>
+                                                    <i class="material-icons md-color-red" id="delete_forum_btn" data-forum = "<?php echo $forum; ?>" title="delete forum">&#xE872;</i>
                                                 </div>
                                             </div>
                                         </div>
@@ -300,6 +300,25 @@
         var churchID  = <?php echo $churchID; ?>;
         $('.dropify#input-forum-logo').dropify();
         $(".selectize").selectize();
+
+        $("#delete_forum_btn").on('click', function(){
+            //when the foru, is to be deleted
+            forum_id = $(this).data('forum');
+
+            //ask for confirmation
+            UIkit.modal.confirm("Do you want to archive this forum?", function(){
+                // will be executed on confirm.
+                $.post('api/index.php', {action:'archive_forum', forum:forum_id, user:<?php echo $userId; ?>}, function(data){
+                    if(typeof(data) != 'object'){
+                        ret = JSON.parse();
+                    }else{
+                        ret = data;
+                    }
+
+                    location.reload();
+                })
+            })
+        })
 
         function log(data){
             console.log(data)
