@@ -1,44 +1,172 @@
 <?php
 
-    include_once "../db.php";
+// START INITIATE
+    include ("db.php");
+    // var_dump($_SERVER["REQUEST_METHOD"]);
+    if ($_SERVER["REQUEST_METHOD"] == "POST") 
+    {
+        if(isset($_POST['action']))
+        {
+            $_POST['action']();
+        }
+        else
+        {
+            echo 'Please read the API documentation';
+        }
+    }
+    else
+    {
+        echo 'UPLUS API V02';
+    }
+// END INITIATE
 
-    $request = $_POST;
+// FORUMS
+     function list_forums()
+    {
+        require('db.php');
+        $query = $churchDb->query("SELECT * FROM forums")or die(mysqli_error($churchDb));
+        $forums = array();
+        while ($forum = mysqli_fetch_array($query))
+        {
+            $forums[] = array(
+                "forumId"   => $forum['id'],
+                "forumTitle"    => $forum['forumtitle'],
+                "joined"        => "1"
+            );
+        }
+        header('Content-Type: application/json');
+        $forums = json_encode($forums);
+        echo $forums;
+    }
 
-    $action = $request['action']??"";
+    function joinForum()
+    {
+        require('db.php');
+        $forumId            = mysqli_real_escape_string($db, $_POST['forumId']);
+        $phone              = mysqli_real_escape_string($db, $_POST['phone']);
+        
+        //CLEAN PHONE
+        $invitedPhone   = preg_replace( '/[^0-9]/', '', $invitedPhonearray );
+        $invitedPhone   = substr($invitedPhone, -10); 
 
-    $response = array();
-    if($action == 'share_buy_request'){
-        //here we are gong to issue the request for buying shares
+        //CHECK FOR POISON
+        $sqlPoison = $db->query("SELECT id FROM groups WHERE id =  '$groupId'") or (mysqli_error());
+        if(mysqli_num_rows($sqlPoison) > 0)
+        {
 
-        $title= $db->real_escape_string($request['title']??"");
-        $surname= $db->real_escape_string($request['surname']??"");
-        $oname= $db->real_escape_string($request['othername']??"");
-        $phone= $db->real_escape_string($request['phone']??"");
-        $id= $db->real_escape_string($request['id']??"");
-        $gender= $db->real_escape_string($request['gender']??"");
-        $dob= $db->real_escape_string($request['dob']??"");
-        $nationality= $db->real_escape_string($request['nationality']??"");
-        $number= $db->real_escape_string($request['shares']??"");
+            $sql = $db->query("SELECT id FROM users WHERE phone =  $invitedPhone") or (mysqli_error());
+            $countUsers = mysqli_num_rows($sql);
+            if($countUsers > 0)
+            {
+                //GET EXISTING USER
+                $invitedArray = mysqli_fetch_array($sql);
+                $invitedId = $invitedArray['id'];
+            }
+            else
+            {
+                //CREATE THE NEW USER
+                $code = rand(0000, 9999);
+                $db->query("INSERT INTO 
+                    users (phone,createdBy,createdDate, password, updatedBy, updatedDate) 
+                    VALUES  ('$invitedPhone', '$invitorId', now(), '$code', '$invitorId', now() )
+                    ");
+                if($db)
+                {
+                    $sql            = $db->query("SELECT id FROM users ORDER BY id DESC LIMIT 1");
+                    $invitedArray   = mysqli_fetch_array($sql);
+                    $invitedId      = $invitedArray['id'];
+                }
+            }
 
-        //Checking if we have some one with same credentials
-        $sql = "SELECT * FROM clients WHERE nidPassport =\"$id\" OR telephone = \"$phone\" ";
-        $exiq = $db->query($sql);
+            // CHECK IF THE USER IS ALREADY IN THE GROUP
+            $sql = $db->query("SELECT * FROM groupuser WHERE groupId ='$groupId' AND userId='$invitedId'");
+            $checkExits = mysqli_num_rows($sql);
+            if($checkExits > 0)
+            {
+                // CHECK IF THE USER DID LEAVE BEFORE
+                $sql1 = $db->query("SELECT * FROM groupuser WHERE (groupId ='$groupId' AND userId='$invitedId') AND archive = 'YES'");
+                $checkExits1 = mysqli_num_rows($sql1);
+                if($checkExits1 > 0)
+                {
+                    // BRING THE USER BACK IN THE GROUP
+                    $sql = $db->query("UPDATE groupuser SET archive = null WHERE groupId ='$groupId' AND userId='$invitedId'");
+                    // CHECK IF THE LIST OF TREASURERS IS NOT FULL AND ADD HIM
+                    $sqlList = $db->query("SELECT * FROM groupuser WHERE groupId = '$groupId' AND type = 'Group treasurer'");
+                    if(mysqli_num_rows($sqlList) <= 2)
+                    {
+                        // THERE IS SOME PLACE FOR YOU
+                        $sql = $db->query("UPDATE groupuser SET type = 'Group treasurer' WHERE groupId ='$groupId' AND userId='$invitedId'");
+                        echo 'Became treasurer';
+                    }
+                    echo 'Member '.$invitedPhone.', is brought back in the group';
+                }
+                else
+                {
+                    echo 'Member '.$invitedPhone.', is already in the group';
+                }
+            }
+            else
+            {
+                // PREPARE MEMBER TYPE
+                $getMemberType= $db->query("SELECT * FROM groupuser WHERE groupId='$groupId' AND type = 'Group treasurer'");
+                $countTres = mysqli_num_rows($getMemberType);
+                if($countTres >= 3)
+                {
+                    $memberType = '';
+                }
+                else
+                {
+                    $memberType = 'Group treasurer';
+                }
 
-        if($exiq && $exiq->num_rows>0){
-            //Here there are some people with same identity
-            $response = array('status'=>false, 'msg'=>"The identity you are using is already in use $exiq->num_rows");
-        }else{
-            //No one exists with the identity
-            $query = $db->query("INSERT INTO clients(title, surname, otherNames, dob, gender, nidPassport, nationality, telephone) VALUES(\"$title\", \"surname\", \"$oname\", \"$dob\", \"$gender\", \"$id\", \"$nationality\", \"$nationality\") ");
-            if($query){
-                //successfully retrieved the stuff
-                $response = array('status'=>true, 'msg'=>"You are successfully registered and you will receive communication regarding your request");
-            }else{
-                //whoa error
-                $response = array('status'=>false, 'msg'=>"Errror in insertion $db->error");
+                // ADD MEMBER FOR THE FIRST TIME IN THIS GROUP
+                $sql = $db->query("INSERT INTO groupuser (joined, groupId, userId, type, createdBy, createdDate, updatedBy, updatedDate) 
+                    VALUES ('yes','$groupId','$invitedId','$memberType','$invitorId', now(), '$invitorId', now())")or die(mysqli_error($db));
+
+                if($db)
+                {
+                    $gnamesql   = $db->query("SELECT groupName FROM groups WHERE id = '$groupId' LIMIT 1");
+                    $loopg      = mysqli_fetch_array($gnamesql);
+                    $groupName  = $loopg['groupName'];
+                    $recipients = '+25'.$invitedPhone;
+                    $message    = 'You have been invited to join '.$groupName.' (a contribution group on UPlus). for more info, click here. https://xms9d.app.goo.gl/PeSx or *801*2# use '.$groupId.' as a group number';
+
+                    $data = array(
+                                "sender"        =>'UPLUS',
+                                "recipients"    =>$recipients,
+                                "message"       =>$message,
+                            );
+                    include 'sms.php';
+                    if($httpcode == 200)
+                    {
+                        echo 'Member with '.$invitedPhone.' is added';
+                    }
+                    else
+                    {
+                        echo 'System error';
+                    }
+                }
+                else
+                {
+                    'The user is not invited';
+                }
             }
         }
-
+        else
+        {
+            echo "Poison Detected: ".$groupId;
+        }
     }
-    echo json_encode($response);
+
+    function exitForum()
+    {
+        include "db.php";
+        $forumId    = mysqli_real_escape_string($db, $_POST['forumId']);
+        $memberId   = mysqli_real_escape_string($db, $_POST['memberId']);   
+
+        $sql = $db->query("UPDATE forumuser SET archive = 'YES', archivedDate = now() WHERE groupId = '$memberId' AND userId = '$memberId'")or die(mysqli_error($db));
+        echo 'You are no longer in this forum'.$groupName.'.';
+    }
+
+// FORUMS
 ?>
