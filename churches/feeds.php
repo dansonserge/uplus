@@ -10,6 +10,11 @@
     <!-- dropify -->
     <link rel="stylesheet" href="assets/skins/dropify/css/dropify.css">
 
+    <!-- Filepond -->
+    <link rel="stylesheet" href="assets/css/filepond.css">
+    <!-- Imag epreview filepond -->
+    <link rel="stylesheet" href="assets/css/filepond-plugin-image-preview.css">
+
 </head>
 <body class="disable_transitions sidebar_main_open sidebar_main_swipe">
     <!-- main header -->
@@ -66,10 +71,11 @@
 	                                       </div> -->
 	                                       <div class="uk-grid">
 		                                       	<div class="uk-width-1-4">
-		                                       		<div class="uk-form-file md-btn">
+		                                       		<!-- <div class="uk-form-file md-btn" style="box-shadow: 0 1px 3px rgba(0, 0, 0, 0), 0 1px 2px rgba(0, 0, 0, 0);">
 		                                       			<img src="gallery/upload_feed_icon.png">
 						                                <input id="form-file" type="file">
-						                            </div>
+						                            </div> -->
+                                                    <input type="file" id="uploadMediaInput" name="filepond" multiple data-max-file-size="102MB" data-max-files="3">
 		                                       	</div>
 											    <div class="uk-width-3-4">
 											    		<div style="position: absolute; right: 2%; bottom: 12%">
@@ -200,6 +206,14 @@
     <!-- Dropzone -->
     <script type="text/javascript" src="assets/js/dropzone.js"></script>
 
+    <!-- filepond -->    
+    
+    <script type="text/javascript" src="assets/js/filepond-plugin-file-encode.min.js"></script>
+    <script type="text/javascript" src="assets/js/filepond-plugin-file-validate-size.min.js"></script>
+    <script type="text/javascript" src="assets/js/filepond-plugin-image-exif-orientation.min.js"></script>
+    <script type="text/javascript" src="assets/js/filepond-plugin-image-preview.js"></script>
+    <script type="text/javascript" src="assets/js/filepond.js"></script>
+
     <!-- Dropify -->
     <script src="bower_components/dropify/dist/js/dropify.min.js"></script>
     <script type="text/javascript">
@@ -208,6 +222,28 @@
                 'default': 'Drag and drop a podcast here or click',
             }
         });
+
+        // Filepond for feeds attachment upload
+        const inputElement = document.querySelector('#uploadMediaInput');
+        const pond = FilePond.create( inputElement );
+
+        FilePond.setOptions({
+            server: 'uploadTest.php'
+        });
+
+        FilePond.registerPlugin(    
+            // encodes the file as base64 data
+          FilePondPluginFileEncode,
+            
+            // validates the size of the file
+            FilePondPluginFileValidateSize,
+            
+            // corrects mobile image orientation
+            FilePondPluginImageExifOrientation,
+            
+            // previews dropped images
+          FilePondPluginImagePreview
+        );
 
 
         $("#feed_create_form").on('submit', function(e){
