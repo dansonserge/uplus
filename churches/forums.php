@@ -62,9 +62,16 @@
                                             </div>
                                         </div>
                                         <div class="user_content">
-
-                                            Here
-                                            
+                                            <div class="md-input-wrapper">
+                                                <label>Forum title</label>
+                                                <input type="text" name="membername" id="forumtitle_input" class="md-input" required="required">
+                                                <span class="md-input-bar "></span>
+                                            </div>
+                                            <div class="md-input-wrapper md-input-filled">
+                                                <!-- <label>Introduction</label> -->
+                                                <textarea cols="30" rows="3" id="forum_intro" class="md-input autosized" placeholder="What's the forum about?" style="overflow-x: hidden; word-wrap: break-word;"></textarea>
+                                                <span class="md-input-bar "></span>
+                                            </div>                                            
                                         </div>
                                     </div>
                                 </div>
