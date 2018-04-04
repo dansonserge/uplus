@@ -148,6 +148,19 @@
     		return $query->fetch_assoc();
     	else return false;
     }
+    function getPosts($church)
+    {
+      //function to return the posts from $churc
+      global $conn;
+      $query = $conn->query("SELECT * FROM posts JOIN users ON posts.postChurchAdmin = users.Id  WHERE users.church = \"$church\" ") or trigger_error($conn->error);
+
+      $posts = array();
+
+      while ($data = $query->fetch_assoc()) {
+        $posts[] = $data;
+      }
+      return $posts;
+    }
 
     function group_members($group){
       //members details

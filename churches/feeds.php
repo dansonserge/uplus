@@ -89,19 +89,21 @@
 						                            </div>
 		                                       	</div>
 											    <div class="uk-width-3-4">
-											    		<div style="position: absolute; right: 2%; bottom: 12%">
-													    	<ul class="uk-list" style="list-style: none; display: inline-block; margin-right: 50px">
-					                                       		<li style="list-style: none; display: inline-block;">
-					                                       			<input type="radio" name="postTo" id="public_post" value="<?php echo $churchID; ?>" data-md-icheck required/>
-					                                        		<label for="public_post" class="inline-label">Public</label>
-					                                       		</li>
-					                                       		<li style="list-style: none; display: inline-block;">
-					                                       			<input type="radio" name="postTo" id="church_post" value="<?php echo $churchID ?>" data-md-icheck required/>
-					                                        		<label for="church_post" class="inline-label">My church</label>
-					                                       		</li>
-					                                       	</ul>
-					                                       	<button class="md-btn md-btn-primary" id="submit_feed" type="submit">Post</button>
-					                                    </div>
+										    		<div style="position: absolute; right: 2%; bottom: 12%">
+												    	<ul class="uk-list" style="list-style: none; display: inline-block; margin-right: 50px">
+				                                       		<li style="list-style: none; display: inline-block;">
+				                                       			<input type="radio" name="postTo" id="public_post" value="<?php echo $churchID; ?>" data-md-icheck required/>
+				                                        		<label for="public_post" class="inline-label">Public</label>
+				                                       		</li>
+				                                       		<li style="list-style: none; display: inline-block;">
+				                                       			<input type="radio" name="postTo" id="church_post" value="<?php echo $churchID ?>" data-md-icheck required/>
+				                                        		<label for="church_post" class="inline-label">My church</label>
+				                                       		</li>
+				                                       	</ul>
+                                                        <!-- <div class=""><img style="width: 72px; height: 72px" src="assets/img/rot_loader.gif"></div> -->
+                                                        <span class="progress-cont display-none"><img src="assets/img/spinners/spinner_success.gif" alt="" width="32" height="32"></span>
+				                                       	<button class="md-btn md-btn-primary" id="submit_feed" type="submit">Post</button>
+				                                    </div>
 											    </div>
 	                                       </div>
 	                                    </div>
@@ -115,6 +117,8 @@
                         <?php
                             //getting podcasts
                         	$podcats = church_podcasts($churchID);
+
+                            $posts = getPosts($churchID);
 
                             //Getting branches
                             $branches = churchbranches($churchID);
@@ -217,14 +221,6 @@
     <!-- Dropzone -->
     <script type="text/javascript" src="assets/js/dropzone.js"></script>
 
-    <!-- filepond -->    
-    
-    <script type="text/javascript" src="assets/js/filepond-plugin-file-encode.min.js"></script>
-    <script type="text/javascript" src="assets/js/filepond-plugin-file-validate-size.min.js"></script>
-    <script type="text/javascript" src="assets/js/filepond-plugin-image-exif-orientation.min.js"></script>
-    <script type="text/javascript" src="assets/js/filepond-plugin-image-preview.js"></script>
-    <script type="text/javascript" src="assets/js/filepond.js"></script>
-
     <!-- Dropify -->
     <script src="bower_components/dropify/dist/js/dropify.min.js"></script>
     <script type="text/javascript">
@@ -233,35 +229,6 @@
                 'default': 'Drag and drop a podcast here or click',
             }
         });
-
-        // Filepond for feeds attachment upload
-        const inputElement = document.querySelector('#uploadMediaInput');
-        const pond = FilePond.create(
-            inputElement,
-            {
-                labelIdle: `Drag & Drop your feed attachment or <span class="filepond--label-action">Browse</span>`,
-            }
-            );
-
-        FilePond.setOptions({
-            server: 'api/index.php?action=upload_feed_attachment',
-
-        });
-
-        FilePond.registerPlugin(    
-            // encodes the file as base64 data
-            FilePondPluginFileEncode,
-            
-            // validates the size of the file
-            FilePondPluginFileValidateSize,
-            
-            // corrects mobile image orientation
-            FilePondPluginImageExifOrientation,
-            
-            // previews dropped images
-          FilePondPluginImagePreview
-        );
-
 
         $("#feed_create_form").on('submit', function(e){
         	e.preventDefault();
@@ -275,7 +242,9 @@
 
 
         	//disabling submit button
+            $("#submit_feed").addClass('display-none')
             $("#submit_feed").attr('disabled', 'disabled')
+            $(".progress-cont").removeClass('display-none')
 
         	//we can save now
         	var formdata = new FormData();
@@ -292,8 +261,14 @@
 	            formdata.append('userType', 'admin');
 	            formdata.append('platform', 'web');
 
-	            ajax.open("POST", "api/index.php");            
+	            ajax.open("POST", "api/index.php");        
 	            ajax.send(formdata);
+
+                ajax.addEventListener("load", function(){
+                    setTimeout(function(){
+                        location.reload()
+                    }, 1500)                    
+                })
             }else{
             	alert("Specify details")
             }
@@ -301,29 +276,6 @@
             
         })
 
-        // $("#file_add_form").on('submit', function(e){
-        //     //Adding podcasts
-        //     e.preventDefault();
-        //     var formdata = new FormData();
-        //     var ajax = new XMLHttpRequest();
-
-        //     var pname = $("#podcast-name").val();
-        //     var pintro = $("#podcast-intro").val();
-        //     var podcatsfile = document.querySelector("#podcast-file").files[0];
-
-        //     //checking essential fields
-        //     if(pname && pintro){
-        //         formdata.append('action', 'add_podcast');
-        //         formdata.append('name', pname);
-        //         formdata.append('church', <?php echo $churchID; ?>);
-        //         formdata.append('intro', pintro);
-        //         formdata.append('file', podcatsfile);
-        //     }
-
-        //     ajax.open("POST", "api/index.php");
-            
-        //     ajax.send(formdata);
-        // })
 
         $("#file_add_form").on('submit', function(e){
             //Adding podcasts
