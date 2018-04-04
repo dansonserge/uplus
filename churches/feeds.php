@@ -113,12 +113,48 @@
                         </div>
                     </div>
 
-                    <div class="uk-grid uk-grid-width-medium-1-3" data-uk-grid-margin="">   
+                    <div class="uk-grid uk-grid-width-medium-1-3" data-uk-grid-margin="">
+
+                        <?php
+                            $posts = getPosts($churchID);
+                            foreach ($posts as $key => $post) {
+                                $post_title = $post['title'];
+                                $post_content = $post['content'];
+                                $post_pdate = $post['postedDate'];
+                                $post_title = $post['title'];                                ?>
+                                    <div class="md-card">
+                                        <div class="md-card-content small-padding">
+                                                <img src="assets/img/gallery/Image01.jpg" alt="" class="blog_list_teaser_image">
+                                                <div class="blog_list_teaser">
+                                                    <?php if(!empty($post_title)){
+                                                        ?>
+                                                        <h2 class="blog_list_teaser_title uk-text-truncate"><?php echo $post_title; ?></h2>
+                                                        <?php
+                                                    } ?>
+                                                
+                                                <p>
+                                                    <?php echo $post_content; ?>
+                                                </p>
+                                                <span class="uk-text-muted uk-text-small"><?php echo date('d M Y', strtotime($post_pdate)); ?></span>
+                                            </div>
+                                            <div class="blog_list_footer">
+                                                <div class="blog_list_footer_info">
+                                                    <span class="uk-margin-right"><i class="material-icons"></i> <small>6</small></span>
+                                                    <span><i class="material-icons"></i> <small>54</small></span>
+                                                </div>
+                                                <a href="#" class="md-btn md-btn-small md-btn-flat md-btn-flat-primary uk-float-right">Read more</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php
+                            }
+                        ?>
+                         
                         <?php
                             //getting podcasts
                         	$podcats = church_podcasts($churchID);
 
-                            $posts = getPosts($churchID);
+                            
 
                             //Getting branches
                             $branches = churchbranches($churchID);
