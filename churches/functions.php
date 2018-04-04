@@ -53,6 +53,14 @@
         return $user;
     }
 
+    function clean_string($string) {
+     $string = str_replace(' ', '_', $string); // Replaces all spaces with hyphens.
+     $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+
+     return preg_replace('/-+/', '-', $string); // Replaces multiple hyphens with single one.
+   }
+
+
     function church_event($churchID){
       global $conn;
       $events = array();

@@ -25,10 +25,11 @@
         if(!empty($forum)){
             $forumData = getForum($forum);
             $forum_title = $forumData['forumtitle']??"";
+            $forum_logo = $forumData['logo'];
             ?>
                 <div id="page_content">
                     <div id="page_content_inner">
-                        <form action="#" class="uk-form-stacked" id="user_edit_form">
+                        <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" class="uk-form-stacked" id="user_edit_form" enctype="multipart/form-data">
                             <div class="uk-grid" data-uk-grid-margin>
                                 <div class="uk-width-large-7-10">
                                     <div class="md-card">
@@ -42,7 +43,7 @@
                                                     <span class="btn-file">
                                                         <span class="fileinput-new"><i class="material-icons">&#xE2C6;</i></span>
                                                         <span class="fileinput-exists"><i class="material-icons">&#xE86A;</i></span>
-                                                        <input type="file" name="user_edit_avatar_control" id="user_edit_avatar_control">
+                                                        <input type="file" name="forum_logo" id="user_edit_avatar_control">
                                                     </span>
                                                     <a href="#" class="btn-file fileinput-exists" data-dismiss="fileinput"><i class="material-icons">&#xE5CD;</i></a>
                                                 </div>
@@ -51,27 +52,59 @@
                                                 <h2 class="heading_b"><span class="uk-text-truncate" id="user_edit_uname"><?php echo $forum_title; ?></span><span class="sub-heading" id="user_edit_position">Started <?php echo $forumData['addedDate']; ?></span></h2>
                                             </div>
                                             <div class="md-fab-wrapper">
-                                                <div class="md-fab md-fab-toolbar md-fab-small md-fab-accent">
-                                                    <i class="material-icons">&#xE8BE;</i>
-                                                    <div class="md-fab-toolbar-actions">
-                                                        <button type="submit" id="user_edit_save" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'bottom'}" title="Save"><i class="material-icons md-color-white">&#xE161;</i></button>
-                                                        <button type="submit" id="user_edit_print" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'bottom'}" title="Print"><i class="material-icons md-color-white">&#xE555;</i></button>
-                                                        <button type="submit" id="user_edit_delete" data-uk-tooltip="{cls:'uk-tooltip-small',pos:'bottom'}" title="Delete"><i class="material-icons md-color-white">&#xE872;</i></button>
-                                                    </div>
+                                                <div class="md-fab md-fab-small md-fab-danger">
+                                                    <i class="material-icons md-color-red">&#xE872;</i>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="user_content">
-                                            <div class="md-input-wrapper">
+                                            <?php
+                                                if(!empty($_POST)){
+                                                    $title = $_POST['forumtitle']??"";
+                                                    $intro = $_POST['intro']??"";
+
+                                                    if($intro && $title){
+                                                        $forum_logo = $_FILES['forum_logo'];
+
+                                                        if($forum_logo['size']>10){
+                                                            $ext = strtolower(pathinfo($forum_logo['name'], PATHINFO_EXTENSION)); //extensin
+
+                                                            if($ext == 'png' || $ext == 'jpg'){
+                                                                $filename = "gallery/church/".strtolower(clean_string($title))."_".time().".$ext";
+
+                                                                if(!move_uploaded_file($pic['tmp_name'], "$filename")){
+                                                                    trigger_error("Error uploading the file");
+                                                                    $filename = $forum_logo;
+                                                                }
+                                                            }else{
+                                                                $filename = $forum_logo;
+                                                            }
+                                                        }else{
+                                                            $filename = $forum_logo;
+                                                        }
+
+                                                        //updating
+                                                        $query = $conn->query("UPDATE forums SET forumtitle = \"$title\", intro = \"$intro\", logo = \"$filename\" WHERE id = \"$forum\"  ") or trigger_error($conn->error);
+                                                        if($query){
+                                                            header("location:".$_SERVER['REQUEST_URI']);
+                                                        }
+                                                    }else{
+                                                        echo "Sure??";
+                                                    }
+                                                }
+                                            ?>
+                                            <div class="md-input-wrapper md-input-filled">
                                                 <label>Forum title</label>
-                                                <input type="text" name="membername" id="forumtitle_input" class="md-input" required="required">
+                                                <input type="text" name="forumtitle" id="forumtitle_input" value="<?php echo $forum_title; ?>" class="md-input" required="required">
                                                 <span class="md-input-bar "></span>
                                             </div>
                                             <div class="md-input-wrapper md-input-filled">
-                                                <!-- <label>Introduction</label> -->
-                                                <textarea cols="30" rows="3" id="forum_intro" class="md-input autosized" placeholder="What's the forum about?" style="overflow-x: hidden; word-wrap: break-word;"></textarea>
+                                                <textarea cols="20" rows="2" id="forum_intro" name="intro" class="md-input autosized" placeholder="What's the forum about?" style="overflow-x: hidden; word-wrap: break-word;"><?php echo $forumData['intro']; ?></textarea>
                                                 <span class="md-input-bar "></span>
-                                            </div>                                            
+                                            </div>
+                                            <div class="md-input-wrapper">
+                                                <button class="md-btn md-btn-primary" type="submit">UPDATE</button>
+                                            </div>                                         
                                         </div>
                                     </div>
                                 </div>
@@ -121,7 +154,6 @@
                                         </form>
                                     </div>
                                 </div>
-                                
                                 
                                 <canvas id="mem_attendance" class="attendance" width="400" height="80"></canvas>
                                 <div ></div>
@@ -206,10 +238,11 @@
                 </div>
             </div>
         </div>
+        <div class="md-fab-wrapper">
+            <button class="md-fab md-fab-primary" href="javascript:void(0)" data-uk-modal="{target:'#add_member_modal'}"><i class="material-icons">add</i></button>
+        </div>
     <?php } ?>
-    <div class="md-fab-wrapper">
-        <button class="md-fab md-fab-primary" href="javascript:void(0)" data-uk-modal="{target:'#add_member_modal'}"><i class="material-icons">add</i></button>
-    </div>
+    
 
     <!-- <div class="md-fab-wrapper md-fab-speed-dial-horizontal">
         <a class="md-fab md-fab-primary" href="javascript:void(0)"><i class="material-icons">add</i><i class="material-icons md-fab-action-close" style="display:none"></i></a>
