@@ -102,11 +102,27 @@
                                 $post_pdate = $post['postedDate'];
                                 $post_likes = $post['nlikes'];
                                 $post_comments = $post['ncomments'];
+
+                                $post_attachments = json_decode($post['attachment'], true);
                                 ?>
                                     <div class="uk-margin-bottom">
                                         <div class="md-card">
                                             <div class="md-card-content small-padding">
-                                                    <!-- <img src="assets/img/gallery/Image01.jpg" alt="" class="blog_list_teaser_image"> -->
+                                                    <div class="media-container">
+                                                        <?php
+                                                            for($n=0; $n<count($post_attachments); $n++){
+                                                                $attachment = $post_attachments[$n];
+                                                                $ext = strtolower(pathinfo($attachment, PATHINFO_EXTENSION)); //extensin
+                                                                if($ext == 'png' || $ext == 'jpg'){
+                                                                    ?>
+                                                                        <img src="<?php echo $attachment; ?>" alt="" class="blog_list_teaser_image">
+                                                                    <?php
+                                                                }
+                                                            }
+                                                        ?>
+                                                        <!-- <img src="assets/img/gallery/Image01.jpg" alt="" class="blog_list_teaser_image"> -->
+                                                    </div>
+                                                    
                                                     <div class="blog_list_teaser">
                                                         <?php if(!empty($post_title)){
                                                             ?>
