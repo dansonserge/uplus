@@ -1824,7 +1824,7 @@
 // END EVENT
 
 // START TRANSFERS
-	function directtransfer()
+	function directtransfer1()
 	{
 		require('db.php');
 
