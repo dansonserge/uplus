@@ -117,6 +117,17 @@
                                                                     ?>
                                                                         <img src="<?php echo $attachment; ?>" alt="" class="blog_list_teaser_image">
                                                                     <?php
+                                                                }else if($ext == 'mp3' || $ext == 'aac'){
+                                                                    //audio
+                                                                    ?>
+                                                                        <audio src="<?php echo $attachment ?>" controls></audio>
+                                                                    <?php 
+                                                                }
+                                                                else if($ext == 'mp4'){
+                                                                    //video
+                                                                    ?>
+                                                                        <video src="<?php echo $attachment ?>" controls></video>
+                                                                    <?php 
                                                                 }
                                                             }
                                                         ?>
