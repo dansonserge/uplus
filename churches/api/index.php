@@ -479,7 +479,6 @@
         {
             $forums[] = $data;
         }
-        header('Content-Type: application/json');
         echo json_encode($forums);
     }else if($action == 'list_feeds'){
         //listing FEEDS - all feeds
@@ -538,14 +537,19 @@
         //type of the post
         $type = $request['type']??"";
 
+        //attachments link
+        $attachments = $conn->real_escape_string($request['attachments'])??"[]";
+
         //the type of person who posted - admin or member if empty it'll be elisaa app
         $userType = $request['userType']??'member';
 
         if($userType == 'admin'){
-            $query = $conn->query("INSERT INTO posts(content, postedBy, type, postChurchAdmin, targetChurch) VALUES(\"$post_content\", 'admin', \"$type\", \"$userId\", \"$target_audience\") ");
+            $sql = "INSERT INTO posts(content, postedBy, type, postChurchAdmin, attachment, targetChurch) VALUES(\"$post_content\", 'admin', \"$type\", \"$userId\", \"$attachments\", \"$target_audience\") ";
+            
         }else{
-            $query = $conn->query("INSERT INTO posts(content, postedBy, type, postMemberId, targetChurch) VALUES(\"$post_content\", 'member', \"$type\", \"$userId\", \"$target_audience\") ");
+            $sql = "INSERT INTO posts(content, postedBy, type,  postMemberId, attachment, targetChurch) VALUES(\"$post_content\", 'member', \"$type\", \"$userId\", \"$attachments\", \"$target_audience\") ";
         }
+        $query = $conn->query($sql);
 
 
         if($query){
@@ -555,15 +559,18 @@
         }
     }else if($action == "upload_feed_attachment"){
         //uploading the file for attachments
-        $pic = $_FILES['filepond'];
-        $attachment = $_FILES['filepond'];
+        $attachment = $_FILES['file'];
         $sent_file_name = $attachment['name'];
         $ext = strtolower(pathinfo($sent_file_name, PATHINFO_EXTENSION)); //extension
+
+        $filename = "gallery/feeds/".substr($sent_file_name, 0, -4)."_".time().".".$ext;
 
         $allowed_extensions = array('preventerrorsguys_dont remove please', 'jpg', 'png', 'mp3', 'aac', 'mp4');
 
         if(array_search($ext, $allowed_extensions)){
             //we can now upload
+            move_uploaded_file($attachment['tmp_name'], "../".$filename);
+            $response = array('status'=>true, 'msg'=>$filename);
         }else{
             $response = array('status'=>false, 'msg'=>"Invalid file type");
         }

@@ -9873,6 +9873,29 @@ body.CodeMirror-fullscreen-active .CodeMirror-fullscreen #code_editor_close {
     right: 0
 }
 
+.feed-thumbnail-upload progress.uk-progress {
+    height: 12px;
+}
+
+.thumb-content {
+    min-height: 32px;
+}
+
+.thumb-title {
+    overflow:  hidden;
+    text-overflow: ellipsis;
+    font-size: .85em;
+    line-height: 1em;
+    font-family: helvetica;
+}
+
+.feed-thumbnail-upload {
+    background: linear-gradient(#eeeeee9e 60%, #fff);
+    padding: 3px;
+    max-width: 150px;
+    display: inline-block;
+}
+
 .irs-from,.irs-single,.irs-to {
     color: #fff;
     font-size: 12px;

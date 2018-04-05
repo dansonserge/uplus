@@ -51,16 +51,16 @@
 		                                       	<div class="uk-width-1-4">
 		                                       		<div class="uk-form-file md-btn" style="box-shadow: 0 1px 3px rgba(0, 0, 0, 0), 0 1px 2px rgba(0, 0, 0, 0);">
 		                                       			<img src="gallery/upload_feed_icon.png">
-						                                <input id="feeds_attachment_input" type="file">
+						                                <input id="feeds_attachment_input" type="file" multiple>
 						                            </div>
 		                                       	</div>
-                                                <div class="uk-width-1-2">
-                                                    <div class="feed-thumbnail-upload">
-                                                        <div class='thumb-title'>Here <i class="material-icons" style="cursor: pointer;">close</i></div>
+                                                <div class="uk-width-1-2" id="feed-thumbnail-tpl-cont">
+                                                    <div class="feed-thumbnail-upload" style="display: none;" id="feed-thumbnail-tpl">
+                                                        <div class='thumb-title'>Here <i class="material-icons" style="cursor: pointer; position: relative;left: 170%">close</i></div>
                                                         <div class="thumb-content"></div>
                                                         <div class="thumb-toolbar">
-                                                            <progress class="uk-progress" value="10" max="100">
-                                                            <div class="uk-grid">
+                                                            <progress class="uk-progress feed_attachment_progress" value="10" max="100">
+                                                            <div class="uk-griad">
                                                                 <div class="uploaded-size"> 0MB</div>
                                                                 <div class="total-size"> 100mb</div>
                                                             </div>
@@ -249,6 +249,8 @@
             }
         });
 
+
+        var feeds_attachment = [];
         $("#feeds_attachment_input").on('change', function(data){
             uploaded = document.querySelector("#feeds_attachment_input").files[0];
             // log(uploaded);
@@ -263,11 +265,59 @@
             if(allowed_extensions.indexOf(ext)>-1){
                 //file is allowed
                 //create an elemt thumbnail for file
+                thumbnail = $("#feed-thumbnail-tpl").clone()
+                thumbnail.css('display', 'inherit');
+
+                //Adding the title
+                thumbnail.find(".thumb-title").html(filename);
+
+                $("#feed-thumbnail-tpl-cont").append(thumbnail);
+
+                //Start to upload
+                var formdata = new FormData();
+
+                formdata.append('action', 'upload_feed_attachment');
+                formdata.append('file', uploaded);
+
+                var ajax = new XMLHttpRequest();
+
+                ajax.upload.addEventListener("progress", function(evt){
+                    uploaded = evt.loaded;
+                    total = evt.total;
+
+                    percentage = (uploaded/total)*100;
+                    
+                    thumbnail.find(".feed_attachment_progress").attr('value', percentage);
+
+                    console.log(percentage)
+                }, false);
+
+
+                ajax.addEventListener("load", function(){
+                    response = this.responseText;
+                    try{
+                        ret = JSON.parse(response);
+                        if(ret.status){
+                            //create successfully(Giving notification and closing the modal);
+                            feeds_attachment.push(ret.msg)
+
+                        }else{
+                            msg = ret.msg;
+                        }
+                    }catch(e){
+                        console.log(e);
+                    }
+
+                }, false);
+
+                ajax.open("POST", "api/index.php");
+                ajax.send(formdata);
             }else{
                 alert("File of "+ext+ " type not allowed")
             }
         })
 
+        //creating feed
         $("#feed_create_form").on('submit', function(e){
         	e.preventDefault();
 
@@ -295,7 +345,8 @@
             	formdata.append('action', 'create_post');
 	            formdata.append('content', post_content);
 	            formdata.append('user', <?php echo $userId; ?>);
-	            formdata.append('church', postTo);
+                formdata.append('church', postTo);
+	            formdata.append('attachments', JSON.stringify(feeds_attachment));
 	            formdata.append('userType', 'admin');
 	            formdata.append('platform', 'web');
 
@@ -309,12 +360,10 @@
                 })
             }else{
             	alert("Specify details")
-            }
-
-            
+            }            
         })
 
-
+        //create podcast
         $("#file_add_form").on('submit', function(e){
             //Adding podcasts
             //Getting inputs
@@ -395,8 +444,7 @@
                         $(this).parents('.uk-margin-bottom').remove();
                     }
                 });
-            }
-            
+            }            
         })
     </script>
     
