@@ -59,9 +59,7 @@
                                                         <div class='thumb-title'>Here <i class="material-icons" style="cursor: pointer;">close</i></div>
                                                         <div class="thumb-content"></div>
                                                         <div class="thumb-toolbar">
-                                                            <div class="uk-progress uk-progress-medium uk-progress-success uk-progress-striped uk-active">
-                                                                <div class="uk-progress-bar" style="width: 0%;">0%</div>
-                                                            </div>
+                                                            <progress class="uk-progress" value="10" max="100">
                                                             <div class="uk-grid">
                                                                 <div class="uploaded-size"> 0MB</div>
                                                                 <div class="total-size"> 100mb</div>
