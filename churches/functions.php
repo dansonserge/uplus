@@ -25,6 +25,13 @@
         return $userData['type'];
       }else return false;
     }
+    function total_users(){
+      //returns all the users of church system
+      global $conn;
+
+      $query = $conn->query("SELECT COUNT(*) as count FROM uplus.users") or trigger_error($conn->error);
+      return $query->fetch_assoc()['count'];
+    }
 
     function checkLogin($userType){
       //function to check if logged in person is $userType

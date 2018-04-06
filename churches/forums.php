@@ -127,6 +127,7 @@
                                             <div class="uk-form-row">
                                                 <ul>
                                                     <li>Created by: <i><?php echo staff_details($forumData['admin'])['name'] ?></i> </li>
+                                                    <li><i></i> <?php echo rand(0, total_users())." of ".total_users(); ?> joined</li>
                                                     <?php
                                                         if(!empty($forumData['updatedDate'])){
                                                             ?>
@@ -274,6 +275,7 @@
             <button class="md-fab md-fab-primary" href="javascript:void(0)" data-uk-modal="{target:'#add_member_modal'}"><i class="material-icons">add</i></button>
         </div>
     <?php } ?>
+    <div id="firebase"></div>
     
 
     <!-- <div class="md-fab-wrapper md-fab-speed-dial-horizontal">
@@ -326,6 +328,9 @@
 
     <!--  user edit functions -->
     <script src="assets/js/pages/page_user_edit.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
 
     <script src="js/uploadFile.js"></script>
     <script type="text/javascript">
@@ -422,7 +427,28 @@
             }
 
         })
+    </script>
 
+    <!-- Firebase -->
+    <script>
+      // Initialize Firebase
+      // TODO: Replace with your project's customized code snippet
+      var config = {
+        apiKey: "AIzaSyB1qCWTLud__LGEFQQCZU98iMiy-Dp8Tbk",
+        authDomain: "learnbase-baa6d.firebaseapp.com",
+        databaseURL: "https://learnbase-baa6d.firebaseio.com",
+        projectId: "learnbase-baa6d",
+        storageBucket: "learnbase-baa6d.appspot.com",
+        messagingSenderId: "483987540771"
+      };
+      firebase.initializeApp(config);
+
+      const preObject = document.getElementById("firebase")
+      const dbRefObj = firebase.database().ref().child('firebase')
+
+      dbRefObj.on('value', function(){
+        
+      })
     </script>
 
     <script>
