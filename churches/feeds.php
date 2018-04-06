@@ -92,7 +92,7 @@
                         </div>
                     </div>
 
-                    <div class="uk-grid uk-grid-width-medium-1-3 uk-width-1-1" data-uk-grid-margin="">
+                    <div class="uk-grid uk-grid-width-medium-1-1 uk-width-1-1" style="max-width: 1200px" data-uk-grid-margin="">
 
                         <?php
                             $posts = getPosts($churchID);
@@ -108,42 +108,42 @@
                                     <div class="uk-margin-bottom">
                                         <div class="md-card">
                                             <div class="md-card-content small-padding">
-                                                    <div class="media-container">
-                                                        <?php
-                                                            for($n=0; $n<count($post_attachments); $n++){
-                                                                $attachment = $post_attachments[$n];
-                                                                $ext = strtolower(pathinfo($attachment, PATHINFO_EXTENSION)); //extensin
-                                                                if($ext == 'png' || $ext == 'jpg'){
-                                                                    ?>
-                                                                        <img src="<?php echo $attachment; ?>" alt="" class="blog_list_teaser_image">
-                                                                    <?php
-                                                                }else if($ext == 'mp3' || $ext == 'aac'){
-                                                                    //audio
-                                                                    ?>
-                                                                        <audio src="<?php echo $attachment ?>" controls></audio>
-                                                                    <?php 
-                                                                }
-                                                                else if($ext == 'mp4'){
-                                                                    //video
-                                                                    ?>
-                                                                        <video src="<?php echo $attachment ?>" controls></video>
-                                                                    <?php 
-                                                                }
-                                                            }
+                                                <div class="blog_list_teaser" style="margin-bottom: 12px;">
+                                                    <?php if(!empty($post_title)){
                                                         ?>
-                                                        <!-- <img src="assets/img/gallery/Image01.jpg" alt="" class="blog_list_teaser_image"> -->
-                                                    </div>
-                                                    
-                                                    <div class="blog_list_teaser">
-                                                        <?php if(!empty($post_title)){
-                                                            ?>
-                                                            <h2 class="blog_list_teaser_title uk-text-truncate"><?php echo $post_title; ?></h2>
-                                                            <?php
-                                                        } ?>
-                                                    
+                                                        <h2 class="blog_list_teaser_title uk-text-truncate"><?php echo $post_title; ?></h2>
+                                                        <?php
+                                                    } ?>                                                    
                                                     <p>
                                                         <?php echo $post_content; ?>
                                                     </p>
+                                                </div>
+                                                <div class="media-container">
+                                                    <?php
+                                                        for($n=0; $n<count($post_attachments); $n++){
+                                                            $attachment = $post_attachments[$n];
+                                                            $ext = strtolower(pathinfo($attachment, PATHINFO_EXTENSION)); //extensin
+                                                            if($ext == 'png' || $ext == 'jpg'){
+                                                                ?>
+                                                                    <img src="<?php echo $attachment; ?>" alt="" style="max-height: 300px" class="blog_list_teaser_image">
+                                                                <?php
+                                                            }else if($ext == 'mp3' || $ext == 'aac'){
+                                                                //audio
+                                                                ?>
+                                                                    <audio src="<?php echo $attachment ?>" controls></audio>
+                                                                <?php 
+                                                            }
+                                                            else if($ext == 'mp4'){
+                                                                //video
+                                                                ?>
+                                                                    <video src="<?php echo $attachment ?>" controls></video>
+                                                                <?php 
+                                                            }
+                                                        }
+                                                    ?>
+                                                    <!-- <img src="assets/img/gallery/Image01.jpg" alt="" class="blog_list_teaser_image"> -->
+                                                </div>
+                                                <div class="feed_timestamp0">
                                                     <span class="uk-text-muted uk-text-small"><?php echo date('d M Y', strtotime($post_pdate)); ?></span>
                                                 </div>
                                                 <div class="blog_list_footer">
@@ -224,11 +224,6 @@
                                     <progress id="podcast-upload-progress" class="uk-progress display-none" value="0" max="100" style="width: 100%"></progress>
                                     <span class="md-input-bar "></span>
                                 </div>
-                                <!-- <div class="md-input-wrapper">
-                                    <label>File</label>
-                                    <input type="file" id="podcast-file" data-allowed-file-extensions="mp3 aac"/>
-                                    <span class="md-input-bar "></span>
-                                </div> -->
                             </div>                        
                         </div>
                         <div class="uk-modal-footer uk-text-right">
