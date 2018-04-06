@@ -26,7 +26,7 @@
             $forumData = getForum($forum);
             $forum_title = $forumData['forumtitle']??"";
             $forum_logo = $forumData['logo'];
-            $forum_status = $forumData['status'];
+            $forum_status = empty($forumData['archiveDate'])?'active':'archive';
             ?>
                 <div id="page_content">
                     <div id="page_content_inner">
@@ -193,7 +193,6 @@
                                             <th>Forum title</th>
                                             <th>Created By</th>
                                             <th>Date created</th>
-                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -209,8 +208,7 @@
                                                 <td>'.$n.'</td>
                                                 <td>'.$data['forumtitle'].'</td>
                                                 <td>'.$admin['name'].'</td>
-                                                <td>'.$data['addedDate'].'</td>
-                                                <td>'.$data['status'].'</td>
+                                                <td>'.date($standard_date." H:i:s", strtotime($data['addedDate'])).'</td>
                                                 <td><a href="forums.php?id='.$data['id'].'"><i class="material-icons">mode_edit</i></a></td>
                                                 </tr>';
                                             }
@@ -337,7 +335,7 @@
                         ret = data;
                     }
 
-                    location.reload();
+                    location = 'forums.php';
                 })
             })
         })
