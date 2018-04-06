@@ -363,7 +363,7 @@
         include 'db.php';
         //Getting details of the message log
 
-        $det = $conn->query("SELECT email, subject, token, sender, members.phone as receiver, message.message as message, channel FROM messageslog JOIN message ON messageslog.message = message.id JOIN members ON messageslog.receiver = members.id WHERE messageslog.id = \"$logID\" LIMIT 1 ")or die("can get log data ".mysqli_error($conn));
+        $det = $conn->query("SELECT email, subject, token, sender, members.phone as receiver, message.message as message, channel FROM messageslog JOIN message ON messageslog.message = message.id JOIN members ON messageslog.receiver = members.id WHERE messageslog.id = \"$logID\" LIMIT 1 ") or trigger_error("can get log data ".mysqli_error($conn));
 
         if(mysqli_num_rows($det)){
             $smsdet = mysqli_fetch_assoc($det);
@@ -373,9 +373,13 @@
 
             $messageSender = $smsdet['sender'];
 
+            $senderData = staff_details($messageSender);
             if($channel == 'sms'){
+                //checking the sms name
+                $smsname = churchSMSname($senderData['church']);
+
                 //Sending sms
-                $smsstatus = sendsms($receiver, $message);
+                $smsstatus = sendsms($receiver, $message, '', $smsname);
 
 
                 //reducing SMS
@@ -429,14 +433,14 @@
         }       
     }
 
-    function sendsms($phone, $message, $subject=""){
+    function sendsms($phone, $message, $subject="", $smsName="Uplus"){
       $recipients     = $phone;
       global $churchID;
 
-      $smsName = !empty( churchSMSname($churchID) )?churchSMSname($churchID):"Uplus";
+      // $smsName = !empty( churchSMSname($churchID) )?churchSMSname($churchID):"Uplus";
 
       $data = array(
-          "sender"        =>$smsName,
+          "sender"        =>"Intwari",
           "recipients"    =>$recipients,
           "message"       =>$message,
       );
