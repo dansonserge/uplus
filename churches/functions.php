@@ -440,7 +440,7 @@
       // $smsName = !empty( churchSMSname($churchID) )?churchSMSname($churchID):"Uplus";
 
       $data = array(
-          "sender"        =>"Intwari",
+          "sender"        =>"INTWARI",
           "recipients"    =>$recipients,
           "message"       =>$message,
       );
