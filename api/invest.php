@@ -53,7 +53,7 @@
 		require('db.php');
 		$memberId	= mysqli_real_escape_string($db, $_POST['memberId']);
 		$forumId	= mysqli_real_escape_string($db, $_POST['forumId']);
-		$query 		= $investDb->query("INSERT INTO forumUser (forumCode, userCode, createdBy) VALUES ('$forumId','$memberId','$memberId')")or die(mysqli_error($investDb));
+		$query 		= $investDb->query("INSERT INTO forumuser (forumCode, userCode, createdBy) VALUES ('$forumId','$memberId','$memberId')")or die(mysqli_error($investDb));
 		echo "Done";
 	}
 
@@ -62,7 +62,7 @@
 		require('db.php');
 		$memberId	= mysqli_real_escape_string($db, $_POST['memberId']);
 		$forumId	= mysqli_real_escape_string($db, $_POST['forumId']);
-		$query 		= $investDb->query("UPDATE forumUser SET archive = 'YES' WHERE forumCode = '$forumId' and userCode = '$memberId')")or die(mysqli_error($investDb));
+		$query 		= $investDb->query("UPDATE forumuser SET archive = 'YES' WHERE forumCode = '$forumId' and userCode = '$memberId')")or die(mysqli_error($investDb));
 		echo "Done";
 	}
 
