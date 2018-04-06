@@ -3149,4 +3149,27 @@
 		}
 	}
 // END PARTNERS	
+
+// Just forum
+	function list_forums()
+	{
+
+		require('db.php');
+		$sql = $churchDb->query("SELECT * FROM forums");	
+		$forums = array();
+		while ($forum = mysqli_fetch_array($sql))
+		{
+			
+		    $forums[] = array(
+				"forumtId"			=> $forum['id'],
+				"forumTitle"		=> $forum['forumtitle'],
+				"forumSubtitle"		=> $forum['intro'],
+				"forumlogo"			=> $forum['logo']
+			);
+		}
+		header('Content-Type: application/json');
+		$forums = json_encode($forums);
+		echo $forums;
+	}
+// End test forum
 ?>
