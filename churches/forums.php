@@ -200,8 +200,8 @@
                                     <tbody>
                                         <?php 
                                         $n=0;
-                                        $sqlGetMembers = $db->query("SELECT * FROM `forums` ORDER BY id DESC")or die ($db->error);
-                                        while($data = mysqli_fetch_array($sqlGetMembers))
+                                        $sqlGetForum = $db->query("SELECT * FROM `forums` WHERE ISNULL(archiveDate) ORDER BY id DESC")or die ($db->error);
+                                        while($data = mysqli_fetch_array($sqlGetForum))
                                             {
                                                 $admin  = staff_details($data['admin']);
                                                 $n++;
