@@ -18,7 +18,6 @@
     <!-- main sidebar -->
     <?php
         include_once "sidebar.php";
-        $church_services = church_services($churchID);
     ?>
 
     <div id="page_content">

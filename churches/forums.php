@@ -26,6 +26,8 @@
             $forumData = getForum($forum);
             $forum_title = $forumData['forumtitle']??"";
             $forum_logo = $forumData['logo'];
+
+            var_dump($forum_logo);
             ?>
                 <div id="page_content">
                     <div id="page_content_inner">
@@ -49,7 +51,7 @@
                                                 </div>
                                             </div>
                                             <div class="user_heading_content">
-                                                <h2 class="heading_b"><span class="uk-text-truncate" id="user_edit_uname"><?php echo $forum_title; ?></span><span class="sub-heading" id="user_edit_position">Started <?php echo $forumData['addedDate']; ?></span></h2>
+                                                <h2 class="heading_b"><span class="uk-text-truncate" id="user_edit_uname"><?php echo $forum_title; ?></span><span class="sub-heading" id="user_edit_position">Started <?php echo date($standard_date, strtotime($forumData['addedDate'])); ?></span></h2>
                                             </div>
                                             <div class="md-fab-wrapper">
                                                 <div class="md-fab md-fab-small md-fab-danger">

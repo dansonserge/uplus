@@ -1,6 +1,8 @@
 <?php
     include_once("db.php");
 
+    $standard_date = "d F Y";
+
     function getUser(){
         global $conn;
         if (isset($_SESSION['loginusername'])) {
@@ -226,7 +228,7 @@
       return $donations;
     }
 
-    function church_services($church, $branch=''){
+    function church_services($church, $branch = ''){
       //function for services of church even in branch
       global $conn;
 
@@ -234,6 +236,10 @@
       if(empty($branch)){
             $temp = array();
             $branches = churchbranches($church);
+
+            if(empty($branches))
+            	return false;
+
             for($n=0; $n<count($branches); $n++){
               $temp[] = $branches[$n]['id'];
             }
@@ -244,7 +250,7 @@
 
 
         $sql = "SELECT * FROM church_service WHERE church_service.branchid IN (".implode(", ", $branch).") ";
-        $query = $conn->query($sql) or die("Can't get cservices $conn->error");
+        $query = $conn->query($sql) or trigger_error("Can't get cservices $conn->error");
 
         $services = array();
         while ($data = $query->fetch_assoc()) {
