@@ -369,8 +369,7 @@
             $smsdet = mysqli_fetch_assoc($det);
             $channel = $smsdet['channel'];
             $receiver = $smsdet['receiver'];
-            $message = $smsdet['message'];
-            
+            $message = $smsdet['message'];            
 
             $messageSender = $smsdet['sender'];
 

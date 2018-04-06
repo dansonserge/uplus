@@ -54,8 +54,11 @@ $(".messageActionButton").on('click', function(e){
 	        oj = confmodal.show();
 	        var me = 0;
 
-            smsName = $("#senderName").val()
-
+            smsName = $("#senderName").val();
+            //checking if the smsname is changed
+            if(smsName == churchSMSname){
+                smsName = '';
+            }
 	        $(".broadcastMsg").on('click', function(){
 	            modal = UIkit.modal('#sendMessageModal');
 	            modal.hide();

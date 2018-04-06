@@ -223,5 +223,7 @@
     members.sms     = memberWithPhone;
     members.email   = memberWithEmail;
     members.app     = memberWithApp;
+
+    var churchSMSname ="<?php echo(churchSMSname($churchID)); ?>";
 </script>
 <script type="text/javascript" src="js/broadcastsend.js"></script>
