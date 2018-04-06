@@ -3,7 +3,7 @@ UPLUS API V1.1 DOCUMENTATION
 link: https://uplus.rw/api/invest.php
 
 --START FORUM--
-	list_forums
+	listForums
 		->
 			memberId
 		<-
@@ -11,4 +11,11 @@ link: https://uplus.rw/api/invest.php
         	forumTitle
         	forumSubtitle
         	joined
+
+    joinForum
+    	->
+    		memberId
+    		forumId
+    	<-
+    		"done"
 --END FORUM--
