@@ -1,11 +1,21 @@
 UPLUS API V1.1 DOCUMENTATION
 
+link: https://uplus.rw/api/invest.php
+
 --START FORUM--
-	list_forums
+	listForums
 		->
-			phoneNumber
+			memberId
 		<-
 			forumId
-      forumTitle
-      
+        	forumTitle
+        	forumSubtitle
+        	joined
+
+    joinForum
+    	->
+    		memberId
+    		forumId
+    	<-
+    		"done"
 --END FORUM--
