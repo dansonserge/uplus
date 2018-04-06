@@ -53,7 +53,14 @@
 		require('db.php');
 		$memberId	= mysqli_real_escape_string($db, $_POST['memberId']);
 		$forumId	= mysqli_real_escape_string($db, $_POST['forumId']);
-		$query 		= $investDb->query("INSERT INTO forumuser (forumCode, userCode, createdBy) VALUES ('$forumId','$memberId','$memberId')")or die(mysqli_error($investDb));
+		if(mysqli_num_rows($investDb->query("SELECT * FROM forumuser WHERE forumCode = '$forumId' AND userCode = '$memberId'"))>0)
+		{
+
+		}
+		else
+		{
+			$query 		= $investDb->query("INSERT INTO forumuser (forumCode, userCode, createdBy) VALUES ('$forumId','$memberId','$memberId')")or die(mysqli_error($investDb));
+		}
 		echo "Done";
 	}
 
