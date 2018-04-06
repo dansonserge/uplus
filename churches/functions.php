@@ -363,7 +363,7 @@
         include 'db.php';
         //Getting details of the message log
 
-        $det = $conn->query("SELECT email, subject, token, sender, smsName members.phone as receiver, message.message as message, channel FROM messageslog JOIN message ON messageslog.message = message.id JOIN members ON messageslog.receiver = members.id WHERE messageslog.id = \"$logID\" LIMIT 1 ") or trigger_error("can get log data ".mysqli_error($conn));
+        $det = $conn->query("SELECT email, subject, token, sender, smsName, members.phone as receiver, message.message as message, channel FROM messageslog JOIN message ON messageslog.message = message.id JOIN members ON messageslog.receiver = members.id WHERE messageslog.id = \"$logID\" LIMIT 1 ") or trigger_error("can get log data ".mysqli_error($conn));
 
         if(mysqli_num_rows($det)){
             $smsdet = mysqli_fetch_assoc($det);
