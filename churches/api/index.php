@@ -585,6 +585,18 @@
                 $response = array('status'=>false, 'msg'=>"$conn->error");
             }
         }
+    }
+    else if($action == 'activate_forum' ){
+        $forum = $request['forum']??"";
+        $user = $request['user']??""; //someone who is deleting this forum
+        if($forum && $user){
+            $query = $conn->query("UPDATE forums SET status = 'active' WHERE id = \"$forum\" ");
+            if($query){
+                $response = array('status'=>true);
+            }else{
+                $response = array('status'=>false, 'msg'=>"$conn->error");
+            }
+        }
     }else{
     	$response = array('status'=>false, 'msg'=>"Provide action - $action");
 

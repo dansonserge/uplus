@@ -26,6 +26,7 @@
             $forumData = getForum($forum);
             $forum_title = $forumData['forumtitle']??"";
             $forum_logo = $forumData['logo'];
+            $forum_status = $forumData['status'];
             ?>
                 <div id="page_content">
                     <div id="page_content_inner">
@@ -52,9 +53,20 @@
                                                 <h2 class="heading_b"><span class="uk-text-truncate" id="user_edit_uname"><?php echo $forum_title; ?></span><span class="sub-heading" id="user_edit_position">Started <?php echo date($standard_date, strtotime($forumData['addedDate'])); ?></span></h2>
                                             </div>
                                             <div class="md-fab-wrapper">
-                                                <div class="md-fab md-fab-small md-fab-danger">
-                                                    <i class="material-icons md-color-red" id="delete_forum_btn" data-forum = "<?php echo $forum; ?>" title="delete forum">&#xE872;</i>
-                                                </div>
+                                                 <?php
+                                                    if($forum_status == 'active'){
+                                                ?>
+                                                    <div class="md-fab md-fab-small md-fab-danger">
+                                                        <i class="material-icons md-color-red" id="delete_forum_btn" data-forum = "<?php echo $forum; ?>" title="delete forum">&#xE872;</i>
+                                                    </div>
+                                                <?php }else{
+                                                    ?>
+                                                        <div class="md-fab md-fab-small md-fab-success">
+                                                            <i class="material-icons md-color-red" id="activate_forum_btn" data-forum = "<?php echo $forum; ?>" title="Re-Activate forum">done</i>
+                                                        </div>
+                                                    <?php
+                                                } ?>
+                                                
                                             </div>
                                         </div>
                                         <div class="user_content">
@@ -111,10 +123,20 @@
                                 <div class="uk-width-large-3-10">
                                     <div class="md-card">
                                         <div class="md-card-content">
-                                            <h3 class="heading_c uk-margin-medium-bottom">Accessibility</h3>
+                                            <h3 class="heading_c uk-margin-medium-bottom">Status</h3>
                                             <div class="uk-form-row">
-                                                <input type="checkbox" checked data-switchery id="user_edit_active" />
-                                                <label for="user_edit_active" class="inline-label">Forum Active</label>
+
+                                                <?php
+                                                    if($forum_status == 'active'){
+                                                ?>
+                                                    <input type="checkbox" checked data-switchery id="user_edit_active" disabled/>
+                                                    <label for="user_edit_active" class="inline-label">Forum Active</label>
+                                                <?php }else{
+                                                    ?>
+                                                        <input type="checkbox" data-switchery id="user_edit_active" disabled/>
+                                                        <label for="user_edit_active" class="inline-label">Forum Archived</label>
+                                                    <?php
+                                                } ?>
                                             </div>                                
                                         </div>
                                     </div>
@@ -309,6 +331,25 @@
             UIkit.modal.confirm("Do you want to archive this forum?", function(){
                 // will be executed on confirm.
                 $.post('api/index.php', {action:'archive_forum', forum:forum_id, user:<?php echo $userId; ?>}, function(data){
+                    if(typeof(data) != 'object'){
+                        ret = JSON.parse();
+                    }else{
+                        ret = data;
+                    }
+
+                    location.reload();
+                })
+            })
+        })
+
+        $("#activate_forum_btn").on('click', function(){
+            //when the foru, is to be deleted
+            forum_id = $(this).data('forum');
+
+            //ask for confirmation
+            UIkit.modal.confirm("Do you want to Re-Activate this forum?", function(){
+                // will be executed on confirm.
+                $.post('api/index.php', {action:'activate_forum', forum:forum_id, user:<?php echo $userId; ?>}, function(data){
                     if(typeof(data) != 'object'){
                         ret = JSON.parse();
                     }else{
