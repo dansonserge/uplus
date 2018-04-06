@@ -11,7 +11,7 @@ $('textarea#broadcastMsg').keyup(function(event){
         $('textarea#broadcastMsg').trigger('keypress');
 })
 
-// button group for contribute and sending
+// button group for schedule and sending
 $(".messageActionButton").on('click', function(e){
     e.preventDefault();
 	target = $(this).attr('id'); //getting the id of clicked button
@@ -54,10 +54,12 @@ $(".messageActionButton").on('click', function(e){
 	        oj = confmodal.show();
 	        var me = 0;
 
+            smsName = $("#senderName").val()
+
 	        $(".broadcastMsg").on('click', function(){
 	            modal = UIkit.modal('#sendMessageModal');
 	            modal.hide();
-	            $.post('api/msg.php', {act:'save', mode:"sms", message:message, members:arr}, function(data){
+	            $.post('api/msg.php', {act:'save', mode:"sms", message:message, smsName:smsName, members:arr}, function(data){
 	               //Parsing return data
 	               try{
 	                    ret = JSON.parse(data);

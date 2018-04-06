@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="md-input-wrapper sms-elem uk-width-medium-1-4" id="smsNameField">
-                        <input type="text" placeholder="Sender Name" name="senderName" id="senderName" value="<?php echo(churchSMSname($churchID)); ?>" class="md-input label-fixed" />
+                        <input type="text" placeholder="Sender Name" name="senderName" id="senderName" value="<?php echo(churchSMSname($churchID)); ?>" class="md-input label-fixed" maxlength=11/>
                         <span class="md-input-bar "></span>
                     </div>
 
@@ -213,8 +213,10 @@
 
     //members with phone
     memberWithPhone = <?php echo(json_encode($mPhone)); ?>;
+
     //members with email
     memberWithEmail = <?php echo(json_encode($mEmail)); ?>;
+
     //members with app
     memberWithApp   = <?php echo(json_encode($mApp)); ?>;
 

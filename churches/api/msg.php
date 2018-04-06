@@ -23,6 +23,7 @@
         $message = $req['message']??"";
         $mode = $req['mode'];
         $subject = $req['subject']??"";
+        $smsName = $req['smsName']??""; //for sms
 
         $scheduleTime = $req['scheduleTime']??false;
 
@@ -31,7 +32,7 @@
         
 
         //Adding message in DB as reference
-        $messageID = addMessage($user, $message, $mode, $subject, $scheduleTime);
+        $messageID = addMessage($user, $message, $mode, $subject, $scheduleTime, $smsName);
 
         //Queing messages for sending
         $questat = logMessages($messageID, $members);

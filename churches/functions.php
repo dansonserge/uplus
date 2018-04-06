@@ -363,23 +363,24 @@
         include 'db.php';
         //Getting details of the message log
 
-        $det = $conn->query("SELECT email, subject, token, sender, members.phone as receiver, message.message as message, channel FROM messageslog JOIN message ON messageslog.message = message.id JOIN members ON messageslog.receiver = members.id WHERE messageslog.id = \"$logID\" LIMIT 1 ") or trigger_error("can get log data ".mysqli_error($conn));
+        $det = $conn->query("SELECT email, subject, token, sender, smsName members.phone as receiver, message.message as message, channel FROM messageslog JOIN message ON messageslog.message = message.id JOIN members ON messageslog.receiver = members.id WHERE messageslog.id = \"$logID\" LIMIT 1 ") or trigger_error("can get log data ".mysqli_error($conn));
 
         if(mysqli_num_rows($det)){
             $smsdet = mysqli_fetch_assoc($det);
             $channel = $smsdet['channel'];
             $receiver = $smsdet['receiver'];
             $message = $smsdet['message'];
+            
 
             $messageSender = $smsdet['sender'];
 
             $senderData = staff_details($messageSender);
             if($channel == 'sms'){
                 //checking the sms name
-                $smsname = churchSMSname($senderData['church']);
+                $smsName = $smsName??churchSMSname($senderData['church']);
 
                 //Sending sms
-                $smsstatus = sendsms($receiver, $message, '', $smsname);
+                $smsstatus = sendsms($receiver, $message, '', $smsName);
 
 
                 //reducing SMS
@@ -604,10 +605,10 @@
       return $pods;
     }
 
-    function addMessage($sender, $message, $channel, $subject, $scheduleTime=""){
+    function addMessage($sender, $message, $channel, $subject, $scheduleTime="", $smsName=null){
         //$time = $time??date('Y-m-d h:m:s');
         global $conn;
-        $sql = "INSERT INTO message(sender, message, channel, subject, scheduleTime) VALUES (\"$sender\", \"$message\", \"$channel\", \"$subject\", \"$scheduleTime\")";
+        $sql = "INSERT INTO message(sender, message, channel, subject, scheduleTime, smsName) VALUES (\"$sender\", \"$message\", \"$channel\", \"$subject\", \"$scheduleTime\", \"$smsName\")";
 
         $query = mysqli_query($conn, $sql) or die("Okay".$conn->error);
         return mysqli_insert_id($conn);
