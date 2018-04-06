@@ -26,8 +26,6 @@
             $forumData = getForum($forum);
             $forum_title = $forumData['forumtitle']??"";
             $forum_logo = $forumData['logo'];
-
-            var_dump($forum_logo);
             ?>
                 <div id="page_content">
                     <div id="page_content_inner">
