@@ -46,7 +46,6 @@
                     </a>
                 </li>
             <?php }else if($userType == 'church'){?>
-
                 <li title="Members">
                     <a href="members.php">
                         <span class="menu_icon">
@@ -105,7 +104,18 @@
                         <span class="menu_title">Events</span>
                     </a>
                 </li>
-            <?php } ?>
+            <?php }elseif ($userType == 'group') {
+                ?>
+                    <li title="Members">
+                        <a href="members.php">
+                            <span class="menu_icon">
+                            <i class="material-icons"></i>
+                            </span>
+                            <span class="menu_title">Members</span>
+                        </a>
+                    </li>
+                <?php
+            } ?>
         </ul>
     </div>
 </aside><!-- main sidebar end -->
