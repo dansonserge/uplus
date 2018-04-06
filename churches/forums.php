@@ -127,7 +127,15 @@
                                             <div class="uk-form-row">
                                                 <ul>
                                                     <li>Created by: <i><?php echo staff_details($forumData['admin'])['name'] ?></i> </li>
-                                                    <li>Last updated: <?php echo $forumData['updatedDate'] ?> by <i><?php echo staff_details($forumData['admin'])['name'] ?></i></li>
+                                                    <?php
+                                                        if(!empty($forumData['updatedDate'])){
+                                                            ?>
+                                                              <li>Last updated: <?php echo $forumData['updatedDate'] ?> by <i><?php echo staff_details($forumData['updatedBy'])['name'] ?></i></li>  
+                                                            <?php
+                                                        }
+
+                                                    ?>
+                                                    
                                                 </ul>
 
                                                 <!-- <?php
