@@ -8,9 +8,9 @@ link: https://uplus.rw/api/invest.php
 			memberId
 		<-
 			forumId
-        	forumTitle
-        	forumSubtitle
-        	joined
+			forumTitle
+			forumSubtitle
+			joined
 
     joinForum
     	->
@@ -18,4 +18,11 @@ link: https://uplus.rw/api/invest.php
     		forumId
     	<-
     		"done"
+    exitForum
+    	->
+    		memberId
+    		forumId
+    	<-
+    		"done"
+    		
 --END FORUM--
