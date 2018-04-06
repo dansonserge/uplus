@@ -25,7 +25,6 @@
         for($n=0; $n<count($unsent); $n++){
             //sending one message
            $sendstat = msend($unsent[$n]['id']);           
-           break;
         }
 
         $unsent = msgStat($id, 'pending');
