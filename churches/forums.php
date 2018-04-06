@@ -96,7 +96,7 @@
                                                         }
 
                                                         //updating
-                                                        $query = $conn->query("UPDATE forums SET forumtitle = \"$title\", intro = \"$intro\", logo = \"$filename\" WHERE id = \"$forum\"  ") or trigger_error($conn->error);
+                                                        $query = $conn->query("UPDATE forums SET forumtitle = \"$title\", intro = \"$intro\", logo = \"$filename\", updatedDate = NOW(), updatedBy = $userId WHERE id = \"$forum\"  ") or trigger_error($conn->error);
                                                         if($query){
                                                             header("location:".$_SERVER['REQUEST_URI']);
                                                         }
@@ -123,11 +123,15 @@
                                 <div class="uk-width-large-3-10">
                                     <div class="md-card">
                                         <div class="md-card-content">
-                                            <h3 class="heading_c uk-margin-medium-bottom">Status</h3>
+                                            <h3 class="heading_c uk-margin-medium-bottom">Summary</h3>
                                             <div class="uk-form-row">
+                                                <ul>
+                                                    <li>Created by: <i><?php echo staff_details($forumData['admin'])['name'] ?></i> </li>
+                                                    <li>Last updated: <?php echo $forumData['updatedDate'] ?> by <i><?php echo staff_details($forumData['admin'])['name'] ?></i></li>
+                                                </ul>
 
-                                                <?php
-                                                    if($forum_status == 'active'){
+                                                <!-- <?php
+                                                    if($forum_status == 'active' ){
                                                 ?>
                                                     <input type="checkbox" checked data-switchery id="user_edit_active" disabled/>
                                                     <label for="user_edit_active" class="inline-label">Forum Active</label>
@@ -136,7 +140,7 @@
                                                         <input type="checkbox" data-switchery id="user_edit_active" disabled/>
                                                         <label for="user_edit_active" class="inline-label">Forum Archived</label>
                                                     <?php
-                                                } ?>
+                                                } ?> -->
                                             </div>                                
                                         </div>
                                     </div>
@@ -334,7 +338,6 @@
                     }else{
                         ret = data;
                     }
-
                     location = 'forums.php';
                 })
             })
