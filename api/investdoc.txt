@@ -10,6 +10,7 @@ link: https://uplus.rw/api/invest.php
 			forumId
 			forumTitle
 			forumSubtitle
+			forumIcon
 			joined
 			joinedCount
 
