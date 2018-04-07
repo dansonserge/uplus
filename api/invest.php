@@ -36,11 +36,16 @@
 			{
 				$joined = '1';
 			}
+			$forumId = $forum['forumId'];
+			
+			$countQuery = $investDb->query("SELECT * FROM forummember WHERE forumId = '$forumId' AND mine = 'NO'")or die(mysqli_error($investDb));
+		   	$joinedCount = mysqli_num_rows($countQuery);
 		    $forums[] = array(
-				"forumId"		=> $forum['forumId'],
+				"forumId"		=> $forumId,
 				"forumTitle"	=> $forum['title'],
 				"forumSubtitle"	=> $forum['subtitle'],
-				"joined"		=> $joined
+				"joined"		=> $joined,
+				"joinedCount"	=> $joinedCount
 			);
 		}
 		header('Content-Type: application/json');
