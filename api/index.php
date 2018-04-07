@@ -165,9 +165,9 @@
 				$sqlStatus = $outCon->query("SELECT status FROM directtransfers WHERE id = '$myId'");
 				$status = mysqli_fetch_array($sqlStatus)['status'];
 				$sqlPull = $outCon->query("SELECT actorName FROM directtransfers WHERE id = '$myId'+1");
-				$pullName = mysqli_fetch_array($sqlPull)['actorName'].'<em>('.$pullnumber.')</em>';
+				$pullName = mysqli_fetch_array($sqlPull)['actorName'].'('.$pullnumber.')';
 				$sqlPush = $outCon->query("SELECT actorName FROM directtransfers WHERE id = '$myId'");
-				$pushName = mysqli_fetch_array($sqlPush)['actorName'].'<em>('.$pushnumber.')</em>';
+				$pushName = mysqli_fetch_array($sqlPush)['actorName'].'('.$pushnumber.')';
 			}
 			$amount 	= $row['amount'];
 			if($status=="Failed"){
