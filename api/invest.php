@@ -24,7 +24,7 @@
 	{
 		require('db.php');
 		$memberId		= mysqli_real_escape_string($db, $_POST['memberId']);
-		$query = $investDb->query("SELECT F.id forumId, F.title, F.subtitle, IFNULL((SELECT M.mine FROM forummember M WHERE M.memberId = '$memberId' AND M.forumId = F.id),'YES') AS mine  FROM forums F WHERE archive <> 'YES'")or die(mysqli_error($investDb));
+		$query = $investDb->query("SELECT F.id forumId, F.title, F.subtitle, F.icon, IFNULL((SELECT M.mine FROM forummember M WHERE M.memberId = '$memberId' AND M.forumId = F.id),'YES') AS mine  FROM forums F WHERE archive <> 'YES'")or die(mysqli_error($investDb));
 		$forums = array();
 		while ($forum = mysqli_fetch_array($query))
 		{
@@ -44,6 +44,7 @@
 				"forumId"		=> $forumId,
 				"forumTitle"	=> $forum['title'],
 				"forumSubtitle"	=> $forum['subtitle'],
+				"forumIcon"		=> $forum['icon'],
 				"joined"		=> $joined,
 				"joinedCount"	=> $joinedCount
 			);
