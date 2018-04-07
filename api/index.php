@@ -193,10 +193,10 @@
 	        	"transactionColor"	=> $color
 	    	);
 		}
-		//header('Content-Type: application/json');
-		//$returnedinformation = json_encode($returnedinformation);
-		//echo $returnedinformation;
-		echo $n;
+		header('Content-Type: application/json');
+		$returnedinformation = json_encode($returnedinformation);
+		echo $returnedinformation;
+		//echo $n;
 	}
 // END ACCOUNTS
 
