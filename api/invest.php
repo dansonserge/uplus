@@ -53,9 +53,13 @@
 		require('db.php');
 		$memberId	= mysqli_real_escape_string($db, $_POST['memberId']);
 		$forumId	= mysqli_real_escape_string($db, $_POST['forumId']);
-		if(mysqli_num_rows($investDb->query("SELECT * FROM forumuser WHERE forumCode = '$forumId' AND userCode = '$memberId'"))>0)
+		if(mysqli_num_rows($investDb->query("SELECT * FROM forumuser WHERE forumCode = '$forumId' AND (userCode = '$memberId' AND archive <> 'YES')"))>0)
 		{
 			echo "User Already In with memberId (".$memberId.") And forumId: (".$forumId.")";
+		}
+		elseif (mysqli_num_rows($investDb->query("SELECT * FROM forumuser WHERE forumCode = '$forumId' AND (userCode = '$memberId' AND archive = 'YES')"))>0) {
+			$query 		= $investDb->query("UPDATE forumuser SET archive = 'NO' WHERE forumCode = '$forumId' and userCode = '$memberId'")or die(mysqli_error($investDb));
+			echo "User Brought back in, with memberId (".$memberId.") And forumId: (".$forumId.")";
 		}
 		else
 		{
@@ -70,10 +74,9 @@
 		require('db.php');
 		$memberId	= mysqli_real_escape_string($db, $_POST['memberId']);
 		$forumId	= mysqli_real_escape_string($db, $_POST['forumId']);
-		$query 		= $investDb->query("UPDATE forumuser SET archive = 'YES' WHERE forumCode = '$forumId' and userCode = '$memberId')")or die(mysqli_error($investDb));
 		if(mysqli_num_rows($investDb->query("SELECT * FROM forumuser WHERE forumCode = '$forumId' AND userCode = '$memberId'"))>0)
 		{
-			$query 		= $investDb->query("INSERT INTO forumuser (forumCode, userCode, createdBy) VALUES ('$forumId','$memberId','$memberId')")or die(mysqli_error($investDb));
+			$query 		= $investDb->query("UPDATE forumuser SET archive = 'YES' WHERE forumCode = '$forumId' and userCode = '$memberId'")or die(mysqli_error($investDb));
 			echo "Done user exited the forum with memberId (".$memberId.") And forumId: (".$forumId.")";
 		}
 		else
