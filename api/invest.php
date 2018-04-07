@@ -55,13 +55,14 @@
 		$forumId	= mysqli_real_escape_string($db, $_POST['forumId']);
 		if(mysqli_num_rows($investDb->query("SELECT * FROM forumuser WHERE forumCode = '$forumId' AND userCode = '$memberId'"))>0)
 		{
-
+			echo "User Already In with memberId (".$memberId.") And forumId: (".$forumId.")";
 		}
 		else
 		{
 			$query 		= $investDb->query("INSERT INTO forumuser (forumCode, userCode, createdBy) VALUES ('$forumId','$memberId','$memberId')")or die(mysqli_error($investDb));
+			echo "Done with memberId (".$memberId.") And forumId: (".$forumId.")";
 		}
-		echo "Done";
+		
 	}
 
 	function exitForum()
