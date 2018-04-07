@@ -28,7 +28,7 @@
 		$forums = array();
 		while ($forum = mysqli_fetch_array($query))
 		{
-			if(!$forum['mine'] == 'NO')
+			if($forum['mine'] == 'YES' || $forum['mine'] == NULL)
 			{
 				$joined = '0';
 			}
