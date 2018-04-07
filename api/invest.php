@@ -55,7 +55,7 @@
 		$forumId	= mysqli_real_escape_string($db, $_POST['forumId']);
 		
 			$countrow= $investDb->query("SELECT * FROM forumuser WHERE forumCode = '$forumId' AND userCode = '$memberId'");
-$counts = mysqli_nu_rows($countrow);if($counts > 0){
+$counts = mysqli_num_rows($countrow);if($counts > 0){
 		}
 		else
 		{
