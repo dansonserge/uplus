@@ -30,11 +30,11 @@
 		{
 			if($forum['mine'] == 'YES' || $forum['mine'] == NULL)
 			{
-				$joined = '0';
+				$joined = '0'.$forum['mine'];
 			}
 			else
 			{
-				$joined = '1';
+				$joined = '1'.$forum['mine'];
 			}
 		    $forums[] = array(
 				"forumId"		=> $forum['forumId'],
