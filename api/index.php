@@ -3159,8 +3159,7 @@
 		$forums = array();
 		while ($forum = mysqli_fetch_array($sql))
 		{
-			
-		    $forums[] = array(
+			$forums[] = array(
 				"forumtId"			=> $forum['id'],
 				"forumTitle"		=> $forum['forumtitle'],
 				"forumSubtitle"		=> $forum['intro'],
