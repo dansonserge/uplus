@@ -4,7 +4,7 @@
     include '../functions.php';
 
     //return JSON Content-Type
-    // header('Content-Type: application/json');
+    header('Content-Type: application/json');
 
 	$Message = new broadcast();
 	$request = array_merge($_POST, $_GET); //$_GET for devt nd $_POST for production
@@ -471,7 +471,9 @@
         }else{
             $response = array('status'=>false, 'msg'=>"Provide all the details");
         }
-    }else if($action == 'list_forums' || $action == 'listForums' ){
+    }
+    else if($action == 'list_forums' || $action == 'listForums' )
+    {
         //listing forums
         $query = $conn->query("SELECT * FROM forums")or die(mysqli_error($conn));
         $forums = array();
