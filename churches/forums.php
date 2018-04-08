@@ -126,10 +126,10 @@
                                             <h3 class="heading_c uk-margin-medium-bottom">Summary</h3>
                                             <div class="uk-form-row">
                                                 <ul>
-                                                    <li>Created by: <i><?php echo staff_details($forumData['admin'])['name'] ?></i> </li>
+<!--                                                     <li>Created by: <i><?php echo staff_details($forumData['admin'])['name'] ?></i> </li> -->
                                                     <li><i></i> <?php echo rand(0, total_users())." of ".total_users(); ?> joined</li>
                                                     <?php
-                                                        if(!empty($forumData['updatedDate'])){
+                                                        if(!empty($forumData['updatedDate']) && 0){
                                                             ?>
                                                               <li>Last updated: <?php echo $forumData['updatedDate'] ?> by <i><?php echo staff_details($forumData['updatedBy'])['name'] ?></i></li>  
                                                             <?php
