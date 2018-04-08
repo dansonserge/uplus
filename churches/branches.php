@@ -6,6 +6,11 @@
         $title = "Branches";
         //Including common head configuration
         include_once "head.php";
+
+        //Check if the admin is going to set branches for new church
+        if($userData['type'] == 'admin'){
+            
+        }
     ?>
     <!-- dropify -->
     <link rel="stylesheet" href="assets/skins/dropify/css/dropify.css">

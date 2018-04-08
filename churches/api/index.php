@@ -484,10 +484,6 @@
                 "forumTitle"        => $data['forumtitle'],
                 "forumSubtitle"     => $data['intro'],
                 "forumlogo"         => $data['logo'],
-                "forumAdmin"        => $data['admin'],
-                "forumAddedDate"    => $data['addedDate'],
-                "archived"          => empty($data['archiveDate'])?false:true,
-
             );
         }
         $response = $forums;

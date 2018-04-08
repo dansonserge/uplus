@@ -43,9 +43,6 @@
                 </div>
                 <div>
                     <div class="md-card">
-                        <?php
-
-                        ?>
                         <div class="md-card-content">
                             <?php
                                 $groups = list_groups($churchID);
