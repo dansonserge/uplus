@@ -4,7 +4,7 @@
     include '../functions.php';
 
     //return JSON Content-Type
-    header('Content-Type: application/json');
+    // header('Content-Type: application/json');
 
 	$Message = new broadcast();
 	$request = array_merge($_POST, $_GET); //$_GET for devt nd $_POST for production
@@ -471,15 +471,24 @@
         }else{
             $response = array('status'=>false, 'msg'=>"Provide all the details");
         }
-    }else if($action == 'list_forums'){
+    }else if($action == 'list_forums' || $action == 'listForums' ){
         //listing forums
         $query = $conn->query("SELECT * FROM forums")or die(mysqli_error($conn));
         $forums = array();
         while ($data = mysqli_fetch_array($query))
         {
-            $forums[] = $data;
+            $forums[] = array(
+                "forumtId"          => $data['id'],
+                "forumTitle"        => $data['forumtitle'],
+                "forumSubtitle"     => $data['intro'],
+                "forumlogo"         => $data['logo'],
+                "forumAdmin"        => $data['admin'],
+                "forumAddedDate"    => $data['addedDate'],
+                "archived"          => empty($data['archiveDate'])?false:true,
+
+            );
         }
-        echo json_encode($forums);
+        $response = $forums;
     }else if($action == 'list_feeds'){
         //listing FEEDS - all feeds
         //TODO: pagination
