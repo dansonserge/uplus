@@ -125,7 +125,7 @@
                                         <div class="md-card-content">
                                             <h3 class="heading_c uk-margin-medium-bottom">Summary</h3>
                                             <div class="uk-form-row">
-                                                <i></i> <?php echo rand(0, total_users())." of ".total_users(); ?> joined
+                                                <i class="md-icon material-icons md-color-light-blue-500">person_outline</i> <?php echo rand(0, total_users())." of ".total_users(); ?> joined
                                                     <?php
                                                         if(!empty($forumData['updatedDate']) && 0){
                                                             ?>

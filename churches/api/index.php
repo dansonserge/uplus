@@ -483,7 +483,7 @@
                 "forumId"          => $data['id'],
                 "forumTitle"        => $data['forumtitle'],
                 "forumSubtitle"     => $data['intro'],
-                "forumlogo"         => $data['logo'],
+                "forumlogo"         => $data['logo']
             );
         }
         $response = $forums;
