@@ -24,7 +24,7 @@
 	{
 		require('db.php');
 		$memberId		= mysqli_real_escape_string($db, $_POST['memberId']);
-		$query = $investDb->query("SELECT id forumId, title, subtitle, IFNULL((SELECT mine FROM forummember WHERE memberId = '$memberId'),'YES') AS mine  FROM forums WHERE archive <> 'YES'")or die(mysqli_error($investDb));
+		$query = $investDb->query("SELECT F.id forumId, F.title, F.subtitle, F.icon, IFNULL((SELECT M.mine FROM forummember M WHERE M.memberId = '$memberId' AND M.forumId = F.id),'YES') AS mine  FROM forums F WHERE archive <> 'YES'")or die(mysqli_error($investDb));
 		$forums = array();
 		while ($forum = mysqli_fetch_array($query))
 		{
@@ -36,11 +36,17 @@
 			{
 				$joined = '1';
 			}
+			$forumId = $forum['forumId'];
+			
+			$countQuery = $investDb->query("SELECT * FROM forummember WHERE forumId = '$forumId' AND mine = 'NO'")or die(mysqli_error($investDb));
+		   	$joinedCount = mysqli_num_rows($countQuery);
 		    $forums[] = array(
-				"forumId"		=> $forum['forumId'],
+				"forumId"		=> $forumId,
 				"forumTitle"	=> $forum['title'],
 				"forumSubtitle"	=> $forum['subtitle'],
-				"joined"		=> $joined
+				"forumIcon"		=> $forum['icon'],
+				"joined"		=> $joined,
+				"joinedCount"	=> $joinedCount
 			);
 		}
 		header('Content-Type: application/json');
@@ -53,15 +59,20 @@
 		require('db.php');
 		$memberId	= mysqli_real_escape_string($db, $_POST['memberId']);
 		$forumId	= mysqli_real_escape_string($db, $_POST['forumId']);
-		if(mysqli_num_rows($investDb->query("SELECT * FROM forumuser WHERE forumCode = '$forumId' AND userCode = '$memberId'"))>0)
+		if(mysqli_num_rows($investDb->query("SELECT * FROM forumuser WHERE forumCode = '$forumId' AND (userCode = '$memberId' AND archive <> 'YES')"))>0)
 		{
-
+			echo "User Already In with memberId (".$memberId.") And forumId: (".$forumId.")";
+		}
+		elseif (mysqli_num_rows($investDb->query("SELECT * FROM forumuser WHERE forumCode = '$forumId' AND (userCode = '$memberId' AND archive = 'YES')"))>0) {
+			$query 		= $investDb->query("UPDATE forumuser SET archive = 'NO' WHERE forumCode = '$forumId' and userCode = '$memberId'")or die(mysqli_error($investDb));
+			echo "User Brought back in, with memberId (".$memberId.") And forumId: (".$forumId.")";
 		}
 		else
 		{
 			$query 		= $investDb->query("INSERT INTO forumuser (forumCode, userCode, createdBy) VALUES ('$forumId','$memberId','$memberId')")or die(mysqli_error($investDb));
+			echo "Done with memberId (".$memberId.") And forumId: (".$forumId.")";
 		}
-		echo "Done";
+		
 	}
 
 	function exitForum()
@@ -69,8 +80,15 @@
 		require('db.php');
 		$memberId	= mysqli_real_escape_string($db, $_POST['memberId']);
 		$forumId	= mysqli_real_escape_string($db, $_POST['forumId']);
-		$query 		= $investDb->query("UPDATE forumuser SET archive = 'YES' WHERE forumCode = '$forumId' and userCode = '$memberId')")or die(mysqli_error($investDb));
-		echo "Done";
+		if(mysqli_num_rows($investDb->query("SELECT * FROM forumuser WHERE forumCode = '$forumId' AND userCode = '$memberId'"))>0)
+		{
+			$query 		= $investDb->query("UPDATE forumuser SET archive = 'YES' WHERE forumCode = '$forumId' and userCode = '$memberId'")or die(mysqli_error($investDb));
+			echo "Done user exited the forum with memberId (".$memberId.") And forumId: (".$forumId.")";
+		}
+		else
+		{
+			echo "User wasent in the forum With memberId: (".$memberId.") And forumId: (".$forumId.")";
+		}
 	}
 
 // END FORUMS

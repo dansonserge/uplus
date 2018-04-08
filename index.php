@@ -930,21 +930,21 @@
 	}
 </script>
 <?php 
-	$nowthis = date_create($eventStart);
-	$year = date_format($nowthis, "Y");
-	$month = date_format($nowthis, "n");
-	$day = date_format($nowthis, "j");
+	//$nowthis = date_create($eventStart);
+	//$year = date_format($nowthis, "Y");
+	//$month = date_format($nowthis, "n");
+	//$day = date_format($nowthis, "j");
 ?>
 <script>
 	$(document).ready(function(){
-	var year1 = " <?php echo $year ?> ";
+	/*var year1 = " <?php echo $year ?> ";
 	var month2 = " <?php echo $month ?> ";
 	var day3 = " <?php echo $day ?> ";
 	$('#countDown').revolver({
 		year : year1,	
 		month : month2,	
 		day : day3,	
-	});
+	});*/
 	});
 </script>
 
