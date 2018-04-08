@@ -478,7 +478,7 @@
         while ($data = mysqli_fetch_array($query))
         {
             $forums[] = array(
-                "forumtId"          => $data['id'],
+                "forumId"          => $data['id'],
                 "forumTitle"        => $data['forumtitle'],
                 "forumSubtitle"     => $data['intro'],
                 "forumlogo"         => $data['logo'],
