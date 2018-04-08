@@ -25,7 +25,7 @@
         if(!empty($forum)){
             $forumData = getForum($forum);
             $forum_title = $forumData['forumtitle']??"";
-            $forum_logo = $forumData['logo'];
+            $forum_logo = $usual_logo =  $forumData['logo'];
             $forum_status = empty($forumData['archiveDate'])?'active':'archive';
             ?>
                 <div id="page_content">
@@ -89,10 +89,10 @@
                                                                     $filename = $forum_logo;
                                                                 }
                                                             }else{
-                                                                $filename = $forum_logo;
+                                                                $filename = $usual_logo;
                                                             }
                                                         }else{
-                                                            $filename = $forum_logo;
+                                                            $filename = $usual_logo;
                                                         }
 
                                                         //updating
