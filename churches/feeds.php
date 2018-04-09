@@ -43,6 +43,8 @@
                 ?>
                 <div id="page_content_inner">
                     <h3 class="uk-margin-bottom">Feeds</h3>
+
+                    <!-- Feedds input -->
                     <div class="uk-grid" data-uk-grid-margin="">
                         <div class="uk-margin-bottom uk-width-medium-2-3 uk-row-first">
                             <div class="md-card">
@@ -125,6 +127,7 @@
                         </div>
                     </div>
 
+                    <!-- POsted feeds -->
                     <div class="uk-grid" data-uk-grid-margin="">
                         <?php
                             $posts = getPosts($churchID);
@@ -196,9 +199,7 @@
                     <div class="uk-grid" data-uk-grid-margin="">
                         <?php
                             //getting podcasts
-                        	$podcats = church_podcasts($churchID);
-
-                            
+                        	$podcats = church_podcasts($churchID);                            
 
                             //Getting branches
                             $branches = churchbranches($churchID);
@@ -208,7 +209,7 @@
                                 //getting representative
                                 // $rep = user_details($branch['repId']);
                         ?>
-                        <div class="uk-margin-bottom uk-row-first">
+                        <div class="uk-margin-bottom uk-width-medium-1-3 uk-width-1-1">
                             <div class="md-card md-card">
                                 <div class="md-card-toolbar">
                                     <h3 class="md-card-toolbar-heading-text">
