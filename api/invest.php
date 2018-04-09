@@ -107,7 +107,7 @@
 				"feedBy"		=> $feed['feedBy'],
 				"feedByImg"		=> $feed['feedByImg'],
 				"feedLikes"		=> $feed['feedLikes'],
-				"feedLikeStatus"=> 'NO',
+				"feedLikeStatus"=> 'NO', "feedComments" => "12",
 				"feedDate"		=> $feed['feedDate'],
 				"feedContent"	=> $feed['feedContent'],
 				"feedDate"		=> $feed['feedDate']
