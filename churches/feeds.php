@@ -22,12 +22,17 @@
 
     <div id="page_content">
         <?php
+            //forums
+            $forums = church_forums();
             if(!empty($_GET['branch'])){
                 $branchid = $_GET['branch'];
                 $branch_data = get_branch($branchid);
                 $branch_name = $branch_data['name'];
 
                 $branch_representative = branch_leader($branchid, 'representative');
+
+                
+                
 
                 ?>
                     <div id="page_content_inner">
@@ -38,8 +43,8 @@
                 ?>
                 <div id="page_content_inner">
                     <h3 class="uk-margin-bottom">Feeds</h3>
-                    <div class="uk-grid uk-grid-width-medium-1-1" data-uk-grid-margin="">
-                        <div class="uk-margin-bottom uk-row-first">
+                    <div class="uk-grid" data-uk-grid-margin="">
+                        <div class="uk-margin-bottom uk-width-medium-2-3 uk-row-first">
                             <div class="md-card">
                                 <div class="md-card-content">
                                 	<form id="feed_create_form">
@@ -90,9 +95,37 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="uk-margin-bottom uk-width-medium-1-3">
+                            <div class="md-card">
+                                <div class="md-card-content">
+                                    <h3 class="heading_c uk-margin-medium-bottom">Filter Feeds</h3>
+                                    <div class="">
+                                        <p>
+                                            <input type="radio" name="radio_demo" id="radio_demo_1" data-md-icheck />
+                                            <label for="radio_demo_1" class="inline-label">Public</label>
+                                        </p>
+                                        <p>
+                                            <input type="radio" name="radio_demo" id="radio_demo_2" data-md-icheck />
+                                            <label for="radio_demo_2" class="inline-label">My church</label>
+                                        </p>
+                                        <h3 class="heading_c uk-margin-bottom">Forums</h3>
+                                        <?php
+                                            foreach ($forums as $key => $forum) {
+                                                ?>
+                                                    <p>
+                                                        <input type="radio" name="radio_demo" id="radio_demo_2" data-md-icheck />
+                                                        <label for="radio_demo_2" class="inline-label"><?php echo $forum['forumtitle'] ?></label>
+                                                    </p>
+                                                <?php
+                                            }
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="uk-grid uk-grid-width-medium-1-1 uk-width-1-1" style="max-width: 1200px" data-uk-grid-margin="">
+                    <div class="uk-grid" data-uk-grid-margin="">
 
                         <?php
                             $posts = getPosts($churchID);
@@ -105,7 +138,7 @@
 
                                 $post_attachments = json_decode($post['attachment'], true);
                                 ?>
-                                    <div class="uk-margin-bottom">
+                                    <div class="uk-margin-bottom uk-width-medium-2-3 uk-width-1-1">
                                         <div class="md-card">
                                             <div class="md-card-content small-padding">
                                                 <div class="blog_list_teaser" style="margin-bottom: 12px;">

@@ -187,6 +187,20 @@
       return $query->fetch_assoc();
     }
 
+
+    function church_forums(){
+    	//returns church
+    	global $conn;
+    	$query = $conn->query("SELECT * FROM forums ") or trigger_error("can't  get forums $conn->error");
+
+    	$forums = array();
+
+    	while ($data = $query->fetch_assoc()) {
+    		$forums[] = $data;
+    	}
+    	return $forums;
+    }
+
     function group_members($group){
       //members details
       global $conn;
