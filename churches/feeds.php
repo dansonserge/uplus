@@ -171,7 +171,7 @@
                                                             else if($ext == 'mp4'){
                                                                 //video
                                                                 ?>
-                                                                    <video src="<?php echo $attachment ?>" controls></video>
+                                                                    <video src="<?php echo $attachment ?>" width='100%' controls></video>
                                                                 <?php 
                                                             }
                                                         }
