@@ -109,7 +109,7 @@
                                 <tbody>
                                     <?php 
                                     $n=0;
-                                    $sqlGetMembers = $db->query("SELECT * FROM `members` ORDER BY id DESC")or die ($db->error);
+                                    $sqlGetMembers = $db->query("SELECT * FROM `members` WHERE church = \"$churchID\" ORDER BY id DESC")or die ($db->error);
                                     while($rowMember = mysqli_fetch_array($sqlGetMembers))
                                         {
                                             $branchid = $rowMember['branchid'];

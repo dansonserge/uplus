@@ -1,0 +1,24 @@
+Attandance List
+userCode	attCode		status
+1			1			1
+
+2			1			0
+
+3			1			1
+
+4			2			1
+
+7			2			0
+
+5			3			1
+
+9			3			1
+
+
+
+Attandance Table
+attId		groupCode	createdDate		createdBy
+1			1			01/02/18		1
+3			1			01/02/18		1
+4			1			01/02/18		1
+5			1			01/02/18		1
