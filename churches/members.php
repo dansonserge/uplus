@@ -68,7 +68,6 @@
                                 </div>
                                 <div class="uk-width-2-6">
                                     <form class="-form">
-                                        <div class="uk-input-group">
                             
                       
                                         <div class="md-input-wrapper">
@@ -109,7 +108,7 @@
                                 <tbody>
                                     <?php 
                                     $n=0;
-                                    $sqlGetMembers = $db->query("SELECT * FROM `members` WHERE church = \"$churchID\" ORDER BY id DESC")or die ($db->error);
+                                    $sqlGetMembers = $db->query("SELECT * FROM `members` as m JOIN branches as b ON m.branchid = b.id  WHERE b.church = \"$churchID\" ORDER BY m.id DESC")or die ($db->error);
                                     while($rowMember = mysqli_fetch_array($sqlGetMembers))
                                         {
                                             $branchid = $rowMember['branchid'];
