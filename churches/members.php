@@ -72,10 +72,10 @@
                       
                                         <div class="md-input-wrapper">
                                                 <label>To</label>
-                                                <input type="text" name="date" class="md-input" id="date-input" data-uk-datepicker="{format:'YYYY-MM-DD', minDate: '2017-01-01'}>
+                                                <input type="text" name="date" class="md-input" id="date-input" data-uk-datepicker="{format:'YYYY-MM-DD', minDate: '2017-01-01'}">
                                                 <span class="md-input-bar "></span>
                                         </div>
-                                        <span class="uk-input-group-addon"><a class="md-btn" href="#">Generate</a></span>  </div>
+                                        <span class="uk-input-group-addon"><a class="md-btn" href="#">Generate</a></span>
                                     </form>
                                 </div>
                                 
@@ -83,12 +83,13 @@
                             
                             
                             <canvas id="mem_attendance" class="attendance" width="400" height="80"></canvas>
-                            <div ></div>
+                            <div></div>
                         </div>
                     </div>
                     <div class="md-card">
-                        <div id="status"></div>
+                        
                         <div class="md-card-content">
+                            <div id="status"></div>
                             <div class="dt_colVis_buttons">
                             </div>
                             <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
@@ -108,7 +109,7 @@
                                 <tbody>
                                     <?php 
                                     $n=0;
-                                    $sqlGetMembers = $db->query("SELECT * FROM `members` as m JOIN branches as b ON m.branchid = b.id  WHERE b.church = \"$churchID\" ORDER BY m.id DESC")or die ($db->error);
+                                    $sqlGetMembers = $db->query("SELECT *, m.name as memberName FROM `members` as m JOIN branches as b ON m.branchid = b.id  WHERE b.church = \"$churchID\" ORDER BY m.id ASC")or die ($db->error);
                                     while($rowMember = mysqli_fetch_array($sqlGetMembers))
                                         {
                                             $branchid = $rowMember['branchid'];
@@ -117,7 +118,7 @@
                                             $n++;
                                             echo '<tr>
                                             <td>'.$n.'</td>
-                                            <td>'.$rowMember['name'].'</td>
+                                            <td>'.$rowMember['memberName'].'</td>
                                             <td>'.$branches['name'].'</td>
                                             <td>'.$rowMember['phone'].'</td>
                                             <td>'.$rowMember['email'].'</td>
