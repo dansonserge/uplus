@@ -191,7 +191,9 @@
                                 <?php
                             }
                         ?>
-                         
+                    </div>
+                    
+                    <div class="uk-grid" data-uk-grid-margin="">
                         <?php
                             //getting podcasts
                         	$podcats = church_podcasts($churchID);
