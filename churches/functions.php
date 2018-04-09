@@ -390,10 +390,14 @@
             $senderData = staff_details($messageSender);
             if($channel == 'sms'){
                 //checking the sms name
-                $smsName = $smsName??churchSMSname($senderData['church']);
+            	if(!empty($smsdet['smsName'])){
+            		$smsName = $smsdet['smsName'];
+            	}else{
+            		$smsName = churchSMSname($senderData['church']);
+            	}
 
-                //Sending sms
-                $smsstatus = sendsms($receiver, $message, '', $smsName);
+              //Sending sms
+              $smsstatus = sendsms($receiver, $message, '', $smsName);
 
 
                 //reducing SMS
@@ -452,7 +456,6 @@
       global $churchID;
 
       // $smsName = !empty( churchSMSname($churchID) )?churchSMSname($churchID):"Uplus";
-
       $data = array(
           "sender"        =>$smsName,
           "recipients"    =>$recipients,

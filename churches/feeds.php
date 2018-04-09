@@ -126,7 +126,6 @@
                     </div>
 
                     <div class="uk-grid" data-uk-grid-margin="">
-
                         <?php
                             $posts = getPosts($churchID);
                             foreach ($posts as $key => $post) {
