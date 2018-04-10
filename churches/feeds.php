@@ -171,7 +171,7 @@
                                                             else if($ext == 'mp4'){
                                                                 //video
                                                                 ?>
-                                                                    <video src="<?php echo $attachment ?>" width='100%' controls></video>
+                                                                    <video src="<?php echo $attachment ?>" width='100%' style="max-height:300px" controls></video>
                                                                 <?php 
                                                             }
                                                         }
@@ -412,7 +412,7 @@
 
                 ajax.addEventListener("load", function(){
                     setTimeout(function(){
-                        location.reload()
+                        // location.reload()
                     }, 1500)                    
                 })
             }else{
