@@ -23,105 +23,23 @@
 
     <div id="page_content">
             <?php
-                if(!empty($_GET['act']) && $_GET['act'] == 'edit'){
-                    $group = $_GET['group'];
 
-                    $groupData = $conn->query("SELECT groups.*, members.name as representative FROM groups JOIN members ON groups.representative = members.id WHERE groups.id = \"$group\" ") or die("error getting group data ".$conn->error);
-                    $groupData = $groupData->fetch_assoc();
+                if($userType == 'group'){
+                    //here we have to identify group ID of this group admin
 
-                    $group_types = group_types();
+                    $sql = "SELECT id FROM groups WHERE representative = \"$userId\" LIMIT 1";
 
-                    $gmembers = group_members($group_id);
+                    $query = $conn->query($sql) or trigger_error("Can't get admin group $conn->error");
+                    $data = $query->fetch_assoc();
+                    $groupId = $data['id'];
 
+                    if(!$groupId){
+                        die("You are not a group admin");
+                    }
+                }
 
-                    ?>
-                        <div id="page_content_inner" data-page="edit">
-                            <div class="heading_a uk-grid uk-margin-bottom uk-grid-width-large-1-2">
-                                <div class="uk-row-first"><h4 class=""><?php echo $churchname; ?> - Groups</h4></div>
-                            </div>
-                            <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
-                                <div class="uk-width-large-4-4">
-                                     <div class="md-card">
-                                        <div class="md-card-toolbar">
-                                            <h3 class="md-card-toolbar-heading-text">Edit Group</h3>
-                                            
-                                        </div>
-                                        <div class="md-card-content">
-                                            <form action="operations.php" method="POST">
-                                                <div class="md-input-wrapper">
-                                                    <select name="grouptype" data-md-selectize>
-                                                        <option value="">Type...</option>
-                                                        <?php
-                                                            for($n=0; $n<count($group_types); $n++){
-                                                                ?>
-                                                                    <option value="<?php echo $member_types[$n]; ?>"><?php echo $group_types[$n]; ?><option>
-                                                                <?php
-                                                            }
-                                                        ?>
-                                                    </select>
-                                                    <span class="md-input-bar "></span>
-                                                </div>
-                                                <select name="membertype" data-md-selectize="" tabindex="-1" style="display: none;" class="selectized"><option value="FULL" selected="selected">FULL</option></select>
-                                                <div class="md-input-wrapper md-input-filled">
-                                                    <label>Group Name</label>
-                                                    <input type="text" name="membername" value="<?php echo $groupData['name']; ?>" class="md-input">
-                                                    <span class="md-input-bar "></span>
-                                                </div>
-                                                <div class="parsley-row md-input-success">
-                                                    <label for="val_select" class="uk-form-label">Operation Branch*</label>
-                                                    <select id="val_select" data-md-selectize="" tabindex="-1" style="display: none;" class="selectized" required="" data-parsley-id="29">
-                                                        <?php
-                                                            $branches = churchbranches($churchID);
-                                                            foreach ($branches as $key => $branch) {
-                                                                # code...
-                                                                ?>
-                                                                    <option value="<?php echo $branch['id']; ?>"><?php echo $branch['name']; ?></option>
-                                                                <?php
-                                                            }
-                                                        ?>
-                                                    </select>
-                                                    <div class="selectize_fix"></div>
-                                                </div>
-                                                <!-- <div class="md-input-wrapper md-input-filled">
-                                                    <label>Operation Branch</label>
-                                                    <select class="selectized">
-                                                        <?php
-                                                            $branches = churchbranches($churchID);
-                                                            foreach ($branches as $key => $branch) {
-                                                                # code...
-                                                                ?>
-                                                                    <option value="<?php echo $branch['id']; ?>"><?php echo $branch['name']; ?></option>
-                                                                <?php
-                                                            }
-                                                        ?>
-                                                    </select>
-                                                </div> -->
-                                                <div class="md-input-wrapper md-input-filled">
-                                                    <label>Type</label>
-                                                    <input type="text" name="memberemail" class="md-input" value="<?php echo $groupData['type'] ?>">
-                                                    <span class="md-input-bar "></span>
-                                                </div>
-                                                <div class="md-input-wrapper md-input-filled">
-                                                    <label>Representative</label>
-                                                    <input type="text" name="memberlocation" value="ok" class="md-input">
-                                                        <span class="md-input-bar "></span>
-                                                </div>
-
-                                                <div class="selectize_fix"></div>
-                                                <div class="uk-grid">
-                                                    <div class="uk-width-1-1">
-                                                        <button class="md-btn md-btn-success">Save</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>              
-                        </div>
-                    <?php
-                }if(!empty($_GET['group'])){
-                    $group_id = $_GET['group'];
+                if(!empty($groupId)){
+                    $group_id = $groupId;
                     $group_data = group_details($group_id);
                     $groupname = $group_data['name'];
                     $grp_location = $group_data['maplocation']??$group_data['location'];
@@ -136,117 +54,11 @@
                                     <h4 class="md-card-toolbar-heading-text"><?php echo $groupname; ?></h4>
                                     <div class="md-card-toolbar-actions">
                                         <!-- <i class="md-icon material-icons md-color-blue-grey-500"></i> -->
-                                        <!-- <i class="md-icon material-icons md-color-light-blue-500"></i> -->
-                                        <!-- <i class="md-icon material-icons md-color-light-blue-500">message</i> -->
+                                        <!-- <i class="md-icon material-icons md-color-light-blue-500"></i> --><!-- 
+                                        <i class="md-icon material-icons md-color-light-blue-500">message</i> -->
                                         <i class="md-icon material-icons md-color-red-500" title="Add a member" id="grp_remove" data-grp = <?php echo $group_id; ?> >delete</i>                                        
                                     </div>
                                 </div>
-                                <div class="md-card-content">
-                                    <div class="uk-grid uk-grid-width-medium-1-2">
-                                        <div class="uk-row-first">
-                                            <div class="uk-overflow-container">
-                                                <table id="user" class="uk-table uk-text-nowrap">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="uk-width-1-3">Group name</td>
-                                                            <td class="uk-width-2-3">
-                                                                <div class="md-input-wrapper">
-                                                                    <input type="text" id='groupName' name="name" class="md-input" required value="<?php echo $groupname; ?>">
-                                                                    <input type="hidden" id='groupid' value="<?php echo $group_id; ?>">
-                                                                    <span class="md-input-bar "></span>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Group type</td>
-                                                            <td>
-                                                                <div class="md-input-wrapper">
-                                                                    <?php
-                                                                        $types = group_types($churchID);
-                                                                    ?>
-                                                                    <select name="branch" id="groupType" data-md-selectize required="required">
-                                                                        <?php
-                                                                            $group_type = $group_data['type'];
-                                                                            $types = group_types($churchID);
-                                                                            for ($n=0; $n<count($types); $n++) {
-                                                                                $type = $types[$n];
-                                                                                if($type == $group_type){
-                                                                                    echo '
-                                                                                    <option value="'.$type.'" selected>'.$type.'</option>
-                                                                                ';
-                                                                                }else{
-                                                                                    echo '
-                                                                                    <option value="'.$type.'">'.$type.'</option>
-                                                                                ';
-                                                                                }
-                                                                                
-                                                                            }
-                                                                        ?>
-                                                                    </select>
-                                                                    <span class="md-input-bar "></span>
-                                                                </div>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Location</td>
-                                                            <td>
-                                                                <div class="md-input-wrapper">
-                                                                    <input type="text" name="name" id="groupLocation" class="md-input" required value="<?php echo $group_data['location']; ?>">
-                                                                    <span class="md-input-bar "></span>
-                                                                </div>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Representative</td>
-                                                            <td>
-                                                                <div class="md-input-wrapper">
-                                                                    <?php
-                                                                        $user_data = user_details($group_data['representative']);
-                                                                    ?>
-                                                                    <select name="branch" data-md-selectize id="groupRepresentative" required="required">
-                                                                        <?php
-                                                                            for ($n=0; $n<count($gmembers); $n++) {
-                                                                                $member = $gmembers[$n];
-                                                                                $mem_name = $member['name'];
-                                                                                $mem_id = $member['id'];
-                                                                                if($user_data['name'] == $member['name']){
-                                                                                    echo '
-                                                                                    <option value="'.$mem_id.'" selected>'.$mem_name.'</option>
-                                                                                ';
-                                                                                }else{
-                                                                                    echo '
-                                                                                    <option value="'.$mem_id.'">'.$mem_name.'</option>
-                                                                                ';
-                                                                                }
-                                                                                
-                                                                            }
-                                                                        ?>
-                                                                    </select>
-                                                                    <span class="md-input-bar "></span>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr></tr>
-                                                        <tr>
-                                                            <td>Profile picture</td>
-                                                            <td><img src="<?php echo $group_data['profile_picture']; ?>"></td>
-                                                            
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <div id="groupUpdateStatus"></div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="group_map" style="height: 450px" data-location="<?php echo $grp_location; ?>" data-group-id="<?php echo $group_id; ?>"></div>
-                                            <div class="">                                                
-                                                <div style="position: absolute;bottom:15px; right: 2%">
-                                                    <button class="md-btn md-btn-info" id="saveGroupChangesBtn" data-uk-modal="{target:'#saveGroupChangesModal'}"><i class="material-icons">save</i></button>                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>  
-                                </div>
-                            </div>
-                            <div class="md-card uk-margin-medium-bottom">
                                 <div class="md-card-content">
                                     <?php
                                         //Showing group members                                            
@@ -264,6 +76,7 @@
                                                             <th>Name</th>
                                                             <th>Join date</th>
                                                             <th>Action</th>
+                                                            <
                                                         </tr>
                                                     </thead>
                                                     <tbody>

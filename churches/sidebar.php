@@ -114,6 +114,14 @@
                             <span class="menu_title">Members</span>
                         </a>
                     </li>
+                    <li title="Members">
+                        <a href="group_attendance.php">
+                            <span class="menu_icon">
+                            <i class="material-icons"></i>
+                            </span>
+                            <span class="menu_title">Attendance</span>
+                        </a>
+                    </li>
                 <?php
             } ?>
         </ul>

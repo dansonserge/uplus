@@ -38,7 +38,7 @@
                                     <div class="uk-grid">
                                         <div class="uk-width-1-6">
                                             <div class="uk--select"  data-uk-form-select>
-                                                <select id="selectChart" class="md-input">
+                                                <select id="selectService" class="md-input">
                                                     <option value="service">-- Any Service --</option>
                                                     <?php
                                                     //Getting services
@@ -52,35 +52,32 @@
                                                     ?>
                                                 </select>
                                             </div>
-                                            <form class="md-form">
-                                                
-                                            </form>
                                         </div>
                                         <div class="uk-width-1-6">
                                             <div class="uk--select"  data-uk-form-select>
-                                                <select id="selectChart" class="md-input">
-                                                    <option value="service">-- Gender --</option>
-                                                    <option value="gender">Male</option>
-                                                    <option value="days">Female</option>
+                                                <select id="selectGender" class="md-input">
+                                                    <option value="">-- Gender --</option>
+                                                    <option value="m">Male</option>
+                                                    <option value="f">Female</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="uk-width-1-6">
                                             <div class="md-input-wrapper">
                                                 <label>From</label>
-                                                <input type="text" name="date" class="md-input" id="date-input" data-uk-datepicker="{format:'DD-MM-YYYY', minDate: '2017-01-01'}>
+                                                <input type="text" name="date" class="md-input" id="startDateInput" data-uk-datepicker="{format:'DD-MM-YYYY', minDate: '2017-01-01'}>
                                                 <span class="md-input-bar ">
                                             </div>
                                         </div>
                                         <div class="uk-width-2-6">
                                             <div class="md-input-wrapper">
                                                     <label>To</label>
-                                                    <input type="text" name="date" class="md-input" id="date-input" data-uk-datepicker="{format:'DD-MM-YYYY', minDate: '2017-01-01'}">
+                                                    <input type="text" name="date" class="md-input" id="endDateInput" data-uk-datepicker="{format:'DD-MM-YYYY', minDate: '2017-01-01'}">
                                                     <span class="md-input-bar "></span>
                                             </div>                                        
                                         </div>
                                         <div class="uk-width-1-6">
-                                            <span class="uk-input-group-addon"><button class="md-btn" >Generate</button></span>
+                                            <span class="uk-input-group-addon"><button class="md-btn" id="generateChart">Generate</button></span>
                                         </div>
                                     </div>
                                 </div>                        
@@ -439,6 +436,18 @@
             console.log(data)
         }
 
+        // Button for generation
+        $("#generateChart").on('click', function(){
+            //extracting desired features
+            service = $("#selectService").val()
+            gender = $("#selectGender").val()
+
+            startDate = $("#startDateInput").val()
+            endDate = $("#endDateInput").val()
+
+            //TODO: get logic here
+        })
+
         $("#head_counts_form").on('submit', function(e){
             e.preventDefault();
 
@@ -512,7 +521,6 @@
             }else{
                 alert("Provide user details")
             }
-
         })
 
     </script>
