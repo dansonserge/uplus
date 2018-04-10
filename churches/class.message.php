@@ -85,7 +85,7 @@
 	    		//Costs
 	    		$data['cost'] = $this->cost($messageID);
 
-				$senttime = new dateTime($data['time']);
+				$senttime = new dateTime($data['addedTime']);
                 $senttime = $senttime->format('d M Y - H:i:s');
                 $data['time'] = $senttime;
 
@@ -118,7 +118,7 @@
 	    function cBroadcast($sender, $num=5){
 	    	//Function to check current church-sender broadcasts
 	    	global $conn;
-	    	$sql = "SELECT * FROM message WHERE sender = \"$sender\" ORDER BY time DESC LIMIT $num";
+	    	$sql = "SELECT * FROM message WHERE sender = \"$sender\" ORDER BY addedTime DESC LIMIT $num";
 	    	$query = mysqli_query($conn, $sql) or die(mysqli_error($conn));
 
 	    	$temp = array();
