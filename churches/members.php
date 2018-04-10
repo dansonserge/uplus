@@ -34,51 +34,56 @@
                                 <div class="uk-width-1-6">
                                     <h4 class="heading_c uk-margin-bottom">Church Growth</h4>
                                 </div>
-                                <div class="uk-width-1-6">
-                                    <form class="-form">
-                                        <div class="uk--select"  data-uk-form-select>
-                                            <select id="selectChart" class="md-input">
-                                                <option value="service">-- Any Service --</option>
-                                                <option value="gender">1st Service</option>
-                                                <option value="days">2nd Service</option>
-                                                <option value="time">3rd Service</option>
-                                            </select>
+                                <div class="uk-width-5-6">
+                                    <div class="uk-grid">
+                                        <div class="uk-width-1-6">
+                                            <div class="uk--select"  data-uk-form-select>
+                                                <select id="selectChart" class="md-input">
+                                                    <option value="service">-- Any Service --</option>
+                                                    <?php
+                                                    //Getting services
+                                                    $church_services = church_services($churchID);
+                                                    for ($n=0; $n<count($church_services); $n++) {
+                                                        $service = $church_services[$n];
+                                                        ?>
+                                                            <option value="<?php echo $service['id']; ?>"><?php echo $service['name']; ?></option>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <form class="md-form">
+                                                
+                                            </form>
                                         </div>
-                                    </form>
-                                </div>
-                                <div class="uk-width-1-6">
-                                    <form class="-form">
-                                        <div class="uk--select"  data-uk-form-select>
-                                            <select id="selectChart" class="md-input">
-                                                <option value="service">-- Gender --</option>
-                                                <option value="gender">Male</option>
-                                                <option value="days">Female</option>
-                                            </select>
+                                        <div class="uk-width-1-6">
+                                            <div class="uk--select"  data-uk-form-select>
+                                                <select id="selectChart" class="md-input">
+                                                    <option value="service">-- Gender --</option>
+                                                    <option value="gender">Male</option>
+                                                    <option value="days">Female</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </form>
-                                </div>
-                                <div class="uk-width-1-6">
-                                    <form class="-form">
-                                        <div class="md-input-wrapper">
+                                        <div class="uk-width-1-6">
+                                            <div class="md-input-wrapper">
                                                 <label>From</label>
-                                                <input type="text" name="date" class="md-input" id="date-input" data-uk-datepicker="{format:'YYYY-MM-DD', minDate: '2017-01-01'}>
-                                                <span class="md-input-bar "></span>
+                                                <input type="text" name="date" class="md-input" id="date-input" data-uk-datepicker="{format:'DD-MM-YYYY', minDate: '2017-01-01'}>
+                                                <span class="md-input-bar ">
+                                            </div>
                                         </div>
-                                    </form>
-                                </div>
-                                <div class="uk-width-2-6">
-                                    <form class="-form">
-                            
-                      
-                                        <div class="md-input-wrapper">
-                                                <label>To</label>
-                                                <input type="text" name="date" class="md-input" id="date-input" data-uk-datepicker="{format:'YYYY-MM-DD', minDate: '2017-01-01'}">
-                                                <span class="md-input-bar "></span>
+                                        <div class="uk-width-2-6">
+                                            <div class="md-input-wrapper">
+                                                    <label>To</label>
+                                                    <input type="text" name="date" class="md-input" id="date-input" data-uk-datepicker="{format:'DD-MM-YYYY', minDate: '2017-01-01'}">
+                                                    <span class="md-input-bar "></span>
+                                            </div>                                        
                                         </div>
-                                        <span class="uk-input-group-addon"><a class="md-btn" href="#">Generate</a></span>
-                                    </form>
-                                </div>
-                                
+                                        <div class="uk-width-1-6">
+                                            <span class="uk-input-group-addon"><button class="md-btn" >Generate</button></span>
+                                        </div>
+                                    </div>
+                                </div>                        
                             </div>
                             
                             
