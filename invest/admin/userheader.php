@@ -133,11 +133,11 @@ if ($existCount > 0) {
         <div class="menu_section">
             <ul>
                 <?php 
-								$sqlseller1 = $db->query("SELECT * FROM company1 WHERE cumpanyUserCode = '$thisid'");
-								$countComanies1 = mysqli_num_rows($sqlseller1);
-								if($countComanies1>0)
-									{
-										while($row = mysqli_fetch_array($sqlseller1)) 
+					$sqlseller1 = $db->query("SELECT * FROM company1 WHERE cumpanyUserCode = '$thisid'");
+					$countComanies1 = mysqli_num_rows($sqlseller1);
+					if($countComanies1>0)
+						{
+                            while($row = mysqli_fetch_array($sqlseller1)) 
 											{
                                                 $companyid = $row['companyId'];
 												$companyName = $row['companyName'];
@@ -150,18 +150,6 @@ if ($existCount > 0) {
                                             </li>
                                             <li title="Dashboard">
                     
-                </li>
-                <li title="Settings">
-                    <a href="items.php?compId=<?php echo $companyid;?>">
-                        <span class="menu_icon"><i class="material-icons">settings</i></span>
-                        <span class="menu_title">Stock Setup</span>
-                    </a>
-                </li>
-                <li title="Finance">
-                    <a href="purchase.php">
-                        <span class="menu_icon"><i class="material-icons"></i></span>
-                        <span class="menu_title">Trade</span>
-                    </a>
                 </li>
                 <li title="Members">
                     <a href="javascript:void()">
@@ -181,7 +169,7 @@ if ($existCount > 0) {
                             <a href="#">Institution</a>
                         </li>
                         <li>
-                            <a href="#">Foraign</a>
+                            <a href="#">Foreign</a>
                         </li>
                         <li>
                             <a href="#">Domestic</a>
@@ -189,18 +177,24 @@ if ($existCount > 0) {
                     </ul>
                 </li>
                 <li title="Communication">
-                    <a href="market.php">
+                    <a href="javascript:void()">
                         <span class="menu_icon"><i class="material-icons">comment</i></span>
                         <span class="menu_title">Communication</span>
-						
                     </a>
-					
+                    
+                    <ul>
+                        <li>
+                            <a href="forums.php">Forum</a>
+                        </li>
+                        <li>
+                            <a href="feeds.php">Feeds</a>
+                        </li>
+                    </ul>
                 </li>
                                             <?php
                                         }
 									}
-								?>
-                    
+								?>                    
             </ul>
         </div>
     </aside><!-- main sidebar end -->

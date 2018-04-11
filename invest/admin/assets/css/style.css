@@ -30,3 +30,6 @@
     background-color: #ddd;
 }
 .itemStat {cursor: pointer;}
+.display_none, .display-none{
+    display:none;
+}
