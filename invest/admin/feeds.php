@@ -275,7 +275,7 @@
 		filter_elems = $(".posts_filter input.filter-elem");
 		for(n=0; n<filter_elems.length; n++){
 			filter = filter_elems[n];
-			$(filter).on('change', function(){
+			$(filter).on('click', function(){
 				alert();
 			})
 		}
