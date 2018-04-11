@@ -535,11 +535,6 @@
         //post feeds
         $userId = $request['user']??"";
         $post_content = $request['content']??"";
-        
-        // $attachments = 
-
-        //if there targeted church
-        $target_audience = $request['church']??null;
 
         //type of the post
         $type = $request['type']??"";
@@ -550,12 +545,13 @@
         //the type of person who posted - admin or member if empty it'll be elisaa app
         $userType = $request['userType']??'member';
 
-        if($userType == 'admin'){
-            $sql = "INSERT INTO posts(content, postedBy, type, postChurchAdmin, attachment, targetChurch) VALUES(\"$post_content\", 'admin', \"$type\", \"$userId\", \"$attachments\", \"$target_audience\") ";
-            
-        }else{
-            $sql = "INSERT INTO posts(content, postedBy, type,  postMemberId, attachment, targetChurch) VALUES(\"$post_content\", 'member', \"$type\", \"$userId\", \"$attachments\", \"$target_audience\") ";
-        }
+        //target forum
+        $target_audience = $request['targetForum'];
+
+        print_r($request);
+
+        $sql = "INSERT INTO posts(content, postedBy, postedById, type, attachment, targetForum) VALUES(\"$post_content\", 'admin', \"$userId\", \"$type\", \"$attachments\", \"$target_audience\")";
+
         $query = $conn->query($sql);
 
 
