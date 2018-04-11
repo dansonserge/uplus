@@ -27,5 +27,38 @@ link: https://uplus.rw/api/invest.php
 			forumId
 		<-
 			"done"
+	loopFeeds
+		->
+		
+		<-
+			feedId
+			feedForumId
+			feedTitle
+			feedBy
+			feedByImg
+			feedLikes
+			feedLikeStatus
+			feedComments
+			feedDate
+			feedContent
+			feedImage
+	likeFeed
+		->
+			userId
+			feedId
+		<-
+			"Done"
+	commentFeed
+		->
+			userId
+			feedId
+			feedComment
+		<-
+			"Done"
+	listCommentsFeed
+		->
+			feedId
+		<-
+			"Done"
 
 --END FORUM--
