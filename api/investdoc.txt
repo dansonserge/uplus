@@ -29,7 +29,7 @@ link: https://uplus.rw/api/invest.php
 			"done"
 	loopFeeds
 		->
-		
+			memberId
 		<-
 			feedId
 			feedForumId
