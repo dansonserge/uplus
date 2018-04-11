@@ -5,30 +5,60 @@
 	session_start();
     define("SMS_PRICE", 13); //Constant for SMS price
 
-    $userType = $userType??'church';
+    $session_id = preg_replace('#[^0-9]#i', '', $_SESSION["id"]); // filter everything but numbers and letters
+    $username = preg_replace('#[^A-Za-z0-9]#i', '', $_SESSION["username"]); // filter everything but numbers and letters
+    $password = preg_replace('#[^A-Za-z0-9]#i', '', $_SESSION["password"]); // filter everything but numbers and letters
 
-    //users Hierachy
-
-    $userId = 1;
-
-    $userType = checkType($userId);
-
-    if ($userId) {
-        $userData = checkLogin($userType);
-        $churchID = $userData['church'];
-
-        // $churchData = getChurch($churchID);
-
-        $churchname = 'CDH';
-        
-        $churchID = $userData['church'];
-
-        $adminImage = $userData['profileImage'];
-    }else{
-    	//header("location: login.php");
+    $sql = $db->query("SELECT * FROM users WHERE loginId='$username' AND pwd='$password' LIMIT 1"); // query the person
+    // ------- MAKE SURE PERSON EXISTS IN DATABASE ---------
+    $existCount = mysqli_num_rows($sql); // count the row nums
+    if ($existCount > 0) { 
+        while($row = mysqli_fetch_array($sql)){ 
+            $thisid = $row["id"];
+            $names = $row["names"];
+            $account_type = $row["account_type"];
+            if($account_type =='admin')
+                {
+                    header("location: admin.php");
+                    exit();
+                }
+        }
+    }
+    else{
+        echo "
+            
+            <br/><br/><br/><h3>Your account has been temporally deactivated</h3>
+            <p>Please contact: <br/><em>(+25) 0782010262</em><br/><b>uwamclemmy@gmail.com</b></p>       
+            Or<p><a href='logout.php'>Click Here to login again</a></p>
+            
+            ";
+            exit();
     }
 
-    $adminImage = "https://pbs.twimg.com/profile_images/844682938805620737/RsLkgs09_400x400.jpg";
+        $userType = $userType??'church';
+
+        //users Hierachy
+
+        $userId = $thisid;
+
+        $userType = checkType($userId);
+
+        if ($userId) {
+            $userData = checkLogin($userType);
+            $churchID = $userData['church'];
+
+            // $churchData = getChurch($churchID);
+
+            $churchname = 'CDH';
+            
+            $churchID = $userData['church'];
+
+            $adminImage = $userData['profileImage'];
+        }else{
+        	//header("location: login.php");
+        }
+
+        $adminImage = "https://pbs.twimg.com/profile_images/844682938805620737/RsLkgs09_400x400.jpg";
 ?>
 <meta charset="UTF-8">
 <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">

@@ -28,18 +28,18 @@ $sql = $db->query("SELECT * FROM users WHERE loginId='$username' AND pwd='$passw
 $existCount = mysqli_num_rows($sql); // count the row nums
 if ($existCount > 0) { 
 	while($row = mysqli_fetch_array($sql)){ 
-			 $thisid = $row["id"];
-			 $names = $row["names"];
-			 $account_type = $row["account_type"];
-			 if($account_type =='admin')
-		{
-			header("location: admin.php");
-			exit();
-		}
-			}
-		} 
-		else{
-		echo "
+		$thisid = $row["id"];
+		$names = $row["names"];
+		$account_type = $row["account_type"];
+		if($account_type =='admin')
+    		{
+    			header("location: admin.php");
+    			exit();
+    		}
+	}
+}
+else{
+    echo "
 		
 		<br/><br/><br/><h3>Your account has been temporally deactivated</h3>
 		<p>Please contact: <br/><em>(+25) 0782010262</em><br/><b>uwamclemmy@gmail.com</b></p>		

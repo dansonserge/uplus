@@ -30,10 +30,6 @@
                 $branch_name = $branch_data['name'];
 
                 $branch_representative = branch_leader($branchid, 'representative');
-
-                
-                
-
                 ?>
                     <div id="page_content_inner">
                         <h3 class="heading_b uk-margin-bottom"><?php echo $churchname." - $"; ?></h3>
@@ -115,21 +111,21 @@
                                 <div class="md-card-content">
                                     <h3 class="heading_c uk-margin-medium-bottom">Filter Feeds</h3>
                                     <div class="">
-                                        <p>
+                                        <!-- <p>
                                             <input type="radio" name="radio_demo" id="radio_demo_1" data-md-icheck />
                                             <label for="radio_demo_1" class="inline-label">Public</label>
-                                        </p>
-                                        <p>
+                                        </p> -->
+                                        <!-- <p>
                                             <input type="radio" name="radio_demo" id="radio_demo_2" data-md-icheck />
                                             <label for="radio_demo_2" class="inline-label">My church</label>
-                                        </p>
-                                        <h3 class="heading_c uk-margin-bottom">Forums</h3>
+                                        </p> -->
+                                        <!-- <h3 class="heading_c uk-margin-bottom">Forums</h3> -->
                                         <?php
                                             foreach ($forums as $key => $forum) {
                                                 ?>
                                                     <p>
                                                         <input type="radio" name="radio_demo" id="radio_demo_2" data-md-icheck />
-                                                        <label for="radio_demo_2" class="inline-label"><?php echo $forum['forumtitle'] ?></label>
+                                                        <label for="radio_demo_2" class="inline-label"><?php echo $forum['title'] ?></label>
                                                     </p>
                                                 <?php
                                             }
