@@ -47,6 +47,9 @@
 								<div class="md-card-content">
 									<form id="feed_create_form">
 										<div class="uk-form-row">
+											<input type="text" class="md-input display-none" id="podacast_title" placeholder="Podcast title">
+										</div>
+										<div class="uk-form-row ">											
 										   <textarea cols="30" rows="4" class="md-input feeds-textarea" id="post_content" placeholder="Something to tell the church?" required="required"></textarea>
 										</div>
 										<div class="uk-form-row">
@@ -70,7 +73,7 @@
 														</div>
 													</div>
 												</div>
-												<div class="uk-width-1-4">
+												<div class="uk-width-1-1 uk-width-medium-1-6">
 													<!-- style="position: absolute; right: 2%; bottom: 12%" -->
 													<div>
 														<!-- <ul class="uk-list" style="list-style: none; display: inline-block; margin-right: 50px">
@@ -83,11 +86,11 @@
 																<label for="church_post" class="inline-label">My church</label>
 															</li>
 														</ul> -->
-														<select class="md-input" title="Choose the target of this feed">
+														<select class="md-input" id="target_select" title="Choose the target of this feed">
 															<option>-- Target --</option>
 															<option>Public</option>
-															<option>My church</option>                                                       
-															
+															<option value="church">My church</option>                                                      
+															<option value="podcast">Podcast</option>															
 															<?php
 																foreach ($forums as $key => $forum) {
 																	?>
@@ -495,6 +498,19 @@
 				ajax.send(formdata);
 			}
 		});
+
+
+		//when the feed target is triggered
+		$("#target_select").on('change', function(e){
+			selected = $(this).val();
+
+			if(selected == 'podcast'){
+
+			}else{
+
+			}
+			console.log(e)
+		})
 
 
 		//removing podcast
