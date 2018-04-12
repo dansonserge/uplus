@@ -47,7 +47,7 @@
 								<div class="md-card-content">
 									<form id="feed_create_form">
 										<div class="uk-form-row">
-											<input type="text" class="md-input display-none" id="podacast_title" placeholder="Podcast title">
+											<input type="text" class="md-input" style="display: none" id="podcast_title" placeholder="Podcast title">
 										</div>
 										<div class="uk-form-row ">											
 										   <textarea cols="30" rows="4" class="md-input feeds-textarea" id="post_content" placeholder="Something to tell the church?" required="required"></textarea>
@@ -86,10 +86,9 @@
 																<label for="church_post" class="inline-label">My church</label>
 															</li>
 														</ul> -->
-														<select class="md-input" id="target_select" title="Choose the target of this feed">
-															<option>-- Target --</option>
+														<select class="md-input" id="target_select" title="Choose the target of this feed" required>
 															<option>Public</option>
-															<option value="church">My church</option>                                                      
+															<option value="church">My church</option>                                                     
 															<option value="podcast">Podcast</option>															
 															<?php
 																foreach ($forums as $key => $forum) {
@@ -411,13 +410,20 @@
 			var ajax = new XMLHttpRequest();
 
 			var post_content = $("#post_content").val();
-			var postTo = $("input[name='postTo']").val();
+			var postTo = $("#target_select").val();
+
+			post_str = {};
+
+			if(postTo == 'church'){
+				post_str.type = ''
+			}
 
 			if(post_content && postTo){
 				formdata.append('action', 'create_post');
 				formdata.append('content', post_content);
 				formdata.append('user', <?php echo $userId; ?>);
 				formdata.append('church', postTo);
+				formdata.append('postForumId', postTo);
 				formdata.append('attachments', JSON.stringify(feeds_attachment));
 				formdata.append('userType', 'admin');
 				formdata.append('platform', 'web');
@@ -443,7 +449,6 @@
 
 			pname = $("#podcast-name").val();
 			pintro = $("#podcast-intro").val();
-			// brepresentative = $("#branch-representative").val();
 			file = document.querySelector("#podcast-file").files[0];
 
 			if(pname && pintro){
@@ -504,10 +509,15 @@
 		$("#target_select").on('change', function(e){
 			selected = $(this).val();
 
+			podcast_title_elem = $("#podcast_title");
+
 			if(selected == 'podcast'){
-
+				podcast_title_elem.show()
+				podcast_title_elem.attr('required', 'required')
 			}else{
-
+				removeAttr("href");
+				podcast_title_elem.hide()
+				podcast_title_elem.removeAttr('required')		
 			}
 			console.log(e)
 		})
