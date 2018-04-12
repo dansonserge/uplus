@@ -116,7 +116,7 @@
 		{
 			$feedId 	= $feed['feedId'];
 			$images 	= array();
-            $sql 		= $investDb->query("SELECT imgUrl FROM investmentimg")or die (mysqli_error($investDb));
+            $sql 		= $investDb->query("SELECT `imgUrl` FROM `investmentimg` WHERE `investCode` = '$feedId'")or die (mysqli_error($investDb));
             while($rowImage = mysqli_fetch_array($sql))
             {
                 $images[]  = array(
