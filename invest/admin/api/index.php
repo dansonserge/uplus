@@ -550,7 +550,7 @@
 
         print_r($request);
 
-        $sql = "INSERT INTO posts(content, postedBy, postedById, type, attachment, targetForum) VALUES(\"$post_content\", 'admin', \"$userId\", \"$type\", \"$attachments\", \"$target_audience\")";
+        $sql = "INSERT INTO feeds(feedContent, feedAttachments, createdBy, feedForumId) VALUES(\"$post_content\", \"$attachments\", \"$userId\", \"$target_audience\")";
 
         $query = $conn->query($sql);
 

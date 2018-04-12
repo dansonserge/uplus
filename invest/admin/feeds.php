@@ -131,15 +131,15 @@
 						<?php
 							$posts = getPosts($userId);
 							foreach ($posts as $key => $post) {
-								$post_title = $post['title'];
-								$post_content = $post['content'];
-								$post_pdate = $post['postedDate'];
+								$post_title = $post['feedTitle'];
+								$post_content = $post['feedContent'];
+								$post_pdate = $post['createdDate'];
 								$post_likes = $post['nlikes'];
 								$post_comments = $post['ncomments'];
 
-								$post_attachments = json_decode($post['attachment'], true);
+								$post_attachments = json_decode($post['feedAttachments'], true);
 								?>
-									<div class="uk-margin-bottom uk-width-medium-2-3 uk-width-1-1" data-target-forum="<?php echo $post['targetForum'] ?>">
+									<div class="uk-margin-bottom uk-width-medium-2-3 uk-width-1-1" data-target-forum="<?php echo $post['feedForumId'] ?>">
 										<div class="md-card">
 											<div class="md-card-content small-padding">
 												<div class="blog_list_teaser" style="margin-bottom: 12px;">

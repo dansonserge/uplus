@@ -169,7 +169,7 @@
     {
       //function to return the posts from $user
       global $db;
-      $query = $db->query("SELECT *, (SELECT COUNT(*) FROM posts_like WHERE postId = posts.id) as nlikes, (SELECT COUNT(*) FROM posts_comments  WHERE postId = posts.id) as ncomments FROM posts JOIN users ON posts.postedById = users.Id  WHERE users.id = \"$user\" ORDER BY postedDate DESC ") or trigger_error($db->error);
+      $query = $db->query("SELECT *, (SELECT COUNT(*) FROM posts_like WHERE postId = feeds.id) as nlikes, (SELECT COUNT(*) FROM posts_comments  WHERE postId = feeds.id) as ncomments FROM feeds JOIN users ON feeds.createdBy = users.Id  WHERE users.id = \"$user\" ORDER BY createdDate DESC ") or trigger_error($db->error);
 
       $posts = array();
 

@@ -415,7 +415,10 @@
 			post_str = {};
 
 			if(postTo == 'church'){
-				post_str.type = ''
+				post_str.type = 'church'
+				post_str.type = 'church'
+			}else if(postTo == 'podcast'){
+				
 			}
 
 			if(post_content && postTo){
