@@ -244,15 +244,18 @@
 
 			members_checkboxes = document.querySelectorAll("#group_members tr td:first-child input");
 
-			members_attendace = {};
+			members_attendace = [];
 
 			for(n=0; n<members_checkboxes.length; n++){
 				m_elem = members_checkboxes[n]
+				log(m_elem)
+				break
 				member_id = $(members_checkboxes[n]).data('user')
 				member_status = $(m_elem)
-				log(member_status)
-				// members_attendace. = 
+
+				members_attendace.push({member:member_id, attended:member_status.prop('checked')})
 			}
+			log(members_attendace)
 
 
 		})
