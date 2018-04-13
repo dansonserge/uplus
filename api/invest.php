@@ -171,8 +171,10 @@
 		$feedTitle		= mysqli_real_escape_string($db, $_POST['feedTitle']);
 		$feedContent	= mysqli_real_escape_string($db, $_POST['feedContent']);
 		
-		$sql = $investDb->query("INSERT INTO feeds(feedForumId, feedTitle, feedBy, feedContent, feedAttachments, createdBy)
-		VALUES ('$forumId', '$feedTitle','$memberId','$feedContent','$memberId')")or die (mysqli_error($investDb));
+		$sql = $investDb->query("INSERT INTO feeds(feedForumId, feedTitle, feedBy,
+		 feedContent, createdBy)
+		VALUES ('$forumId', '$feedTitle','$memberId',
+		'$feedContent','$memberId')")or die (mysqli_error($investDb));
 		echo "Done";
 	}
 // END FORUMS
