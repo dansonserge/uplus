@@ -148,8 +148,8 @@
 	{
 		require('db.php');
 		$feedId		= mysqli_real_escape_string($db, $_POST['feedId']);
-
-		$sql = $investDb->query("")or die (mysqli_error());
+		"Done";
+		//$sql = $investDb->query("")or die (mysqli_error());
 	}
 
 	function commentFeed()
@@ -159,7 +159,23 @@
 		$feedId		= mysqli_real_escape_string($db, $_POST['feedId']);
 		$feedComment= mysqli_real_escape_string($db, $_POST['feedComment']);
 
+		"Done";
 		$sql = $investDb->query("")or die (mysqli_error());
+	}
+
+	function postFeed()
+	{
+		require('db.php');
+		$memberId		= mysqli_real_escape_string($db, $_POST['memberId']);
+		$forumId		= mysqli_real_escape_string($db, $_POST['feedId']);
+		$feedTitle		= mysqli_real_escape_string($db, $_POST['feedTitle']);
+		$feedContent	= mysqli_real_escape_string($db, $_POST['feedContent']);
+		
+		$sql = $investDb->query("INSERT INTO feeds(feedForumId, feedTitle, feedBy,
+		 feedContent, createdBy)
+		VALUES ('$forumId', '$feedTitle','$memberId',
+		'$feedContent','$memberId')")or die (mysqli_error($investDb));
+		echo "Done";
 	}
 // END FORUMS
 ?>
