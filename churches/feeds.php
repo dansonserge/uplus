@@ -192,7 +192,7 @@
 													?>
 													<!-- <img src="assets/img/gallery/Image01.jpg" alt="" class="blog_list_teaser_image"> -->
 												</div>
-												<div class="feed_timestamp0">
+												<div class="feed_timestamp">
 													<span class="uk-text-muted uk-text-small"><?php echo date('d M Y', strtotime($post_pdate)); ?></span>
 												</div>
 												<div class="blog_list_footer">
@@ -200,6 +200,7 @@
 														<span class="uk-margin-right"><i class="material-icons"></i> <small><?php echo $post_likes; ?></small></span>
 														<span><i class="material-icons"></i> <small><?php echo $post_comments; ?></small></span>
 													</div>
+													<span class="uk-margin-left blog_list_footer_info"><i class="material-icons">public</i> <?php echo ucfirst($post['target_string']) ?></span>
 													<a href="#" class="md-btn md-btn-small md-btn-flat md-btn-flat-primary uk-float-right">Read more</a>
 												</div>
 											</div>
