@@ -550,6 +550,11 @@
         //the type of person who posted - admin or member if empty it'll be elisaa app
         $userType = $request['userType']??'member';
 
+        //platform which the user posted with
+        $platform = $request['platform']??"app";
+
+        print_r($request);
+
         if($userType == 'admin'){
             $sql = "INSERT INTO posts(content, postedBy, type, postChurchAdmin, attachment, targetChurch) VALUES(\"$post_content\", 'admin', \"$type\", \"$userId\", \"$attachments\", \"$target_audience\") ";
             

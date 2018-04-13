@@ -414,19 +414,28 @@
 
 			post_str = {};
 
+			post_target_forum = post_target_church = false; //handler for t fprum and church
+
 			if(postTo == 'church'){
-				post_str.type = 'church'
-				post_str.type = 'church'
+				feed_type = 'church'
+				post_target_church = <?php echo $churchID ?>
 			}else if(postTo == 'podcast'){
-				
+				feed_type = 'podcast'
+			}else if(postTo == ''){
+				feed_type = 'public'
+			}else{
+				feed_type = 'forum'
+				post_target_forum = postTo
 			}
+
 
 			if(post_content && postTo){
 				formdata.append('action', 'create_post');
 				formdata.append('content', post_content);
 				formdata.append('user', <?php echo $userId; ?>);
-				formdata.append('church', postTo);
-				formdata.append('postForumId', postTo);
+				formdata.append('type', feed_type);
+				formdata.append('church', post_target_church);
+				formdata.append('postForumId', post_target_forum);
 				formdata.append('attachments', JSON.stringify(feeds_attachment));
 				formdata.append('userType', 'admin');
 				formdata.append('platform', 'web');
@@ -436,7 +445,8 @@
 
 				ajax.addEventListener("load", function(){
 					setTimeout(function(){
-						location.reload()
+						alert("testing")
+						// location.reload()
 					}, 1500)                    
 				})
 			}else{
