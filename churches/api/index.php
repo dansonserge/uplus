@@ -571,6 +571,18 @@
         }else{
             $response = array('status'=>false, 'msg'=>"Error $conn->error");   
         }
+    }else if($action == 'delete_feed'){
+        //deleting the feed
+        $feed = $request['feed']??"";
+        $user = $request['user']??""; //who deleted this feed
+
+        if($user && $feed){
+            $query = $conn->query("UPDATE posts SET archivedDate = NOW(), archivedBy = \"$user\", updatedDate = NOW(), updatedBy = \"$user\" WHERE id = \"$feed\"  ") or trigger_error($conn->error);
+            $response = array('status'=>true);
+        }else{
+            $response = array('status'=>false, 'msg'=>"Provide details");
+        }
+
     }else if($action == "upload_feed_attachment"){
         //uploading the file for attachments
         $attachment = $_FILES['file'];

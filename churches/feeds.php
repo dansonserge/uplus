@@ -200,7 +200,8 @@
 														<span class="uk-margin-right"><i class="material-icons"></i> <small><?php echo $post_likes; ?></small></span>
 														<span><i class="material-icons"></i> <small><?php echo $post_comments; ?></small></span>
 													</div>
-													<span class="uk-margin-left blog_list_footer_info"><i class="material-icons">public</i> <?php echo ucfirst($post['target_string']) ?></span>
+														<i class="md-icon material-icons md-color-red-500 post_remove" style="cursor: pointer;" title="Remove podcast" data-post="<?php echo $post['id']; ?>">delete</i>
+													
 													<a href="#" class="md-btn md-btn-small md-btn-flat md-btn-flat-primary uk-float-right">Read more</a>
 												</div>
 											</div>
@@ -551,6 +552,28 @@
 					if(ret.status){
 						// parent container cleanin
 						
+						parent_elem.hide(100);
+						$(this).parents('.uk-margin-bottom').remove();
+					}
+				});
+			}            
+		})
+
+		//removing feed
+		$(".post_remove").on('click', function(){
+			feedId = $(this).data("post");
+			parent_elem = $(this).parents('.uk-margin-bottom');
+
+			del_prompt = window.confirm("Delete this feed?");
+			if(del_prompt){
+				$.post('api/index.php', {action:'delete_feed', feed:feedId, user:<?php echo $userId; ?>}, function(data){
+					if(typeof(data) == 'object')
+						ret = data
+					else
+						ret = JSON.parse(data)
+					if(ret.status){
+						// parent container cleanin
+						location.reload();
 						parent_elem.hide(100);
 						$(this).parents('.uk-margin-bottom').remove();
 					}
