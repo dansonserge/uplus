@@ -67,11 +67,12 @@
                         <a href="#" class="user_action_icon"><i class="material-icons md-24 md-light">&#xE7F4;</i><span class="uk-badge">0</span></a>
                         <div class="uk-dropdown uk-dropdown-xlarge">
                             <div class="md-card-content">
-                                <ul class="uk-tab uk-tab-grid" data-uk-tab="{connect:'#header_alerts',animation:'slide-horizontal'}">
+                                <p>No notification now</p>
+                                <!-- <ul class="uk-tab uk-tab-grid" data-uk-tab="{connect:'#header_alerts',animation:'slide-horizontal'}">
                                     <li class="uk-width-1-2 uk-active"><a href="#" class="js-uk-prevent uk-text-small">Messages (12)</a></li>
                                     <li class="uk-width-1-2"><a href="#" class="js-uk-prevent uk-text-small">Alerts (4)</a></li>
-                                </ul>
-                                <ul id="header_alerts" class="uk-switcher uk-margin">
+                                </ul> -->
+                                <!-- <ul id="header_alerts" class="uk-switcher uk-margin">
                                     <li>
                                         <ul class="md-list md-list-addon">
                                             <li>
@@ -164,7 +165,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                </ul>
+                                </ul> -->
                             </div>
                         </div>
                     </li>
