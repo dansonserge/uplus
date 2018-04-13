@@ -24,15 +24,103 @@
 		<?php
 			//forums
 			$forums = church_forums();
-			if(!empty($_GET['branch'])){
-				$branchid = $_GET['branch'];
-				$branch_data = get_branch($branchid);
-				$branch_name = $branch_data['name'];
-
-				$branch_representative = branch_leader($branchid, 'representative');
+			if(!empty($_GET['id'])){
+				$feed_id = $_GET['id'];
+				$feed_data = get_feed($feed_id);
+				$feed_cont = $feed_data['content'];
+				$feed_title = $feed_data['title'];
+				$feed_type = $feed_data['type'];
+				$feed_attachments = json_decode($feed_data['attachment'], true);
 				?>
 					<div id="page_content_inner">
-						<h3 class="heading_b uk-margin-bottom"><?php echo $churchname." - $"; ?></h3>
+						<h3 class="heading_b uk-margin-bottom">Editing feed</h3>
+						<div class="uk-margin-bottom uk-width-medium-2-3 uk-row-first">
+							<div class="md-card">
+								<div class="md-card-content">
+									<form id="feed_create_form">
+										<div class="uk-form-row">
+											<input type="text" class="md-input" style="<?php if($feed_type != 'podcast') echo 'display: none' ?>" id="podcast_title" value="<?php echo $feed_title ?>" placeholder="Podcast title">
+										</div>
+										<div class="uk-form-row ">											
+										   <textarea cols="30" rows="4" class="md-input feeds-textarea" id="post_content" placeholder="Something to tell the church?" required="required"><?php echo $feed_cont; ?></textarea>
+										</div>
+										<div class="uk-form-row">
+										   <div class="uk-grid">
+												<div class="uk-width-1-1">
+													<div class="uk-grid">														
+														<div class="uk-width-9-10 feed-thumbnail-tpl-cont" id="feed-thumbnail-tpl-cont" style="overflow-x: scroll;">
+															<?php
+																foreach($feed_attachments as $att){
+																	?>
+																		<div class="feed-thumbnail-upload" id="feed-thumbnail-tpl">
+																		<!-- <div class='thumb-title'><?php echo $att; ?> <i class="material-icons" style="cursor: pointer; position: relative;left: 170%">close</i></div> -->
+																		<div class="thumb-content">
+																			<?php
+																				$ext = strtolower(pathinfo($att, PATHINFO_EXTENSION)); //extensin
+																				if($ext == 'png' || $ext == 'jpg'){
+																					?>
+																						<img src="<?php echo $att; ?>" alt="" style="max-height: 300px" class="blog_list_teaser_image">
+																					<?php
+																				}else if($ext == 'mp3' || $ext == 'aac'){
+																					//audio
+																					?>
+																						<audio src="<?php echo $att ?>" controls></audio>
+																					<?php 
+																				}
+																				else if($ext == 'mp4'){
+																					//video
+																					?>
+																						<video src="<?php echo $att; ?>" width='100%' style="max-height:300px" controls></video>
+																					<?php 
+																				}
+
+																			?>
+																		</div>
+																		<div class="thumb-toolbar">
+																			<!-- <progress class="uk-progress feed_attachment_progress" value="100" max="100"> -->
+																			<!-- <div class="uk-griad">
+																				<div class="uploaded-size"> 0MB</div>
+																				<div class="total-size"> 100mb</div>
+																			</div> -->
+																		</div>
+																	</div>
+																	<?php
+																}
+
+															?>												
+														</div>
+													</div>													
+												</div>
+												<div class="uk-width-1-3 uk-margin-top">
+													<div class="uk-form-file md-btn" style="box-shadow: 0 1px 3px rgba(0, 0, 0, 0), 0 1px 2px rgba(0, 0, 0, 0);">
+														<i class="material-icons">perm_media</i>
+														<input id="feeds_attachment_input" type="file" multiple>
+													</div>
+												</div>
+												<div class="uk-width-1-1 uk-width-medium-1-3 uk-float-left">
+														<select class="md-input" id="target_select" title="Choose the target of this feed" required>
+															<option <?php if($feed_type == 'public') echo "selected"; ?>>Public</option>
+															<option value="church">My church dds</option>                                                     
+															<option value="podcast" <?php if($feed_type == 'podcast') echo "selected"; ?>>Podcast</option>															
+															<?php
+																foreach ($forums as $key => $forum) {
+																	?>
+																		<option value="<?php echo $forum['id'] ?>" <?php if($feed_type == 'forum' && $feed_data['targetForum'] == $forum['id']) echo "selected"; ?> ><?php echo $forum['forumtitle'] ?></option>
+																	<?php
+																}
+															?>
+														</select>
+												</div>
+												<div class="uk-width-1-3">
+													<span class="progress-cont display-none"><img src="assets/img/spinners/spinner_success.gif" alt="" width="32" height="32"></span>
+														<button class="md-btn md-btn-primary" id="submit_feed" type="submit">Update</button>
+												</div>
+										   </div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
 					</div>
 				<?php
 			}else{
@@ -53,6 +141,19 @@
 										   <textarea cols="30" rows="4" class="md-input feeds-textarea" id="post_content" placeholder="Something to tell the church?" required="required"></textarea>
 										</div>
 										<div class="uk-form-row">
+											<div class="uk-width-1-1" id="feed-thumbnail-tpl-cont">
+												<div class="feed-thumbnail-upload" style="display: none;" id="feed-thumbnail-tpl">
+													<div class='thumb-title'>Here <i class="material-icons" style="cursor: pointer; position: relative;left: 170%">close</i></div>
+													<div class="thumb-content"></div>
+													<div class="thumb-toolbar">
+														<progress class="uk-progress feed_attachment_progress" value="10" max="100">
+														<div class="uk-griad">
+															<div class="uploaded-size"> 0MB</div>
+															<div class="total-size"> 100mb</div>
+														</div>
+													</div>
+												</div>
+											</div>
 										   <div class="uk-grid">
 												<div class="uk-width-1-4">
 													<div class="uk-form-file md-btn" style="box-shadow: 0 1px 3px rgba(0, 0, 0, 0), 0 1px 2px rgba(0, 0, 0, 0);">
@@ -60,19 +161,7 @@
 														<input id="feeds_attachment_input" type="file" multiple>
 													</div>
 												</div>
-												<div class="uk-width-1-3" id="feed-thumbnail-tpl-cont">
-													<div class="feed-thumbnail-upload" style="display: none;" id="feed-thumbnail-tpl">
-														<div class='thumb-title'>Here <i class="material-icons" style="cursor: pointer; position: relative;left: 170%">close</i></div>
-														<div class="thumb-content"></div>
-														<div class="thumb-toolbar">
-															<progress class="uk-progress feed_attachment_progress" value="10" max="100">
-															<div class="uk-griad">
-																<div class="uploaded-size"> 0MB</div>
-																<div class="total-size"> 100mb</div>
-															</div>
-														</div>
-													</div>
-												</div>
+												
 												<div class="uk-width-1-1 uk-width-medium-1-6">
 													<!-- style="position: absolute; right: 2%; bottom: 12%" -->
 													<div>
@@ -117,19 +206,19 @@
 									<h3 class="heading_c uk-margin-medium-bottom">Filter Feeds</h3>
 									<div class="">
 										<p>
-											<input type="radio" name="radio_demo" id="radio_demo_1" data-md-icheck />
+											<input type="radio" class="feed-filter" name="radio_demo" id="radio_demo_1" data-md-icheck />
 											<label for="radio_demo_1" class="inline-label">Public</label>
 										</p>
 										<p>
 											<input type="radio" name="radio_demo" id="radio_demo_2" data-md-icheck />
-											<label for="radio_demo_2" class="inline-label">My church</label>
+											<label for="radio_demo_2" class="inline-label feed-filter">My church</label>
 										</p>
 										<h3 class="heading_c uk-margin-bottom">Forums</h3>
 										<?php
 											foreach ($forums as $key => $forum) {
 												?>
 													<p>
-														<input type="radio" name="radio_demo" id="radio_demo_2" data-md-icheck />
+														<input type="radio" name="radio_demo" id="radio_demo_2" class="feed-filter" data-md-icheck />
 														<label for="radio_demo_2" class="inline-label"><?php echo $forum['forumtitle'] ?></label>
 													</p>
 												<?php
@@ -144,7 +233,7 @@
 					<!-- POsted feeds -->
 					<div class="uk-grid" data-uk-grid-margin="">
 						<?php
-							$posts = getPosts($churchID);
+							$posts = church_feeds($churchID);
 							foreach ($posts as $key => $post) {
 								$post_title = $post['title'];
 								$post_content = $post['content'];
@@ -154,7 +243,7 @@
 
 								$post_attachments = json_decode($post['attachment'], true);
 								?>
-									<div class="uk-margin-bottom uk-width-medium-2-3 uk-width-1-1">
+									<div class="uk-margin-bottom uk-width-medium-2-3 uk-width-1-1 feed-container" data-feed="<?php echo $post['id'] ?>">
 										<div class="md-card">
 											<div class="md-card-content small-padding">
 												<div class="blog_list_teaser" style="margin-bottom: 12px;">
@@ -190,7 +279,6 @@
 															}
 														}
 													?>
-													<!-- <img src="assets/img/gallery/Image01.jpg" alt="" class="blog_list_teaser_image"> -->
 												</div>
 												<div class="feed_timestamp">
 													<span class="uk-text-muted uk-text-small"><?php echo date('d M Y', strtotime($post_pdate)); ?></span>
@@ -200,9 +288,18 @@
 														<span class="uk-margin-right"><i class="material-icons"></i> <small><?php echo $post_likes; ?></small></span>
 														<span><i class="material-icons"></i> <small><?php echo $post_comments; ?></small></span>
 													</div>
-														<i class="md-icon material-icons md-color-red-500 post_remove" style="cursor: pointer;" title="Remove podcast" data-post="<?php echo $post['id']; ?>">delete</i>
+													<span class="uk-margin-left blog_list_footer_info"><i class="material-icons">public</i> <?php echo ucfirst($post['target_string']) ?>
+													</span>
+													<div class="uk-float-right">
+														<span class="uk-margin-left">
+															<a href="feeds.php?id=<?php echo $post['id']; ?>">
+																<!-- <i class="md-icon material-icons md-color-green-500" style="cursor: pointer;" title="Remove podcast" data-post="<?php echo $post['id']; ?>">mode_edit</i> -->
+															</a>
+															<i class="md-icon material-icons md-color-red-500 post_remove" style="cursor: pointer;" title="Remove podcast" data-post="<?php echo $post['id']; ?>">delete</i>
+														</span>
+													</div>
 													
-													<a href="#" class="md-btn md-btn-small md-btn-flat md-btn-flat-primary uk-float-right">Read more</a>
+													<!-- <a href="#" class="md-btn md-btn-small md-btn-flat md-btn-flat-primary uk-float-right">Read more</a> -->
 												</div>
 											</div>
 										</div>
@@ -212,7 +309,8 @@
 						?>
 					</div>
 					
-					<div class="uk-grid" data-uk-grid-margin="">
+					<!-- Podcasts -->
+					<!-- <div class="uk-grid" data-uk-grid-margin="">
 						<?php
 							//getting podcasts
 							$podcats = church_podcasts($churchID);                            
@@ -243,7 +341,7 @@
 							</div>
 						</div>
 						<?php } ?>
-					</div>
+					</div> -->
 				</div>
 				<?php
 			}
@@ -292,10 +390,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="md-fab-wrapper ">
-			<!-- <a class="md-fab md-fab-primary" href="javascript:void(0)"><i class="material-icons">add</i></a> -->
-			<button class="md-fab md-fab-primary d_inline" id="launch_branch_create" href="javascript:void(0)" data-uk-modal="{target:'#branch_create'}"><i class="material-icons">file_upload</i></button>
-		</div>
 	</div>
 	<!-- common functions -->
 	<script src="assets/js/common.min.js"></script>
@@ -339,7 +433,7 @@
 				//file is allowed
 				//create an elemt thumbnail for file
 				thumbnail = $("#feed-thumbnail-tpl").clone()
-				thumbnail.css('display', 'inherit');
+				thumbnail.css('display', 'inline');
 
 				//Adding the title
 				thumbnail.find(".thumb-title").html(filename);
@@ -557,7 +651,7 @@
 					}
 				});
 			}            
-		})
+		});
 
 		//removing feed
 		$(".post_remove").on('click', function(){
@@ -579,6 +673,15 @@
 					}
 				});
 			}            
+		});
+
+
+		document.querySelector('.feed-filter').addEventListener('click', function(){
+			alert()
+		})
+
+		$(".feed-filter").on('click', function(){
+			alert();
 		})
 	</script>
 	
