@@ -234,7 +234,6 @@
 	<script src="assets/js/pages/plugins_xeditable.min.js"></script>
 
 
-
 	<!-- Group specific custom script -->
 	<script type="text/javascript" src="js/groups.js"></script>
 	<script type="text/javascript">
