@@ -148,8 +148,8 @@
 	{
 		require('db.php');
 		$feedId		= mysqli_real_escape_string($db, $_POST['feedId']);
-
-		$sql = $investDb->query("")or die (mysqli_error());
+		"Done";
+		//$sql = $investDb->query("")or die (mysqli_error());
 	}
 
 	function commentFeed()
@@ -159,6 +159,7 @@
 		$feedId		= mysqli_real_escape_string($db, $_POST['feedId']);
 		$feedComment= mysqli_real_escape_string($db, $_POST['feedComment']);
 
+		"Done";
 		$sql = $investDb->query("")or die (mysqli_error());
 	}
 // END FORUMS
