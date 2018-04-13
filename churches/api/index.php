@@ -540,6 +540,9 @@
         //if there targeted church
         $target_audience = $request['church']??null;
 
+        //if there targeted forum
+        $target_forum = $request['postForumId']??null;
+
         //type of the post
         $type = $request['type']??"";
 
@@ -555,10 +558,10 @@
         print_r($request);
 
         if($userType == 'admin'){
-            $sql = "INSERT INTO posts(title, content, postedBy, type, postChurchAdmin, attachment, targetChurch) VALUES(\"$title\", \"$post_content\", 'admin', \"$type\", \"$userId\", \"$attachments\", \"$target_audience\") ";
+            $sql = "INSERT INTO posts(title, content, postedBy, type, postChurchAdmin, attachment, targetChurch, targetForum, platform) VALUES(\"$title\", \"$post_content\", 'admin', \"$type\", \"$userId\", \"$attachments\", \"$target_audience\", \"$target_forum\", \"$platform\") ";
             
         }else{
-            $sql = "INSERT INTO posts(title, content, postedBy, type,  postMemberId, attachment, targetChurch) VALUES(\"$title\", \"$post_content\", 'member', \"$type\", \"$userId\", \"$attachments\", \"$target_audience\") ";
+            $sql = "INSERT INTO posts(title, content, postedBy, type,  postMemberId, attachment, targetChurch, targetForum, platform) VALUES(\"$title\", \"$post_content\", 'member', \"$type\", \"$userId\", \"$attachments\", \"$target_audience\", \"$target_forum\", \"$platform\") ";
         }
         $query = $conn->query($sql);
 

@@ -448,8 +448,7 @@
 
 				ajax.addEventListener("load", function(){
 					setTimeout(function(){
-						alert("testing	")
-						// location.reload()
+						location.reload()
 					}, 1500)                    
 				})
 			}else{
