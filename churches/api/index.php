@@ -535,8 +535,7 @@
         //post feeds
         $userId = $request['user']??"";
         $post_content = $request['content']??"";
-        
-        // $attachments = 
+        $title = $request['title']??"";
 
         //if there targeted church
         $target_audience = $request['church']??null;
@@ -556,10 +555,10 @@
         print_r($request);
 
         if($userType == 'admin'){
-            $sql = "INSERT INTO posts(content, postedBy, type, postChurchAdmin, attachment, targetChurch) VALUES(\"$post_content\", 'admin', \"$type\", \"$userId\", \"$attachments\", \"$target_audience\") ";
+            $sql = "INSERT INTO posts(title, content, postedBy, type, postChurchAdmin, attachment, targetChurch) VALUES(\"$title\", \"$post_content\", 'admin', \"$type\", \"$userId\", \"$attachments\", \"$target_audience\") ";
             
         }else{
-            $sql = "INSERT INTO posts(content, postedBy, type,  postMemberId, attachment, targetChurch) VALUES(\"$post_content\", 'member', \"$type\", \"$userId\", \"$attachments\", \"$target_audience\") ";
+            $sql = "INSERT INTO posts(title, content, postedBy, type,  postMemberId, attachment, targetChurch) VALUES(\"$title\", \"$post_content\", 'member', \"$type\", \"$userId\", \"$attachments\", \"$target_audience\") ";
         }
         $query = $conn->query($sql);
 

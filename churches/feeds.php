@@ -410,7 +410,9 @@
 			var ajax = new XMLHttpRequest();
 
 			var post_content = $("#post_content").val();
-			var postTo = $("#target_select").val();
+			var title = $("#podcast_title").val(); //podcast title
+			var postTo = $("#target_select").val().toLowerCase();
+			
 
 			post_str = {};
 
@@ -421,7 +423,7 @@
 				post_target_church = <?php echo $churchID ?>
 			}else if(postTo == 'podcast'){
 				feed_type = 'podcast'
-			}else if(postTo == ''){
+			}else if(postTo == 'public'){
 				feed_type = 'public'
 			}else{
 				feed_type = 'forum'
@@ -431,6 +433,7 @@
 
 			if(post_content && postTo){
 				formdata.append('action', 'create_post');
+				formdata.append('title', title); //for podcasts
 				formdata.append('content', post_content);
 				formdata.append('user', <?php echo $userId; ?>);
 				formdata.append('type', feed_type);
@@ -445,7 +448,7 @@
 
 				ajax.addEventListener("load", function(){
 					setTimeout(function(){
-						alert("testing")
+						alert("testing	")
 						// location.reload()
 					}, 1500)                    
 				})
