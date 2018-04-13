@@ -167,7 +167,7 @@
 	{
 		require('db.php');
 		$memberId		= mysqli_real_escape_string($db, $_POST['memberId']);
-		$forumId		= mysqli_real_escape_string($db, $_POST['forumId']);
+		$forumId		= mysqli_real_escape_string($db, $_POST['feedId']);
 		$feedTitle		= mysqli_real_escape_string($db, $_POST['feedTitle']);
 		$feedContent	= mysqli_real_escape_string($db, $_POST['feedContent']);
 		
