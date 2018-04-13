@@ -165,7 +165,7 @@
 				return $query->fetch_assoc();
 			else return false;
 		}
-		function getPosts($church)
+		function church_feeds($church)
 		{
 			//function to return the posts from $churc
 			global $conn;
@@ -194,6 +194,18 @@
 				$posts[] = $data;
 			}
 			return $posts;
+		}
+
+		function get_feed($feed)
+		{
+			//function to return the details on the feed
+			global $conn;
+			$sql = "SELECT *, posts.type as type, (SELECT COUNT(*) FROM posts_like WHERE postId = posts.id) as nlikes, (SELECT COUNT(*) FROM posts_comments  WHERE postId = posts.id) as ncomments FROM posts JOIN users ON posts.postChurchAdmin = users.Id  WHERE posts.id = \"$feed\" ";
+
+			$query = $conn->query($sql) or trigger_error($conn->error);
+
+			$data = $query->fetch_assoc();
+			return $data;
 		}
 
 		function getForum($forumId){

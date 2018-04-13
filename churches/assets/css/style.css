@@ -42,7 +42,9 @@
     float: none!important;
     margin: 0!important
 }
-
+.feed-thumbnail-tpl-cont::-webkit-scrollbar{
+    width: 6px;
+}
 .uk-alert-close:after {
     color: #fff!important
 }

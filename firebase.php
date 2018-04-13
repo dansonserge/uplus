@@ -32,13 +32,13 @@
 		// })
 
 		// Save data to firebase
-		function savedata(){
-		  var message = messageField.value;
+		// function savedata(){
+		//   var message = messageField.value;
 
-		  messagesRef.push({'posts':{fieldName:'messageField', text:message}});
-		  messagesRef.push({fieldName:'messageField', text:message});
-		  messageField.value = '';
-		}
+		//   messagesRef.push({'posts':{fieldName:'messageField', text:message}});
+		//   messagesRef.push({fieldName:'messageField', text:message});
+		//   messageField.value = '';
+		// }
 
 		messageResults = document.querySelector('#results')
 

@@ -125,7 +125,7 @@
                                         <div class="md-card-content">
                                             <h3 class="heading_c uk-margin-medium-bottom">Summary</h3>
                                             <div class="uk-form-row">
-                                                <i class="md-icon material-icons md-color-light-blue-500">person_outline</i> <?php echo rand(0, total_users())." of ".total_users(); ?> joined
+                                                <i class="md-icon material-icons md-color-light-blue-500">person_outline</i> <span id="user_count"></span> <?php echo " of ".total_users(); ?> joined
                                                     <?php
                                                         if(!empty($forumData['updatedDate']) && 0){
                                                             ?>
@@ -327,6 +327,26 @@
 
     <!-- Firebase -->
     <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+    <script type="text/javascript">
+        var messagesRef = new Firebase('https://learnbase-baa6d.firebaseio.com/forumChats');
+
+        var forums_member_count = 0,  n=0, forums_member = {};
+
+        messagesRef.limitToLast(10).on('child_added', function (snapshot) {
+            var data = snapshot.val();
+            fid = data.forumId
+            
+            if(forums_member[fid]){
+                forums_member[fid] = forums_member[fid]+1;
+
+            }else{
+                forums_member_count += 1             
+                forums_member[fid] = 1;
+            }
+
+            $("#user_count").html(forums_member_count)
+        });
+    </script>
 
     <script src="js/uploadFile.js"></script>
     <script type="text/javascript">
@@ -423,28 +443,6 @@
             }
 
         })
-    </script>
-
-    <!-- Firebase -->
-    <script>
-      // Initialize Firebase
-      // TODO: Replace with your project's customized code snippet
-      var config = {
-        apiKey: "AIzaSyB1qCWTLud__LGEFQQCZU98iMiy-Dp8Tbk",
-        authDomain: "learnbase-baa6d.firebaseapp.com",
-        databaseURL: "https://learnbase-baa6d.firebaseio.com",
-        projectId: "learnbase-baa6d",
-        storageBucket: "learnbase-baa6d.appspot.com",
-        messagingSenderId: "483987540771"
-      };
-      firebase.initializeApp(config);
-
-      const preObject = document.getElementById("firebase")
-      const dbRefObj = firebase.database().ref().child('firebase')
-
-      dbRefObj.on('value', function(){
-        
-      })
     </script>
 
     <script>
