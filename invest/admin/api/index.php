@@ -581,7 +581,8 @@
         $forum = $request['forum']??"";
         $user = $request['user']??""; //someone who is deleting this forum
         if($forum && $user){
-            $query = $conn->query("UPDATE forums SET archiveDate = NOW(), archivedBy = \"$user\" WHERE id = \"$forum\" ");
+            $query = $conn->query("DELETE FROM `forums` WHERE id='$forum'");
+		
             if($query){
                 $response = array('status'=>true);
             }else{
