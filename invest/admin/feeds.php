@@ -137,7 +137,7 @@
 								$post_likes = $post['nlikes'];
 								$post_comments = $post['ncomments'];
 
-								$post_attachments = json_decode($post['feedAttachments'], true);
+								$post_attachments = $post['feedAttachments'];
 								?>
 									<div class="uk-margin-bottom uk-width-medium-2-3 uk-width-1-1" data-target-forum="<?php echo $post['feedForumId'] ?>">
 										<div class="md-card">
@@ -390,7 +390,7 @@
 
 				ajax.addEventListener("load", function(){
 					setTimeout(function(){
-						location.reload()
+						// location.reload()
 					}, 1500)                    
 				})
 			}else{

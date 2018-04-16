@@ -540,20 +540,25 @@
         $type = $request['type']??"";
 
         //attachments link
-        $attachments = $conn->real_escape_string($request['attachments'])??"[]";
+        $attachments = json_decode($request['attachments'], true);
 
         //the type of person who posted - admin or member if empty it'll be elisaa app
         $userType = $request['userType']??'member';
 
         //target forum
-        $target_audience = $request['targetForum'];
+        $target_audience = $request['targetForum']; 
 
-        $sql = "INSERT INTO feeds(feedContent, feedAttachments, createdBy, feedForumId) VALUES(\"$post_content\", \"$attachments\", \"$userId\", \"$target_audience\")";
+        $sql = "INSERT INTO feeds(feedContent, createdBy, feedForumId) VALUES(\"$post_content\", \"$userId\", \"$target_audience\")";
 
         $query = $conn->query($sql);
 
 
         if($query){
+            for($n=0; $n<count($attachments) && is_array($attachments); $n++){
+                $att = $attachments[$n];
+                $conn->query("INSERT INTO investmentimg(imgUrl, investCode) VALUES(\"$att\", $conn->insert_id) ") or trigger_error($conn->error);
+            }
+
             $response = array('status'=>true, 'msg'=>array('postId'=>$conn->insert_id));
         }else{
             $response = array('status'=>false, 'msg'=>"Error $conn->error");   

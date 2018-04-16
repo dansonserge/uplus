@@ -169,11 +169,22 @@
     {
       //function to return the posts from $user
       global $db;
-      $query = $db->query("SELECT *, (SELECT COUNT(*) FROM posts_like WHERE postId = feeds.id) as nlikes, (SELECT COUNT(*) FROM posts_comments  WHERE postId = feeds.id) as ncomments FROM feeds JOIN users ON feeds.createdBy = users.Id  WHERE users.id = \"$user\" ORDER BY createdDate DESC ") or trigger_error($db->error);
+      $query = $db->query("SELECT *, feeds.id as fid, (SELECT COUNT(*) FROM posts_like WHERE postId = feeds.id) as nlikes, (SELECT COUNT(*) FROM posts_comments  WHERE postId = feeds.id) as ncomments FROM feeds JOIN users ON feeds.createdBy = users.Id  WHERE users.id = \"$user\" ORDER BY createdDate DESC ") or trigger_error($db->error);
 
       $posts = array();
 
       while ($data = $query->fetch_assoc()) {
+
+        //getting post attachments
+        $attq = $db->query("SELECT imgUrl FROM investmentimg WHERE investCode = $data[fid]") or trigger_error($conn->error);
+
+        $att = array();
+        while ( $attData = $attq->fetch_assoc()) {
+          $att[] = $attData['imgUrl'];
+        }
+
+        $data['feedAttachments'] = $att;
+
         $posts[] = $data;
       }
       return $posts;
