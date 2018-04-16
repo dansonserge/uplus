@@ -80,8 +80,10 @@ $(".grp_remove").on('click', function(){
     //When the remove button is clicked, for group removal
     groupId = $(this).attr('data-grp');
 
+    $("#grp_remove").trigger('click')
+
     //Asking for confirmation
-    alert("TODO: Ask for confirmation")
+    // alert("TODO: Ask for confirmirmation")
 });
 
 //Adding person to group

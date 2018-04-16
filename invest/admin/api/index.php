@@ -4,7 +4,7 @@
     include '../functions.php';
 
     //return JSON Content-Type
-    header('Content-Type: application/json');
+    // header('Content-Type: application/json');
 
 	$Message = new broadcast();
 	$request = array_merge($_POST, $_GET); //$_GET for devt nd $_POST for production
@@ -547,8 +547,6 @@
 
         //target forum
         $target_audience = $request['targetForum'];
-
-        print_r($request);
 
         $sql = "INSERT INTO feeds(feedContent, feedAttachments, createdBy, feedForumId) VALUES(\"$post_content\", \"$attachments\", \"$userId\", \"$target_audience\")";
 

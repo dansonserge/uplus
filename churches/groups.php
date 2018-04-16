@@ -104,7 +104,7 @@
                                                 <div class="md-input-wrapper md-input-filled">
                                                     <label>Representative</label>
                                                     <input type="text" name="memberlocation" value="ok" class="md-input">
-                                                        <span class="md-input-bar "></span>
+                                                    <span class="md-input-bar "></span>
                                                 </div>
 
                                                 <div class="selectize_fix"></div>
@@ -164,7 +164,7 @@
                                                                     <?php
                                                                         $types = group_types($churchID);
                                                                     ?>
-                                                                    <select name="branch" id="groupType" data-md-selectize required="required">
+                                                                    <select name="branch" id="groupType" data-md-selectize required="required" disabled>
                                                                         <?php
                                                                             $group_type = $group_data['type'];
                                                                             $types = group_types($churchID);
