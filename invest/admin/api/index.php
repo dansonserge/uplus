@@ -504,7 +504,7 @@
         $intro = $request['intro']??"";
 
 
-        $filename = '';
+        $filename = 'images/forum_default.jpg'; //default forum image
 
         if(!empty($_FILES['logo'])){
             $pic = $_FILES['logo'];
