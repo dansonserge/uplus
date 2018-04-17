@@ -250,7 +250,7 @@
                                 <span class="md-input-bar "></span>
                             </div>
                             <div class="md-input-wrapper md-input-filled">
-                                <input type="file" id="input-forum-logo" name="logo" data-height="100" data-height="100" class="dropify" data-allowed-file-extensions="png jpg" required="required"/>
+                                <input type="file" id="input-forum-logo" name="logo" data-height="100" data-height="100" class="dropify" data-allowed-file-extensions="png jpg jpeg" required="required"/>
                                 <span class="md-input-bar "></span>
                             </div>
                         </form>
@@ -384,7 +384,7 @@
             intro = $("#forum_intro").val();
             logo =  document.querySelector("#input-forum-logo").files[0];
 
-            if(title && intro && logo){
+            if(title && intro){
                 //Marking the progress
                 //Marking the sending process
                 $("#add_member_modal .act-dialog[data-role=init]").hide();

@@ -503,34 +503,39 @@
         $admin = $request['admin']??"";
         $intro = $request['intro']??"";
 
-        $pic = $_FILES['logo'];
 
-        //checking file image
-        $ext = strtolower(pathinfo($pic['name'], PATHINFO_EXTENSION)); //extensin
+        $filename = '';
 
+        if(!empty($_FILES['logo'])){
+            $pic = $_FILES['logo'];
 
-        if( ($ext == 'png' || $ext == 'jpg') ){
-            $filename = "images/$title"."_".time().".$ext";
+            //checking file image
+            $ext = strtolower(pathinfo($pic['name'], PATHINFO_EXTENSION)); //extensin
 
-            if(move_uploaded_file($pic['tmp_name'], "../$filename")){
-                //Creating forum
-                $sql = "INSERT INTO forums(title, createdBy, subtitle, icon) VALUES(\"$title\", \"$admin\", \"$intro\", \"$filename\") ";
-                $insert = $conn->query($sql);
+            if( ($ext == 'png' || $ext == 'jpg' && $ext == 'jpeg') ){
+                $filename = "images/$title"."_".time().".$ext";
 
-                if($insert){
-                    $response = array('status'=>true, 'msg'=>"Created");
-                }else{
-                    $response = array('status'=>false, 'msg'=>"Can't create: $conn->error");
-                }
+                if(move_uploaded_file($pic['tmp_name'], "../$filename")){
+                    
 
-                $response = array('status'=>true, 'msg'=>"Success", 'forumId'=>$conn->insert_id);
+                    // $response = array('status'=>true, 'msg'=>"Success", 'forumId'=>$conn->insert_id);
 
-            }else $response = array('status'=>false, 'msg'=>"Error keeping file on server\nPlease try again".json_encode($_FILES));
+                }else $response = array('status'=>false, 'msg'=>"Error keeping file on server\nPlease try again".json_encode($_FILES));
 
-        }else{
-            //We dont recognize this file format
-            $response = array('status'=>false, 'msg'=>"Please upload an image png and jpg not $ext");
+            }
         }
+
+        //Creating forum in db
+        $sql = "INSERT INTO forums(title, createdBy, subtitle, icon) VALUES(\"$title\", \"$admin\", \"$intro\", \"$filename\") ";
+        $insert = $conn->query($sql);
+
+        if($insert){
+            $response = array('status'=>true, 'msg'=>"Created");
+        }else{
+            $response = array('status'=>false, 'msg'=>"Can't create: $conn->error");
+        }
+
+        
     }else if($action ==  'create_post'){
         //post feeds
         $userId = $request['user']??"";
