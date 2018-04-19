@@ -67,7 +67,19 @@
             $response = array('status'=>false, 'msg'=>"Please upload an image png and jpg not $ext");
         }
     }else if($action == "list_churches"){
-        $response = getChurchList();
+        $churches = getChurchList();
+        $response = array();
+        for ($n=0; $n<count($churches); $n++) {
+            $church = $churches[$n];
+            echo "string";
+            $response[] = array(
+                'id'=>$church['id'],
+                'name'=>$church['name'],
+                'logo'=>$church['logo'],
+                'profile_picture'=>$church['profile_picture'],
+                'smsName'=>$church['smsName'],
+            );
+        }
     }else if($action == "get_groups"){
         //Elisaa want random groupps
         //give the church ID u want groups of

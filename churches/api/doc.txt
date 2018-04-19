@@ -1,0 +1,44 @@
+UPLUS church API V1.1 DOCUMENTATION
+
+--START CHURCH--
+	list_church
+		->
+			null
+		<-
+		id
+			name
+			logo
+			profile_picture
+			smsName
+
+	updateProfile
+		->
+			userId
+			userName
+			userImage
+		<-
+			1 (success)/ 0 (fail)
+--END ACCOUNTS--
+
+--START GROUPS--
+	get_groups
+		->
+			church
+		<-
+			groupId
+			groupImage
+			updatedDate
+			syncstatus
+			groupName
+			groupTargetType
+			perPersonType
+			targetAmount
+			perPerson
+			adminId
+			adminName
+			groupDesc
+			groupBalance
+			groupBalance
+
+
+--END GROUPS--
