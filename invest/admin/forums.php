@@ -32,8 +32,6 @@
             $forum_n_joined = n_forum_users($forum_id);
             $forum_joined = forum_users($forum_id);
 
-            var_dump($forum_joined);
-
             ?>
                 <div id="page_content">
                     <div id="page_content_inner">
@@ -162,10 +160,15 @@
                             </div>
                         </form>
 
+                        <?php
+                            //Showing members of the forum
+                            if($forum_n_joined>0){
+                        ?>
                         <div class="uk-grid uk-margin-top">
                             <div class="uk-width-1-1">
                                 <div class="md-card">
                                     <div class="md-card-content">
+                                        <h4 class="heading_a uk-margin-bottom">Forum members</h4>
                                         <div class="dt_colVis_buttons">
                                         </div>
                                         <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
@@ -175,7 +178,6 @@
                                                     <th>Names</th>
                                                     <th>Gender</th>
                                                     <th>Joined Date</th>
-                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -185,14 +187,12 @@
                                                 foreach($forum_joined as $key=> $member)
                                                     {
                                                         $n++;
+                                                        $memberData = user_details($member['userCode']);
                                                         echo '<tr>
                                                         <td>'.$n.'</td>
-                                                        <td>'.$rowMember['memberName'].'</td>
-                                                        <td>'.$branches['name'].'</td>
-                                                        <td>'.$rowMember['phone'].'</td>
-                                                        <td>'.$rowMember['createdDate'].'</td>
-                                                        <td><a href="editmember.php?id='.$rowMember['id'].'"><i class="material-icons">mode_edit</i></a></td>
-                                                        </tr>';
+                                                        <td>'.$memberData['names'].'</td>
+                                                        <td>'.$memberData['gender'].'</td>
+                                                        <td>'.date($standard_date, strtotime($member['createdDate']) ).'</td>';
                                                     }
                                                 ?> 
                                                 
@@ -202,6 +202,7 @@
                                 </div>
                             </div>
                         </div>
+                        <?php } ?>
 
                     </div>
                 </div>

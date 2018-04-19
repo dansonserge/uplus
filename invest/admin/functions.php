@@ -79,12 +79,12 @@
 		}
 
 		function user_details($userid){
-				//Function to get user's details
-				global $db;
-				$user = $db->query("SELECT * FROM members WHERE id = \"$userid\" LIMIT 1 ") or die("Errror getting user's details $db->error");
+			//Function to get user's details
+			global $db;
+			$user = $db->query("SELECT * FROM users WHERE id = \"$userid\" LIMIT 1 ") or trigger_error("Errror getting user's details $db->error");
 
-				$user = $user->fetch_assoc();
-				return $user;
+			$user = $user->fetch_assoc();
+			return $user;
 		}
 
 		function clean_string($string) {
