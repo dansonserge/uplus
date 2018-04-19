@@ -37,10 +37,10 @@
                         </ul>
                     </div>
 
-                    <div class="md-input-wrapper sms-elem uk-width-medium-1-4" id="smsNameField">
+                    <!-- <div class="md-input-wrapper sms-elem uk-width-medium-1-4" id="smsNameField">
                         <input type="text" placeholder="Sender Name" name="senderName" id="senderName" value="<?php echo(churchSMSname($churchID)); ?>" class="md-input label-fixed" maxlength=11/>
                         <span class="md-input-bar "></span>
-                    </div>
+                    </div> -->
 
                     <div class="md-input-wrapper uk-hidden email-elem" id="subjField">
                         <!-- <label class="fancy">Subject: </label> -->
