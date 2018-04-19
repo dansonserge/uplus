@@ -84,11 +84,20 @@
         //Elisaa want random groupps
         //give the church ID u want groups of
         $church = $request['church']??1; //1 is for Elisaa 's testing'
-        $query = $conn->query("SELECT * FROM groups as g JOIN branches  as b ON g.branchid = b.id WHERE b.church =\"$church\"") or trigger_error($conn->error);
+        $query = $conn->query("SELECT g.* FROM groups as g JOIN branches  as b ON g.branchid = b.id WHERE b.church =\"$church\"") or trigger_error($conn->error);
 
         $groups = array();
         while ($data = $query->fetch_assoc()) {
-            $groups[] = $data;
+            $groups[] = array(
+                'id'=>$data['id'],
+                'name'=>$data['name'],
+                'representative'=>$data['representative'],
+                'branchid'=>$data['branchid'],
+                'type'=>$data['type'],
+                'location'=>$data['location'],
+                'maplocation'=>$data['maplocation'],
+                'profile_picture'=>$data['profile_picture'],
+            );
         }
 
         $response = array('status'=>true, 'data'=>$groups);

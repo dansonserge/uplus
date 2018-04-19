@@ -25,6 +25,15 @@ UPLUS church API V1.1 DOCUMENTATION
 		->
 			church
 		<-
+			id
+			name
+			representative
+			branchid
+			type
+			location
+			maplocation
+			profile_picture
+			
 			groupId
 			groupImage
 			updatedDate
