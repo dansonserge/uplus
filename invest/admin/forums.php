@@ -205,6 +205,72 @@
                         <?php } ?>
 
                     </div>
+
+                    <div class="md-fab-wrapper">
+                        <button class="md-fab md-fab-primary" href="javascript:void(0)" data-uk-modal="{target:'#add_member_modal'}"><i class="material-icons">person_add</i></button>
+                    </div>
+
+                    <div class="modals">            
+                        <div class="uk-modal" id="add_member_modal" aria-hidden="true" style="display: none; overflow-y: auto;">
+                            <div class="uk-modal-dialog" style="top: 339.5px;">
+                                <div class="uk-modal-header uk-tile uk-tile-default">
+                                    <h3 class="d_inline">Invite members to forum</h3>
+                                </div>
+                                <form id="add_member_form">
+                                    <div class="md-carda">
+                                        <div class="md-card-content1">
+                                            <div class="md-input-wrapper">
+                                                <label>Select member</label>
+                                                <input type="text" name="membername" id="name_input" class="md-input" required="required">
+                                                <span class="md-input-bar "></span>
+                                            </div>
+                                            <div class="md-input-wrapper">
+                                                <textarea id="invite_text"  class="md-input" placeholder="Enter invitation"></textarea>
+                                                <span class="md-input-bar "></span>
+                                            </div>
+                                        </div>                            
+                                    </div>
+                                </form>
+                                <div id="addStatus" class="card mt-3" style="margin-top:20px"></div>
+
+                                <div class="uk-modal-footer uk-text-right act-dialog" data-role='init'>
+                                    <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
+                                    <button class="md-btn md-btn-success pull-right" id="add_member_btn">Invite</button>
+                                </div>
+
+                                <div class="uk-modal-footer uk-text-right act-dialog display-none" data-role='done'>
+                                    <button type="button" class="md-btn md-btn-flat uk-modal-close"><img src="assets/img/rot_loader.gif" style="max-height: 50px"> Adddig member...</button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="uk-modal" id="modal_upload_members" aria-hidden="true" style="display: none; overflow-y: auto;">
+                            <div class="uk-modal-dialog" style="top: 339.5px;">
+                                <div class="uk-modal-header uk-tile uk-tile-default">
+                                    <h3 class="d_inline">Batch members upload</h3>
+                                </div>
+                                <form id="memExport" method="POST" enctype="multipart/form-data">
+                                    <div class="md-card">
+                                        <div class="md-card-content">
+                                            <div class="md-input-wrapper">
+                                                <label>Choose Excel file of members you want to export</label>
+                                                
+                                                <input type="file" id="file1" class="dropify" data-allowed-file-extensions="xls xlsx"/>
+                                                <span class="md-input-bar "></span>
+                                            </div>                                            
+                                            <input type="hidden" name="action" value="export_members">
+                                            <input type="hidden" name="church" value="<?php echo $churchID; ?>">
+                                            <input type="hidden" name="user" value="<?php echo $userId; ?>">                       
+                                        </div>
+                                    </div>
+                                    <div class="uk-modal-footer uk-text-right">
+                                        <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
+                                        <button type="submit" class="md-btn md-btn-success pull-right">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             <?php
         }else{
@@ -253,6 +319,7 @@
                                             <th>Forum title</th>
                                             <th>Created By</th>
                                             <th>Date created</th>
+                                            <th>Participants</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -269,6 +336,7 @@
                                                 <td>'.$data['title'].'</td>
                                                 <td>'.$admin['name'].'</td>
                                                 <td>'.date($standard_date." H:i:s", strtotime($data['createdDate'])).'</td>
+                                                <td>'.n_forum_users($data['id']).'</td>
                                                 <td><a href="forums.php?id='.$data['id'].'"><i class="material-icons">mode_edit</i></a></td>
                                                 </tr>';
                                             }
