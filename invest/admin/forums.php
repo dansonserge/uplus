@@ -30,6 +30,9 @@
             $forum_logo = $usual_logo =  $forumData['icon'];
             $forum_status = empty($forumData['archiveDate'])?'active':'archive';
             $forum_n_joined = n_forum_users($forum_id);
+            $forum_joined = forum_users($forum_id);
+
+            var_dump($forum_joined);
 
             ?>
                 <div id="page_content">
@@ -163,6 +166,38 @@
                             <div class="uk-width-1-1">
                                 <div class="md-card">
                                     <div class="md-card-content">
+                                        <div class="dt_colVis_buttons">
+                                        </div>
+                                        <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Names</th>
+                                                    <th>Gender</th>
+                                                    <th>Joined Date</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php 
+                                                $n=0;
+
+                                                foreach($forum_joined as $key=> $member)
+                                                    {
+                                                        $n++;
+                                                        echo '<tr>
+                                                        <td>'.$n.'</td>
+                                                        <td>'.$rowMember['memberName'].'</td>
+                                                        <td>'.$branches['name'].'</td>
+                                                        <td>'.$rowMember['phone'].'</td>
+                                                        <td>'.$rowMember['createdDate'].'</td>
+                                                        <td><a href="editmember.php?id='.$rowMember['id'].'"><i class="material-icons">mode_edit</i></a></td>
+                                                        </tr>';
+                                                    }
+                                                ?> 
+                                                
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -357,8 +392,9 @@
             UIkit.modal.confirm("Do you want to archive this forum?", function(){
                 // will be executed on confirm.
                 $.post('api/index.php', {action:'archive_forum', forum:forum_id, user:<?php echo $userId; ?>}, function(data){
+                    // alert(data)
                     if(typeof(data) != 'object'){
-                        ret = JSON.parse();
+                        ret = JSON.parse(data);
                     }else{
                         ret = data;
                     }
@@ -368,7 +404,7 @@
         })
 
         $("#activate_forum_btn").on('click', function(){
-            //when the foru, is to be deleted
+            //when the foru, is to be activated
             forum_id = $(this).data('forum');
 
             //ask for confirmation
