@@ -7,4 +7,5 @@ temp/group1.jpeg
 
 db.php/
 monitor/db.php
+*.jpg
 *.mp4

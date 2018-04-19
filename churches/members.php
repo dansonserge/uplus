@@ -112,8 +112,8 @@
 								<tbody>
 									<?php 
 									$n=0;
-									$sqlGetMembers = $db->query("SELECT *, m.name as memberName FROM `members` as m JOIN branches as b ON m.branchid = b.id  WHERE b.church = \"$churchID\" ORDER BY m.id ASC")or die ($db->error);
-									while($rowMember = mysqli_fetch_array($sqlGetMembers))
+									$sqlGetMembers = $db->query("SELECT m.*, m.name as memberName FROM `members` as m JOIN branches as b ON m.branchid = b.id  WHERE b.church = \"$churchID\" ORDER BY m.id ASC")or die ($db->error);
+									while($rowMember = mysqli_fetch_assoc($sqlGetMembers))
 										{
 											$branchid = $rowMember['branchid'];
 											$sqlGetMembersloc = $db->query("SELECT * FROM `branches` WHERE id = '$branchid'")or die ($db->error);
