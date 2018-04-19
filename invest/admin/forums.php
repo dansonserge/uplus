@@ -24,9 +24,13 @@
         $forum = $_GET['id']??"";
         if(!empty($forum)){
             $forumData = getForum($forum);
+
+            $forum_id = $forumData['id'];
             $forum_title = $forumData['title']??"";
             $forum_logo = $usual_logo =  $forumData['icon'];
             $forum_status = empty($forumData['archiveDate'])?'active':'archive';
+            $forum_n_joined = n_forum_users($forum_id);
+
             ?>
                 <div id="page_content">
                     <div id="page_content_inner">
@@ -127,7 +131,7 @@
                                         <div class="md-card-content">
                                             <h3 class="heading_c uk-margin-medium-bottom">Summary</h3>
                                             <div class="uk-form-row">
-                                                <i class="md-icon material-icons md-color-light-blue-500">person_outline</i> <?php echo rand(0, total_users())." of ".total_users(); ?> joined
+                                                <i class="md-icon material-icons md-color-light-blue-500">person_outline</i> <?php echo $forum_n_joined." of ".total_users(); ?> joined
                                                     <?php
                                                         if(!empty($forumData['updatedDate']) && 0){
                                                             ?>
@@ -154,6 +158,15 @@
                                 </div>
                             </div>
                         </form>
+
+                        <div class="uk-grid uk-margin-top">
+                            <div class="uk-width-1-1">
+                                <div class="md-card">
+                                    <div class="md-card-content">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
