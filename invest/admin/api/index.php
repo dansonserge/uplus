@@ -2,6 +2,7 @@
 	include "../db.php";
 	include "../class.message.php";
     include '../functions.php';
+    include '../../mail.php';
 
     //return JSON Content-Type
     // header('Content-Type: application/json');
@@ -30,42 +31,54 @@
         }else{
             echo "No file uploaded";
         }       
-    }else if($action ==  'create_church'){
-        //creating church
+    }else if($action ==  'invite_users'){
+        //inviting user to the forum
+        //getting app users to be invited
+        $users = $request['users']??array();
+
+        //getting email users to be invited
+        $emails = $request['emails']??array();
+
+        $invitedBy = $request['invitedBy'];
+
+        // $message
+        $message = $request['message']??"";
+
+
+        //logging the invite
+        for($n=0; $n<count($users); $n++) {
+            $user = $users[$n];
+            $conn->query("INSERT INTO foruminvites(userCode, message, invitedBy) VALUES($user, \"$message\", $invitedBy)") or trigger_error($conn->error);
+            if($conn->insert_id){
+                $response = true;
+            }else{
+                $response = false;                
+            }
+            //getting the user email
+            $userdata = user_details($user);
+            $Mail->send($userdata['email'], 'Forum invitation', $message);
+
+        }
+
+        //logging the invite
+        for($n=0; $n<count($emails); $n++) {
+            // echo "string";
+            $user = $emails[$n];
+            $conn->query("INSERT INTO foruminvites(email, message, invitedBy) VALUES(\"$user\", \"$message\", $invitedBy)") or trigger_error($conn->error);
+
+            if($conn->insert_id){
+                $response = true;
+            }else{
+                $response = false;                
+            }
+
+            $Mail->send($user, 'Forum invitation', $message);
+        }
+        
+
         $name = $request['name']??"";
         $location = $request['location']??"";
 
-        $pic = $_FILES['picture'];
-        $logo = $_FILES['logo'];
-
-        //checking file image
-        $ext = strtolower(pathinfo($pic['name'], PATHINFO_EXTENSION)); //extensin
-        $logo_ext = strtolower(pathinfo($logo['name'], PATHINFO_EXTENSION)); //extensin
-
-
-        if( ($ext == 'png' || $ext == 'jpg') && ($logo_ext == 'png' || $logo_ext == 'jpg') ){
-            $filename = "gallery/church/$name"."_".time().".$ext";
-            $logo_filename = "gallery/church/$name"."_logo_".time().".$ext";
-
-            if(move_uploaded_file($pic['tmp_name'], "../$filename") && move_uploaded_file($logo['tmp_name'], "../$logo_filename")){
-                //Creating church
-                $sql = "INSERT INTO church(name, profile_picture, logo) VALUES(\"$name\", \"$filename\", \"$logo_filename\") ";
-                $insert = $conn->query($sql);
-
-                if($insert){
-                    $response = array('status'=>true, 'msg'=>"Created");
-                }else{
-                    $response = array('status'=>false, 'msg'=>"Can't create: $conn->error");
-                }
-
-                $response = array('status'=>true, 'msg'=>"Success", 'churchid'=>$conn->insert_id);
-
-            }else $response = array('status'=>false, 'msg'=>"Error keeping file on server\nPlease try again".json_encode($_FILES));
-
-        }else{
-            //We dont recognize this file format
-            $response = array('status'=>false, 'msg'=>"Please upload an image png and jpg not $ext");
-        }
     }else if($action == "list_churches"){
         $response = getChurchList();
     }else if($action == "get_groups"){

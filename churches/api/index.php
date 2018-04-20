@@ -2,6 +2,7 @@
 	include "../db.php";
 	include "../class.message.php";
     include '../functions.php';
+    include '../mail.php';
 
     //return JSON Content-Type
     header('Content-Type: application/json');

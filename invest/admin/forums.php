@@ -247,7 +247,7 @@
                                                                     $n++;
                                                                     $memberData = user_details($member['id']);
                                                                     echo '<tr>
-                                                                    <td> <input type="checkbox" class="uk-checkbox checkbox_elem"> </td>
+                                                                    <td> <input type="checkbox" class="uk-checkbox checkbox_elem" data-id='.$memberData['id'].'> </td>
                                                                     <td>'.$memberData['names'].'</td>
                                                                     <td>'.$memberData['gender'].'</td>
                                                                     <td>'.$memberData['account_type'].'</td>';
@@ -445,6 +445,9 @@
             <a class="md-fab md-fab-small md-fab-success d_inline" href="javascript:void(0)" data-uk-modal="{target:'#head_counts_modal'}"><i class="material-icons">account_circle</i></a>
         </div>
     </div> -->
+    <script type="text/javascript">
+        var current_user = <?php echo $userId; ?>
+    </script>
 
     <!-- jQuery -->
     <script type="text/javascript" src="js/jquery.js"></script>
