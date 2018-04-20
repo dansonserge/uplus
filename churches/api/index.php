@@ -74,8 +74,8 @@
             $response[] = array(
                 'id'=>(int)$church['id'],
                 'name'=>$church['name'],
-                'logo'=>$church['logo'],
-                'profile_picture'=>$church['profile_picture'],
+                'logo'=>$church['logo']??"",
+                'profile_picture'=>$church['profile_picture']??"",
                 'smsName'=>$church['smsName'],
             );
         }
