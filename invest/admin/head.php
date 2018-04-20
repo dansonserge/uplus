@@ -69,7 +69,7 @@
 <link rel="icon" type="image/png" href="assets/img/favicon-16x16.png" sizes="16x16">
 <link rel="icon" type="image/png" href="assets/img/favicon-32x32.png" sizes="32x32">
 
-<title><?php echo !empty($title)?$title." | ":"" ?> U+ Invest</title>
+<title><?php echo !empty($title)?$title." | ":"" ?> U-Invest</title>
 
 <!-- uikit -->
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.40/css/uikit.min.css" /> -->

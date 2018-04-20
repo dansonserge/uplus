@@ -71,7 +71,6 @@
         $response = array();
         for ($n=0; $n<count($churches); $n++) {
             $church = $churches[$n];
-            echo "string";
             $response[] = array(
                 'id'=>(int)$church['id'],
                 'name'=>$church['name'],
