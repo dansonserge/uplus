@@ -277,13 +277,14 @@
                                 </form>
                                 <div id="addStatus" class="card mt-3" style="margin-top:20px"></div>
 
+
                                 <div class="uk-modal-footer uk-text-right act-dialog" data-role='init'>
                                     <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
                                     <button class="md-btn md-btn-success pull-right" id="invite_member_btn">Invite</button>
                                 </div>
 
                                 <div class="uk-modal-footer uk-text-right act-dialog display-none" data-role='done'>
-                                    <button type="button" class="md-btn md-btn-flat uk-modal-close"><img src="assets/img/rot_loader.gif" style="max-height: 50px"> Adddig member...</button>
+                                    <button type="button" class="md-btn md-btn-flat uk-modal-close"><img src="assets/img/rot_loader.gif" style="max-height: 50px"> Inviting people to the forum...</button>
                                 </div>
 
                             </div>

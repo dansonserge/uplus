@@ -32,9 +32,16 @@ $("#invite_member_btn").on('click', function(){
 			}
 
 			// console.log(userIds);
-
+			$("#invite_member_form").addClass('uk-hidden')
+			$(".act-dialog[data-role='init']").addClass('uk-hidden')
+			$(".act-dialog[data-role='done']").removeClass('display-none')
 			//preparing to send the invitation
-			$.post('api/index.php', {action:'invite_users', users:userIds, emails:invite_emails, message:invite_text, invitedBy:current_user})
+			$.post('api/index.php', {action:'invite_users', users:userIds, emails:invite_emails, message:invite_text, invitedBy:current_user}, function(){
+				alert("Successfully added everyone")
+				setTimeout(function(){
+					location.reload()
+				}, 1000)
+			})
 		}
 	}else{
 		alert("Please add some users")	

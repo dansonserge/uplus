@@ -33,7 +33,7 @@
 			// 0 = off (for production use)
 			// 1 = client messages
 			// 2 = client and server messages
-			$mail->SMTPDebug = 2;
+			$mail->SMTPDebug = 0;
 			//Set the hostname of the mail server
 			$mail->Host = 'smtp.gmail.com';
 			// use
@@ -53,28 +53,33 @@
 			$mail->setFrom($this->email);
 			//Set an alternative reply-to address
 			//Set who the message is to be sent to
+
+			//Options
+			$mail->SMTPOptions = array(
+			    'ssl' => array(
+			        'verify_peer' => false,
+			        'verify_peer_name' => false,
+			        'allow_self_signed' => true
+			    )
+			);
+
 			$mail->addAddress($email);
 			//Set the subject line
-			$mail->Subject = 'PHPMailer GMail SMTP test';
+			$mail->Subject = $subject;
 			//Read an HTML message body from an external file, convert referenced images to embedded,
 			//convert HTML into a basic plain-text alternative body
 			// $mail->msgHTML(file_get_contents('contents.html'), __DIR__);
 			$mail->Body = $body;
-			
+
 			//Replace the plain text body with one created manually
-			$mail->AltBody = 'This is a plain-text message body';
+			$mail->AltBody = $body;
 			//Attach an image file
 			// $mail->addAttachment('images/phpmailer_mini.png');
 			//send the message, check for errors
 			if (!$mail->send()) {
-			    echo "Mailer Error: " . $mail->ErrorInfo;
+			    return array('status'=>false, 'msg'=>$mail->ErrorInfo);
 			} else {
-			    echo "Message sent!";
-			    //Section 2: IMAP
-			    //Uncomment these to save your message in the 'Sent Mail' folder.
-			    #if (save_mail($mail)) {
-			    #    echo "Message saved!";
-			    #}
+				return array('status'=>true);
 			}
 		}
 
