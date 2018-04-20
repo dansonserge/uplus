@@ -1,7 +1,7 @@
 UPLUS church API V1.1 DOCUMENTATION
-
+url: https://uplus.com/churches/api/index.php
 --START CHURCH--
-	list_church
+	list_churches
 		->
 			null
 		<-
