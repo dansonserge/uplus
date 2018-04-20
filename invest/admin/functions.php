@@ -47,6 +47,20 @@
 			return $users;
 		}
 
+		function forumn_non_users($forumId){
+			//function to return all the users of the forum
+			global $conn;
+			$forumId = $conn->real_escape_string($forumId);
+			$query = $conn->query("SELECT * FROM users WHERE id NOT IN (SELECT userCode FROM forumuser WHERE forumCode = \"$forumId\" and archive = 'NO') ") or trigger_error($conn->error);
+
+			$users = array();
+			while ($data = $query->fetch_assoc()) {
+				$users[] = $data;
+			}
+			
+			return $users;
+		}
+
 		function n_forum_users($forumId){
 			//function to return number of the users in forum
 			global $conn;

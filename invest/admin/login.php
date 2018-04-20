@@ -106,15 +106,15 @@ else{
                     <div class="user_avatar"></div>
                 </div>
                 <form method="post" action="login.php" class="form-group">
-					<div class="uk-form-row">
+					<div class="uk-form-row md-input-filled">
                         <label for="username">Username</label>
                         <input class="md-input" type="text" id="username" name="username" />
                     </div>
-                    <div class="uk-form-row">
+                    <div class="uk-form-row md-input-filled">
                         <label for="password">Password</label>
 						<input class="md-input" type="password" id="password" name="password" />
                     </div>
-					<input type="text" name="page" value="<?php echo$page;?>" hidden class="form-control"/>
+					<input type="text" name="page" value="<?php echo $page;?>" hidden class="form-control"/>
 						
                     <div class="uk-margin-medium-top">
                         <input type="submit" class="md-btn md-btn-primary md-btn-block md-btn-large" name="login" value="SIGNIN"/>

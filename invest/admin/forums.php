@@ -32,6 +32,7 @@
             $forum_n_joined = n_forum_users($forum_id);
             $forum_joined = forum_users($forum_id);
 
+            $forum_not_joined = forumn_non_users($forum_id);
             ?>
                 <div id="page_content">
                     <div id="page_content_inner">
@@ -216,26 +217,69 @@
                                 <div class="uk-modal-header uk-tile uk-tile-default">
                                     <h3 class="d_inline">Invite members to forum</h3>
                                 </div>
-                                <form id="add_member_form">
+                                <form id="invite_member_form">
                                     <div class="md-carda">
-                                        <div class="md-card-content1">
-                                            <div class="md-input-wrapper">
-                                                <label>Select member</label>
-                                                <input type="text" name="membername" id="name_input" class="md-input" required="required">
-                                                <span class="md-input-bar "></span>
+                                        <div class="md-card-contenta">
+                                            <div class="uk-tab-center1">
+                                                <ul class="uk-tab" data-uk-tab="{connect:'#tabs_5'}">
+                                                    <li class="uk-active"><a href="#">Users</a></li>
+                                                    <li><a href="#">Email</a></li>
+                                                </ul>
                                             </div>
-                                            <div class="md-input-wrapper">
-                                                <textarea id="invite_text"  class="md-input" placeholder="Enter invitation"></textarea>
-                                                <span class="md-input-bar "></span>
-                                            </div>
+                                            <ul id="tabs_5" class="uk-switcher uk-margin">
+                                                <li>
+                                                    <label>Select members to invite</label>
+                                                    <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th><input type="checkbox" class="uk-checkbox checkall" data-md-ichecka></th>
+                                                                <th>Names</th>
+                                                                <th>Gender</th>
+                                                                <th>Type</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id='app_invite_users'>
+                                                            <?php 
+                                                            $n=0;
+
+                                                            foreach($forum_not_joined as $key=> $member)
+                                                                {
+                                                                    $n++;
+                                                                    $memberData = user_details($member['id']);
+                                                                    echo '<tr>
+                                                                    <td> <input type="checkbox" class="uk-checkbox checkbox_elem"> </td>
+                                                                    <td>'.$memberData['names'].'</td>
+                                                                    <td>'.$memberData['gender'].'</td>
+                                                                    <td>'.$memberData['account_type'].'</td>';
+                                                                }
+                                                            ?> 
+                                                            
+                                                        </tbody>
+                                                    </table>
+                                                </li>
+                                                <li>
+                                                    
+                                                    <div class="md-input-wrapper md-input-filled uk-margin-top">
+                                                        <label>Enter emails you want to envite</label>
+                                                        <textarea id="invite_emails"  class="md-input label-fixed" placeholder="Email list separated by comma ','"></textarea>
+                                                        <span class="md-input-bar "></span>
+                                                    </div>
+                                                </li>
+                                            </ul>
                                         </div>                            
+                                    </div>
+
+                                    <div class="md-input-wrapper md-input-filled uk-margin-top">
+                                        <label>Invitation message</label>
+                                        <textarea id="invite_text"  class="md-input label-fixed" placeholder="Enter invitation">You are invited to join a forum - '<?php echo $forum_title; ?>' on U+ invest, check it now in your app</textarea>
+                                        <span class="md-input-bar "></span>
                                     </div>
                                 </form>
                                 <div id="addStatus" class="card mt-3" style="margin-top:20px"></div>
 
                                 <div class="uk-modal-footer uk-text-right act-dialog" data-role='init'>
                                     <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
-                                    <button class="md-btn md-btn-success pull-right" id="add_member_btn">Invite</button>
+                                    <button class="md-btn md-btn-success pull-right" id="invite_member_btn">Invite</button>
                                 </div>
 
                                 <div class="uk-modal-footer uk-text-right act-dialog display-none" data-role='done'>
@@ -448,6 +492,8 @@
     <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
 
     <script src="js/uploadFile.js"></script>
+
+    <script type="text/javascript" src="js/forums.js"></script>
     <script type="text/javascript">
         var churchID  = 1;
         $('.dropify#input-forum-logo').dropify();
