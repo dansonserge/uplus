@@ -96,6 +96,11 @@ include'functions.php';
                         <div class="md-card">
                             <div class="md-card-content">
                                 <form id="feed_create_form">
+                                    <!-- <div class="md-input-wrapper md-input-filled">
+                                        <label>Feed title</label>
+                                        <input type="text" name="feedtitle" id="forumtitle_input" value="<?php echo $forum_title; ?>" class="md-input" required="required">
+                                        <span class="md-input-bar "></span>
+                                    </div> -->
                                     <div class="uk-form-row">
                                        <textarea cols="30" rows="4" class="md-input feeds-textarea" id="post_content" placeholder="Something to tell?" required="required"></textarea>
                                     </div>
@@ -609,8 +614,8 @@ include'functions.php';
         var ajax = new XMLHttpRequest();
 
         var post_content = $("#post_content").val();
-        var postTo = $("#postTo").val();
-
+        var postTo = $("#postTo").val()
+;
         if(post_content && postTo){
             formdata.append('action', 'create_post');
             formdata.append('content', post_content);

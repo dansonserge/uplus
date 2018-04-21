@@ -557,6 +557,9 @@
         //type of the post
         $type = $request['type']??"";
 
+        // title
+        $type = $request['title']??"";
+
         //attachments link
         $attachments = json_decode($request['attachments'], true);
 
