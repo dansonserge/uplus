@@ -108,34 +108,37 @@ ini_set('display_errors', 0);
 	                                    Finance
 	                                </h3>
 	                            </div>
-	                            Total Share Value: <?php
-$totalHave ="";												 
-$totalqty="";			
-			$sql = $db->query("SELECT I.`itemId`, I.`itemName`,
-IFNULL((SELECT SUM(T.`qty`) FROM `transactions` T WHERE `operation`='In' AND T.`itemCode` = I.`itemId`),0) Ins,
-IFNULL((SELECT SUM(T.`qty`) FROM `transactions` T WHERE `operation`='Out' AND T.`itemCode` = I.`itemId`),0)  Outs,
-IFNULL((SELECT SUM(T.`qty`) FROM `transactions` T WHERE `operation`='In' AND T.`itemCode` = I.`itemId`),0) -
-IFNULL((SELECT SUM(T.`qty`) FROM `transactions` T WHERE `operation`='Out' AND T.`itemCode` = I.`itemId`),0)  Balance
-,I.`unit`, I.`unitPrice`
-FROM `items1` I WHERE I.itemCompanyCode= '$companyid' ORDER BY Balance DESC");
-										$n=0;
-					$countResults = mysqli_num_rows($sql);
-			if($countResults > 0){	
-									WHILE($row= mysqli_fetch_array($sql))
+	                            Total Share Value:
+	                            <span>
+	                            	<?php
+									$totalHave ="";												 
+									$totalqty="";
+									$sql = $db->query("SELECT I.`itemId`, I.`itemName`,
+									IFNULL((SELECT SUM(T.`qty`) FROM `transactions` T WHERE `operation`='In' AND T.`itemCode` = I.`itemId`),0) Ins,
+									IFNULL((SELECT SUM(T.`qty`) FROM `transactions` T WHERE `operation`='Out' AND T.`itemCode` = I.`itemId`),0)  Outs,
+									IFNULL((SELECT SUM(T.`qty`) FROM `transactions` T WHERE `operation`='In' AND T.`itemCode` = I.`itemId`),0) -
+									IFNULL((SELECT SUM(T.`qty`) FROM `transactions` T WHERE `operation`='Out' AND T.`itemCode` = I.`itemId`),0)  Balance
+									,I.`unit`, I.`unitPrice`
+									FROM `items1` I WHERE I.itemCompanyCode= '$companyid' ORDER BY Balance DESC");
+									$n=0;
+									$countResults = mysqli_num_rows($sql);
+									if($countResults > 0){
+										WHILE($row= mysqli_fetch_array($sql))
 										{
 											$n++;
 											$qty = $row['Balance'];
 											$up = $row['unitPrice'];
 											$outstanding = $qty * $up;
-										$totalqty = $qty + $totalqty;
-										$totalHave = $outstanding + $totalHave;
+											$totalqty = $qty + $totalqty;
+											$totalHave = $outstanding + $totalHave;
 										}
-							}else{
-				$totalHave = 0;
-			}
-										echo number_format($totalHave);
-										?>  Rwf</br>
-	                            Total ROI: 0 Rwf</br>
+									}else{
+										$totalHave = 0;
+									}
+									echo number_format($totalHave);
+									?>  Rwf
+								</span>
+								Total ROI: 0 Rwf
 	                        </div>
 	                    </div>
 						</a>
@@ -155,33 +158,33 @@ FROM `items1` I WHERE I.itemCompanyCode= '$companyid' ORDER BY Balance DESC");
 	                                </h3>
 	                            </div>
 	                            Current Customers: 
-								<?php $sqlClients = $db->query('SELECT * FROM clients');
-										echo $countClients = mysqli_num_rows($sqlClients);
-										?>
+								<?php
+									$sqlClients = $db->query('SELECT * FROM clients');
+									echo $countClients = mysqli_num_rows($sqlClients);
+								?>
 	                        </div>
 	                    </div>
 						</a>
 	                </div>
-	            <div>
-                    <div class="md-card md-card-hover md-card-overlay">
-                        <div class="md-card-content">
-                            <div class="epc_chart" data-percent="53" data-bar-color="#009688">
-                                <span class="epc_chart_text"><span class="countUpMe">53</span>%</span>
-                            </div>
-                        </div>
-                        <div class="md-card-overlay-content">
-                            <div class="uk-clearfix md-card-overlay-header">
-                                <i class="md-icon material-icons md-card-overlay-toggler">&#xE5D4;</i>
-                                <h3>
-                                    Shares
-                                </h3>
-                            </div>
-                            Purchased Shares: 11,340</br>
-                            Remaining Shares: 9,783
-                        </div>
-                    </div>
-                </div>
-
+		            <div>
+	                    <div class="md-card md-card-hover md-card-overlay">
+	                        <div class="md-card-content">
+	                            <div class="epc_chart" data-percent="53" data-bar-color="#009688">
+	                                <span class="epc_chart_text"><span class="countUpMe">53</span>%</span>
+	                            </div>
+	                        </div>
+	                        <div class="md-card-overlay-content">
+	                            <div class="uk-clearfix md-card-overlay-header">
+	                                <i class="md-icon material-icons md-card-overlay-toggler">&#xE5D4;</i>
+	                                <h3>
+	                                    Shares
+	                                </h3>
+	                            </div>
+	                            <p>Purchased Shares: 11,340</p>
+	                            <p>Remaining Shares: 9,783</p>
+	                        </div>
+	                    </div>
+	                </div>
 	            </div>
 	            <!-- tasks -->
             <div class="uk-grid" data-uk-grid-margin data-uk-grid-match="{target:'.md-card-content'}">
@@ -198,39 +201,36 @@ FROM `items1` I WHERE I.itemCompanyCode= '$companyid' ORDER BY Balance DESC");
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       
+                                    	<?php
+											include ("../db.php");
 
-                                        <?php 
-
-					include ("../db.php");
-
-					$sql2 = $db->query("SELECT * FROM items1 WHERE createdBy = '$username' ORDER BY itemId DESC");
-					$countItems = mysqli_num_rows($sql2);
-					if($countItems > 0){
-					while($row = mysqli_fetch_array($sql2)){
-					$itemId = $row['itemId'];
-					$postTitle = $row['itemName'];
-					//$priceStatus = $row['postDeadline'];
-					$price = number_format($row['unitPrice']);
-					
-					$rest = rand(10000,1000);
-					$progr = rand(100,10);
-					echo '
-						<tr class="uk-table-middle">
-                            <td class="uk-width-3-10 uk-text-nowrap"><a href="userPost.php?postId='.$itemId.'">'.$postTitle.'</a></td>
-                            <td class="uk-width-3-10">
-                                <div class="uk-progress uk-progress-mini uk-progress-warning uk-margin-remove">
-                                    <div class="uk-progress-bar" style="width: '.$progr.'%;"></div>
-                                </div>
-                            </td>
-                            <td class="uk-width-2-10 uk-text-right uk-text-muted uk-text-small">'.number_format($rest).'</td>
-                        </tr>
-						';
-					}}
-					else{
-						echo '<center><h4>Opps No Item Yet!!!, Please add some</h4></center>';
-					}
-				?>
+											$sql2 = $db->query("SELECT * FROM items1 WHERE createdBy = '$username' ORDER BY itemId DESC");
+											$countItems = mysqli_num_rows($sql2);
+											if($countItems > 0){
+											while($row = mysqli_fetch_array($sql2)){
+											$itemId = $row['itemId'];
+											$postTitle = $row['itemName'];
+											//$priceStatus = $row['postDeadline'];
+											$price = number_format($row['unitPrice']);
+											
+											$rest = rand(10000,1000);
+											$progr = rand(100,10);
+											echo '
+												<tr class="uk-table-middle">
+						                            <td class="uk-width-3-10 uk-text-nowrap"><a href="userPost.php?postId='.$itemId.'">'.$postTitle.'</a></td>
+						                            <td class="uk-width-3-10">
+						                                <div class="uk-progress uk-progress-mini uk-progress-warning uk-margin-remove">
+						                                    <div class="uk-progress-bar" style="width: '.$progr.'%;"></div>
+						                                </div>
+						                            </td>
+						                            <td class="uk-width-2-10 uk-text-right uk-text-muted uk-text-small">'.number_format($rest).'</td>
+						                        </tr>
+												';
+											}}
+											else{
+												echo '<center><h4>Opps No Item Yet!!!, Please add some</h4></center>';
+											}
+										?>
                                     </tbody>
                                 </table>
                             </div>
@@ -240,16 +240,15 @@ FROM `items1` I WHERE I.itemCompanyCode= '$companyid' ORDER BY Balance DESC");
             	<div class="uk-width-medium-2-3">
                     <div class="md-card">
                         <div class="md-card-content">
-                            <h3 class="heading_a uk-margin-bottom">Comparision of Banks <span class="uk-badge" style="background-color: unset;
-    background-color: #1f77b4;">Deposit</span></td> & <span class="uk-badge" style="background-color: unset;
-    background-color: #ff7f0e;">Total Assets</span></h3>
+                            <h3 class="heading_a uk-margin-bottom">Comparision of Banks <span class="uk-badge" style="background-color: unset;background-color: #1f77b4;">Deposit</span> & <span class="uk-badge" style="background-color: unset;background-color: #ff7f0e;">Total Assets</span>
+                            </h3>
                             <div id="ct-chart" class="chartist"></div>
                         </div>
                     </div>
                 </div>
             </div>
 			<?php
-							}
+			}
 					}
 				else
 					{
