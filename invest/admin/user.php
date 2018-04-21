@@ -31,7 +31,7 @@ ini_set('display_errors', 0);
 			
 		$sql5 = $db->query("INSERT INTO `bids`
 		(`trUnityPrice`, `qty`, `itemCode`, `operation`,`companyId`,`operationStatus`, doneBy) 
-VALUES  ('$unityPrice','$quantity','$Imagename','In','$itemCompanyCode','1','$thisid')")or die(mysqli_error());
+		VALUES  ('$unityPrice','$quantity','$Imagename','In','$itemCompanyCode','1','$thisid')")or die(mysqli_error());
 		
 		if ($_FILES['fileField']['tmp_name'] != "") {																	 										 
 			$newname = ''.$Imagename.'.jpg';
@@ -56,21 +56,21 @@ VALUES  ('$unityPrice','$quantity','$Imagename','In','$itemCompanyCode','1','$th
 		$sql = $db->query("UPDATE posts SET postTitle='$postTitle',productCode='$productCode',quantity='$quantity',price='$price',priceStatus='$priceStatus',postDesc='$postDesc',postedBy='$postedBy',postDeadline='$postDeadline',productLocation='$productLocation' WHERE postId = '$postId'")or die (mysqli_error());
 		
 		header("location: user.php");
-	}		
-	
+	}			
 ?>
 
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
 <?php include'userheader.php' ;?>
+
 	<!-- main sidebar -->
 <div id="new_comp">
 <div id="page_content">
         <div id="page_content_inner">
 			<h4 class="heading_b uk-margin-bottom">DashBoard</h4>
 			<?php 
-				$sqlseller = $db->query("SELECT * FROM company1 WHERE cumpanyUserCode = '$thisid'");
+				$sqlseller = $db->query("SELECT * FROM company1 WHERE companyUserCode = '$thisid'");
 				$countComanies = mysqli_num_rows($sqlseller);
 				if($countComanies>0)
 					{
@@ -82,7 +82,7 @@ VALUES  ('$unityPrice','$quantity','$Imagename','In','$itemCompanyCode','1','$th
 	                <div>
 	                    <a href="items.php?compId=<?php echo $comanyId;?>">
 						<div class="md-card md-card-hover md-card-overlay">
-	                        <img src="../company/<?php echo $comanyId;?>.jpg" alt="">
+	                        <img src="/<?php echo $Company->standardLogo;?>" alt="">
 	                        <div class="md-card-overlay-content">
 	                            <div class="uk-clearfix md-card-overlay-header">
 	                                <i class="md-icon material-icons md-card-overlay-toggler">&#xE5D4;</i>

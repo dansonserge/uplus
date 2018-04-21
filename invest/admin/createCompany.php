@@ -46,14 +46,14 @@ if ($existCount > 0) {
 if(isset($_POST['companyName']))
 	{
 		$companyName = $_POST['companyName'];
-		$cumpanyUserCode = $_POST['cumpanyUserCode'];
+		$companyUserCode = $_POST['companyUserCode'];
 		$businessType = $_POST['businessType'];
 		$location = $_POST['location'];
 		$companyDescription = $_POST['companyDescription'];
 		$companyTin = $_POST['companyTin'];
 		include ("../db.php");
-		$sqlcpn = $db->query("INSERT INTO company1 (companyName, cumpanyUserCode, businessType, location, companyDescription, companyTin) 
-		VALUES ('$companyName', '$cumpanyUserCode', '$businessType', '$location', '$companyDescription', '$companyTin')")or die (mysqli_error());
+		$sqlcpn = $db->query("INSERT INTO company1 (companyName, companyUserCode, businessType, location, companyDescription, companyTin) 
+		VALUES ('$companyName', '$companyUserCode', '$businessType', '$location', '$companyDescription', '$companyTin')")or die (mysqli_error());
 		
 		$sql2 = $db->query("SELECT * FROM company1 ORDER BY companyId DESC limit 1");
 			while($row = mysqli_fetch_array($sql2)){
@@ -123,7 +123,7 @@ if(isset($_POST['companyName']))
 	                                	<span class="md-input-bar"></span>
 	                                </div>
 	                            </div>
-								<input type="text" name="cumpanyUserCode" value="<?php echo $thisid;?>" hidden />
+								<input type="text" name="companyUserCode" value="<?php echo $thisid;?>" hidden />
 								<br/>
 								<textarea name="companyDescription"></textarea> <br/>
 								Tin Number:<br/>

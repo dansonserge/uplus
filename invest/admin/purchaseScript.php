@@ -101,7 +101,7 @@ if ($existCount > 0) {
 	
 ?>
 <?php 
-	$sqlseller1 = $db->query("SELECT * FROM company1 WHERE cumpanyUserCode = '$thisid'");
+	$sqlseller1 = $db->query("SELECT * FROM company1 WHERE companyUserCode = '$thisid'");
 	$countComanies1 = mysqli_num_rows($sqlseller1);
 	if($countComanies1>0)
 		{

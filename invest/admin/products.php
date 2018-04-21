@@ -204,7 +204,7 @@ if ($existCount > 0) {
                             <div class="col-sm-12">
                                 <h4 class="pull-left page-title">
 								<?php 
-								$getmethecompany = $db->query("SELECT * FROM company WHERE cumpanyUserCode = '$thisid'");
+								$getmethecompany = $db->query("SELECT * FROM company WHERE companyUserCode = '$thisid'");
 										$countComanies1 = mysqli_num_rows($getmethecompany);
 										if($countComanies1>0)
 											{

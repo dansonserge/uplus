@@ -88,7 +88,7 @@ if(isset($_GET['productId']))
 	{
 		$productName = $row['productName'];
 		$productId = $row['productId'];
-	$sqlseller = $db->query("SELECT * FROM company1 WHERE cumpanyUserCode = '$thisid'");
+	$sqlseller = $db->query("SELECT * FROM company1 WHERE companyUserCode = '$thisid'");
 		while($row = mysqli_fetch_array($sqlseller)) 
 			{
 				$comanyId = $row['companyId'];
