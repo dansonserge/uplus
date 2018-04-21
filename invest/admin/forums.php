@@ -1,27 +1,77 @@
+
+<?php
+error_reporting(E_ALL); 
+ini_set('display_errors', 0);
+	if(isset($_POST['addpst']))
+	{
+		$itemName = $_POST['itemName'];
+		$productCode = $_POST['productCode'];
+		$itemCompanyCode = $_POST['itemCompanyCode'];
+		$unit = $_POST['unit'];
+		$unityPrice = $_POST['unityPrice'];
+		$quantity = $_POST['quantity'];
+		$description = $_POST['description'];
+		echo $itemName;
+		echo' itemName<br/>';
+		echo $productCode;echo' productCode<br/>';
+		echo $itemCompanyCode;echo' itemCompanyCode<br/>';
+		echo $unit;echo' unit<br/>';
+		echo $unityPrice;echo' unityPrice<br/>';
+		echo $quantity;echo' quantity<br/>';
+		echo $description ;echo' description<br/>';
+		$addtheitem = $db->query("INSERT INTO `items1`(`itemName`, `productCode`, `itemCompanyCode`, `unit`, `unityPrice`, description) 
+		VALUES ('$itemName','$productCode','$itemCompanyCode','$unit','$unityPrice','$description')
+		")or die (mysqli_error());
+		
+		
+		$sql2 = $db->query("SELECT * FROM items1 ORDER BY itemId DESC limit 1");
+			while($row = mysqli_fetch_array($sql2)){
+				$Imagename = $row['itemId'];
+			}
+			
+		$sql5 = $db->query("INSERT INTO `bids`
+		(`trUnityPrice`, `qty`, `itemCode`, `operation`,`companyId`,`operationStatus`, doneBy) 
+		VALUES  ('$unityPrice','$quantity','$Imagename','In','$itemCompanyCode','1','$thisid')")or die(mysqli_error());
+		
+		if ($_FILES['fileField']['tmp_name'] != "") {																	 										 
+			$newname = ''.$Imagename.'.jpg';
+			move_uploaded_file( $_FILES['fileField']['tmp_name'], "../products/$newname");
+		}
+		header("location: user.php");
+	}
+	elseif(isset($_POST['editpst']))
+	{
+		$postId = $_POST['postId'];
+		$postTitle = $_POST['postTitle'];
+		$productCode = $_POST['productCode'];
+		$quantity = $_POST['quantity'];
+		$price = $_POST['price'];
+		$priceStatus = $_POST['priceStatus'];
+		$postDesc = $_POST['postDesc'];
+		$postedBy = $username; //$_POST['postedBy'];
+		$postDeadline = $_POST['postDeadline'];
+		$productLocation = $_POST['productLocation'];
+		
+		include ("db.php");
+		$sql = $db->query("UPDATE posts SET postTitle='$postTitle',productCode='$productCode',quantity='$quantity',price='$price',priceStatus='$priceStatus',postDesc='$postDesc',postedBy='$postedBy',postDeadline='$postDeadline',productLocation='$productLocation' WHERE postId = '$postId'")or die (mysqli_error());
+		
+		header("location: user.php");
+	}			
+?>
+
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
-<head>
-    <?php
-        $title = "Forums";
-        //Including common head configuration
-        include_once "head.php";
-    ?>
-     <!-- dropify -->
-    <link rel="stylesheet" href="assets/skins/dropify/css/dropify.css">
-</head>
-<body class="disable_transitions sidebar_main_open sidebar_main_swipe">
-    <!-- main header -->
-    <?php
-        include_once "menu-header.php";
-    ?>
-    <!-- main sidebar -->
-    <?php
-        include_once "sidebar.php";
-      //  $church_services = church_services($churchID);
+<?php
 
-        //
-        $forum = $_GET['id']??"";
+include'userheader.php';
+include'functions.php';
+?>
+
+<!-- main sidebar -->
+<div id="new_comp">
+	<?php
+	 $forum = $_GET['id']??"";
         if(!empty($forum)){
             $forumData = getForum($forum);
 
@@ -386,7 +436,7 @@
                                                 <td><a href="forums.php?id='.$data['id'].'"><i class="material-icons">mode_edit</i></a></td>
                                                 </tr>';
                                             }
-                                        ?> 
+                                        ?>
                                         
                                     </tbody>
                                 </table>
@@ -436,41 +486,57 @@
             <button class="md-fab md-fab-primary" href="javascript:void(0)" data-uk-modal="{target:'#add_member_modal'}"><i class="material-icons">add</i></button>
         </div>
     <?php } ?>
-    <div id="firebase"></div>
-    <script type="text/javascript">
-        var current_user = <?php echo $userId; ?>
-    </script>
+</div>
 
-    <!-- jQuery -->
-    <script type="text/javascript" src="js/jquery.js"></script>
+    <!-- google web fonts -->
+    <script>
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+        (function() {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
 
     <!-- common functions -->
     <script src="assets/js/common.min.js"></script>
-
     <!-- uikit functions -->
     <script src="assets/js/uikit_custom.min.js"></script>
     <!-- altair common functions/helpers -->
     <script src="assets/js/altair_admin_common.min.js"></script>
 
     <!-- page specific plugins -->
-    <!-- datatables -->
-    <script src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-    <!-- datatables buttons-->
-    <script src="bower_components/datatables-buttons/js/dataTables.buttons.js"></script>
-    <script src="assets/js/custom/datatables/buttons.uikit.js"></script>
-    <script src="bower_components/jszip/dist/jszip.min.js"></script>
-    <script src="bower_components/pdfmake/build/pdfmake.min.js"></script>
-    <script src="bower_components/pdfmake/build/vfs_fonts.js"></script>
-    <script src="bower_components/datatables-buttons/js/buttons.colVis.js"></script>
-    <script src="bower_components/datatables-buttons/js/buttons.html5.js"></script>
-    <script src="bower_components/datatables-buttons/js/buttons.print.js"></script>
-    
-    <!-- datatables custom integration -->
-    <script src="assets/js/custom/datatables/datatables.uikit.min.js"></script>
+    <!-- d3 -->
+    <script src="bower_components/d3/d3.min.js"></script>
+    <!-- metrics graphics (charts) -->
+    <script src="bower_components/metrics-graphics/dist/metricsgraphics.min.js"></script>
+    <!-- chartist (charts) -->
+    <script src="bower_components/chartist/dist/chartist.min.js"></script>
+     <!-- peity (small charts) -->
+    <script src="bower_components/peity/jquery.peity.min.js"></script>
+    <!-- easy-pie-chart (circular statistics) -->
+    <script src="bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
+    <!-- countUp -->
+    <script src="bower_components/countUp.js/dist/countUp.min.js"></script>
+    <!-- handlebars.js -->
+    <script src="bower_components/handlebars/handlebars.min.js"></script>
+    <script src="assets/js/custom/handlebars_helpers.min.js"></script>
+    <!-- CLNDR -->
+    <script src="bower_components/clndr/clndr.min.js"></script>
 
-    <!--  datatables functions -->
-    <script src="assets/js/pages/plugins_datatables.min.js"></script>
-
+    <!--  dashbord functions -->
+    <script src="assets/js/pages/dashboard.min.js"></script>
 
     <!-- Dropify -->
     <script src="bower_components/dropify/dist/js/dropify.min.js"></script>
@@ -489,6 +555,7 @@
     <script src="js/uploadFile.js"></script>
 
     <script type="text/javascript" src="js/forums.js"></script>
+
     <script type="text/javascript">
         var churchID  = 1;
         $('.dropify#input-forum-logo').dropify();
@@ -608,10 +675,11 @@
       })
     </script>
 
+
     <script>
         $(function() {
             if(isHighDensity()) {
-                $.getScript( "assets/js/custom/dense.min.js", function(data) {
+                $.getScript( "bower_components/dense/src/dense.js", function() {
                     // enable hires images
                     altair_helpers.retina_images();
                 });
@@ -626,5 +694,98 @@
             altair_helpers.ie_fix();
         });
     </script>
+	
+<script>
+// <!--0 Add Company-->
+function addcomp(){
+
+	var comp = 'yes';
+		
+	$.ajax({
+			type : "GET",
+			url : "createCompany.php",
+			dataType : "html",
+			cache : "false",
+			data : {
+				
+				comp : comp,
+			},
+			success : function(html, textStatus){
+				$("#new_comp").html(html);
+			},
+			error : function(xht, textStatus, errorThrown){
+				alert("Error : " + errorThrown);
+			}
+	});
+}
+</script>	
+<script> <!--1 Show subcat-->
+function get_sub(){
+	var catId =$("#catId").val();
+	//alert(catId);
+	$.ajax({
+			type : "GET",
+			url : "userscript.php",
+			dataType : "html",
+			cache : "false",
+			data : {
+				
+				catId : catId,
+			},
+			success : function(html, textStatus){
+				$("#suboption").html(html);
+			},
+			error : function(xht, textStatus, errorThrown){
+				alert("Error : " + errorThrown);
+			}
+	});
+}
+</script>
+<script>
+	// <!--2 Show products-->
+	function get_prod(){
+		var subCatId =$("#subCatId").val();
+		//alert(subCatId);
+		$.ajax({
+				type : "GET",
+				url : "userscript.php",
+				dataType : "html",
+				cache : "false",
+				data : {
+					
+					subCatId : subCatId,
+				},
+				success : function(html, textStatus){
+					$("#prodoption").html(html);
+				},
+				error : function(xht, textStatus, errorThrown){
+					alert("Error : " + errorThrown);
+				}
+		});
+	}
+</script>
+<script>
+	// <!--3 start new post-->
+	function new_post(){
+		var productId =$("#productId").val();
+		//alert(productId);
+		$.ajax({
+				type : "GET",
+				url : "userscript.php",
+				dataType : "html",
+				cache : "false",
+				data : {
+					
+					productId : productId,
+				},
+				success : function(html, textStatus){
+					$("#new_post_show").html(html);
+				},
+				error : function(xht, textStatus, errorThrown){
+					alert("Error : " + errorThrown);
+				}
+		});
+	}
+</script>
 </body>
 </html>
