@@ -114,8 +114,11 @@ img.alignright { margin:0 0 15px 20px; }
  [ 3.3 Main header]
  */
 
-.main-header { padding:20px 0 30px 0; background-color: #00897b
+.main-header {
 
+padding:20px 0 30px 0;
+
+background-color: #022e64;
 }
 .main-header .form-search { height:50px; border:1px solid rgba(255, 255, 255, 0.75); position:relative; }
 .form-search .form-category {height: 48px; width: 235px; float: right;}
@@ -138,9 +141,9 @@ img.alignright { margin:0 0 15px 20px; }
 /*end custom*/
 
 .form-search .box-category{background-color: #fff;
-	-webkit-box-shadow: inset -50px 0 rgba(0,0,0,.13);
-	-moz-box-shadow: inset -50px 0 rgba(0,0,0,.13);
-	box-shadow: inset -50px 0 rgba(0,0,0,.13);}
+    -webkit-box-shadow: inset -50px 0 rgba(0,0,0,.13);
+    -moz-box-shadow: inset -50px 0 rgba(0,0,0,.13);
+    box-shadow: inset -50px 0 rgba(0,0,0,.13);}
 .form-search .form-category .title{color: #4f4f4f; font-size: 14px; text-transform: capitalize; line-height: 48px; display: block; margin-right: 50px; position: relative; padding-left: 18px; text-align: left;}
 .form-search .form-category .title:after{position: absolute; content: ""; border-width: 5px; right: 16px; top: 50%; border-style: solid; border-color: transparent; border-top-color: #7f7f7f}
 .form-search .form-category.open .title:after{border-top-color: transparent; border-bottom-color: #7f7f7f; top: calc(50% - 5px)}

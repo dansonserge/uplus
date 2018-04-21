@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 logo">
                     <a href="/invest">
-                        <img alt="Cavada market" src="assets/images/cdh.png" style="max-width: 100px; max-height: 80px" />
+                        <img alt="First Bank Nigeria" src="assets/images/firstbank_logo.png" style="max-width: 100px; max-height: 80px" />
                     </a>
                 </div>
                 <div class="tool-header">
