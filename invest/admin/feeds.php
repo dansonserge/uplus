@@ -231,11 +231,11 @@ include'functions.php';
                                                 <span class="uk-text-muted uk-text-small"><?php echo date('d M Y', strtotime($post_pdate)); ?></span>
                                             </div>
                                             <div class="blog_list_footer">
-                                                <div class="blog_list_footer_info">
+                                                <div class="blog_list_footer_info" style="cursor: pointer;">
                                                     <span class="uk-margin-right"><i class="material-icons"></i> <small><?php echo $post_likes; ?></small></span>
                                                     <span><i class="material-icons"></i> <small><?php echo $post_comments; ?></small></span>
                                                 </div>
-                                                <a href="#" class="md-btn md-btn-small md-btn-flat md-btn-flat-primary uk-float-right">Read more</a>
+                                                <!-- <a href="#" class="md-btn md-btn-small md-btn-flat md-btn-flat-primary uk-float-right">Read more</a> -->
                                             </div>
                                         </div>
                                     </div>
