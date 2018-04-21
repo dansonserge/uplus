@@ -568,7 +568,7 @@ include'functions.php';
             //ask for confirmation
             UIkit.modal.confirm("Do you want to archive this forum?", function(){
                 // will be executed on confirm.
-                $.post('api/index.php', {action:'archive_forum', forum:forum_id, user:<?php echo $userId; ?>}, function(data){
+                $.post('api/index.php', {action:'archive_forum', forum:forum_id, user:<?php echo $thisid; ?>}, function(data){
                     // alert(data)
                     if(typeof(data) != 'object'){
                         ret = JSON.parse(data);
@@ -587,7 +587,7 @@ include'functions.php';
             //ask for confirmation
             UIkit.modal.confirm("Do you want to Re-Activate this forum?", function(){
                 // will be executed on confirm.
-                $.post('api/index.php', {action:'activate_forum', forum:forum_id, user:<?php echo $userId; ?>}, function(data){
+                $.post('api/index.php', {action:'activate_forum', forum:forum_id, user:<?php echo $thisid; ?>}, function(data){
                     if(typeof(data) != 'object'){
                         ret = JSON.parse();
                     }else{
@@ -617,7 +617,7 @@ include'functions.php';
                 $("#add_member_modal .act-dialog[data-role=done]").removeClass('display-none');
 
                 var formdata = new FormData();
-                fields = {action:'create_forum', title:title, intro:intro, admin:<?php echo $userId; ?>, logo:logo};
+                fields = {action:'create_forum', title:title, intro:intro, admin:<?php echo $thisid; ?>, logo:logo};
 
                 for (var prop in fields) {
                     formdata.append(prop, fields[prop]);
@@ -657,22 +657,22 @@ include'functions.php';
     <script>
       // Initialize Firebase
       // TODO: Replace with your project's customized code snippet
-      var config = {
-        apiKey: "AIzaSyB1qCWTLud__LGEFQQCZU98iMiy-Dp8Tbk",
-        authDomain: "learnbase-baa6d.firebaseapp.com",
-        databaseURL: "https://learnbase-baa6d.firebaseio.com",
-        projectId: "learnbase-baa6d",
-        storageBucket: "learnbase-baa6d.appspot.com",
-        messagingSenderId: "483987540771"
-      };
-      firebase.initializeApp(config);
+      // var config = {
+      //   apiKey: "AIzaSyB1qCWTLud__LGEFQQCZU98iMiy-Dp8Tbk",
+      //   authDomain: "learnbase-baa6d.firebaseapp.com",
+      //   databaseURL: "https://learnbase-baa6d.firebaseio.com",
+      //   projectId: "learnbase-baa6d",
+      //   storageBucket: "learnbase-baa6d.appspot.com",
+      //   messagingSenderId: "483987540771"
+      // };
+      // firebase.initializeApp(config);
 
-      const preObject = document.getElementById("firebase")
-      const dbRefObj = firebase.database().ref().child('firebase')
+      // const preObject = document.getElementById("firebase")
+      // const dbRefObj = firebase.database().ref().child('firebase')
 
-      dbRefObj.on('value', function(){
+      // dbRefObj.on('value', function(){
         
-      })
+      // })
     </script>
 
 

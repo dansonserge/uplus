@@ -104,13 +104,13 @@ else{
                     <div class="user_avatar"></div>
                 </div>
                 <form method="post" action="login.php" class="form-group">
-					<div class="uk-form-row md-input-filled">
+					<div class="md-input-wrapper md-input-filled">
                         <label for="username">Username</label>
-                        <input class="md-input" type="text" id="username" name="username" />
+                        <input class="md-input label-fixed" type="text" id="username" name="username" />
                     </div>
-                    <div class="uk-form-row md-input-filled">
+                    <div class="md-input-wrapped md-input-filled">
                         <label for="password">Password</label>
-						<input class="md-input" type="password" id="password" name="password" />
+						<input class="md-input label-fixed" type="password" id="password" name="password" />
                     </div>
 					<input type="text" name="page" value="<?php echo $page;?>" hidden class="form-control"/>
 						
