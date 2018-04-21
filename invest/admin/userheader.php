@@ -64,7 +64,7 @@
 
 	<link rel="icon" type="image/png" href="../assets/images/fbn-logo-blue.png" sizes="32x32">
 
-	<title>Invest</title>
+	<title><?php echo !empty($title)?$title." | ":"" ?> U-Invest</title>
 
 	<!-- additional styles for plugins -->
 	<!-- weather icons -->
