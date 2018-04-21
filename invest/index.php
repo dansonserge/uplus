@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>FirstBank Nigeria</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="assets/lib/bootstrap/css/bootstrap.min.css" />
@@ -19,7 +20,8 @@
     <link rel="stylesheet" type="text/css" href="assets/css/quick-view.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/responsive9.css" />
      <link rel="stylesheet" type="text/css" href="assets/css/layout.css" />
-    <title>Uplus INVEST</title>
+     <link rel="icon" href="https://www.firstbanknigeria.com/wp-content/uploads/2016/05/w-logo-blue.png" sizes="32x32" />
+    
 </head>
 <body class="home market-home">
 <!-- HEADER -->
