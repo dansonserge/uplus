@@ -6,7 +6,12 @@
 	{
 		if(isset($_POST['action']))
 		{
-			$_POST['action']();
+			//check if the function is defined
+			if(function_exists($_POST['action'])){
+				$_POST['action']();
+			}else{
+				echo 'Make sure you understand';
+			}
 		}
 		else
 		{
@@ -105,7 +110,7 @@
 				"feedTitle"		=> $row['feedTitle'],
 				"feedBy"		=> $row['feedBy'],
 				"feedByImg"		=> $row['feedByImg'],
-				"feedLikes"		=> $row['feedLikes'],
+				"feedLikes"		=> $row['feedLikes']??0,
 				"feedLikeStatus"=> 'NO', 
 				"feedComments" 	=> "12",
 				"feedDate"		=> $row['feedDate'],
