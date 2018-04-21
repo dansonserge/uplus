@@ -67,14 +67,14 @@
 	<title>Invest</title>
 
 	<!-- additional styles for plugins -->
-		<!-- weather icons -->
-		<link rel="stylesheet" href="bower_components/weather-icons/css/weather-icons.min.css" media="all">
-		<!-- metrics graphics (charts) -->
-		<link rel="stylesheet" href="bower_components/metrics-graphics/dist/metricsgraphics.css">
-		<!-- chartist -->
-		<link rel="stylesheet" href="bower_components/chartist/dist/chartist.min.css">
-		<!-- c3.js (charts) -->
-		<link rel="stylesheet" href="bower_components/c3js-chart/c3.min.css">
+	<!-- weather icons -->
+	<link rel="stylesheet" href="bower_components/weather-icons/css/weather-icons.min.css" media="all">
+	<!-- metrics graphics (charts) -->
+	<link rel="stylesheet" href="bower_components/metrics-graphics/dist/metricsgraphics.css">
+	<!-- chartist -->
+	<link rel="stylesheet" href="bower_components/chartist/dist/chartist.min.css">
+	<!-- c3.js (charts) -->
+	<link rel="stylesheet" href="bower_components/c3js-chart/c3.min.css">
 		
 	
 	<!-- uikit -->
@@ -89,6 +89,13 @@
 
 	<!-- themes -->
 	<link rel="stylesheet" href="assets/css/themes/themes_combined.min.css" media="all">
+
+	<!-- Dropify -->
+	<link rel="stylesheet" href="assets/skins/dropify/css/dropify.css">
+
+	<!-- Custom CSS -->
+	<link rel="stylesheet" href="assets/css/style.css" media="all">
+
 </head>
 <body class=" sidebar_main_open sidebar_main_swipe">
 	<!-- main header -->
