@@ -64,10 +64,10 @@ ini_set('display_errors', 0);
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
 <?php include'userheader.php' ;?>
 
-	<!-- main sidebar -->
+<!-- main sidebar -->
 <div id="new_comp">
-<div id="page_content">
-        <div id="page_content_inner">
+	<div id="page_content">
+	    <div id="page_content_inner">
 			<h4 class="heading_b uk-margin-bottom">DashBoard</h4>
 			<?php 
 				$sqlseller = $db->query("SELECT * FROM company1 WHERE companyUserCode = '$thisid'");
@@ -143,7 +143,7 @@ ini_set('display_errors', 0);
 	                    </div>
 						</a>
 					</div>
-                
+	            
 	                <div>
 	                    <a href="customers.php?compId=<?php echo $comanyId;?>">
 						<div class="md-card md-card-hover md-card-overlay">
@@ -187,77 +187,75 @@ ini_set('display_errors', 0);
 	                </div>
 	            </div>
 	            <!-- tasks -->
-            <div class="uk-grid" data-uk-grid-margin data-uk-grid-match="{target:'.md-card-content'}">
-                <div class="uk-width-medium-1-3">
-                    <div class="md-card">
-                        <div class="md-card-content">
-                            <div class="uk-overflow-container">
-                                <table class="uk-table">
-                                    <thead>
-                                        <tr>
-                                            <th class="uk-text-nowrap">Branches</th>
-                                            <th class="uk-text-nowrap">Progress</th>
-                                            <th class="uk-text-nowrap uk-text-right">Rest</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    	<?php
-											include ("../db.php");
+	            <div class="uk-grid" data-uk-grid-margin data-uk-grid-match="{target:'.md-card-content'}">
+	                <div class="uk-width-medium-1-3">
+	                    <div class="md-card">
+	                        <div class="md-card-content">
+	                            <div class="uk-overflow-container">
+	                                <table class="uk-table">
+	                                    <thead>
+	                                        <tr>
+	                                            <th class="uk-text-nowrap">Branches</th>
+	                                            <th class="uk-text-nowrap">Progress</th>
+	                                            <th class="uk-text-nowrap uk-text-right">Rest</th>
+	                                        </tr>
+	                                    </thead>
+	                                    <tbody>
+	                                    	<?php
+												include ("../db.php");
 
-											$sql2 = $db->query("SELECT * FROM items1 WHERE createdBy = '$username' ORDER BY itemId DESC");
-											$countItems = mysqli_num_rows($sql2);
-											if($countItems > 0){
-											while($row = mysqli_fetch_array($sql2)){
-											$itemId = $row['itemId'];
-											$postTitle = $row['itemName'];
-											//$priceStatus = $row['postDeadline'];
-											$price = number_format($row['unitPrice']);
-											
-											$rest = rand(10000,1000);
-											$progr = rand(100,10);
-											echo '
-												<tr class="uk-table-middle">
-						                            <td class="uk-width-3-10 uk-text-nowrap"><a href="userPost.php?postId='.$itemId.'">'.$postTitle.'</a></td>
-						                            <td class="uk-width-3-10">
-						                                <div class="uk-progress uk-progress-mini uk-progress-warning uk-margin-remove">
-						                                    <div class="uk-progress-bar" style="width: '.$progr.'%;"></div>
-						                                </div>
-						                            </td>
-						                            <td class="uk-width-2-10 uk-text-right uk-text-muted uk-text-small">'.number_format($rest).'</td>
-						                        </tr>
-												';
-											}}
-											else{
-												echo '<center><h4>Opps No Item Yet!!!, Please add some</h4></center>';
-											}
-										?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            	<div class="uk-width-medium-2-3">
-                    <div class="md-card">
-                        <div class="md-card-content">
-                            <h3 class="heading_a uk-margin-bottom">Comparision of Banks <span class="uk-badge" style="background-color: unset;background-color: #1f77b4;">Deposit</span> & <span class="uk-badge" style="background-color: unset;background-color: #ff7f0e;">Total Assets</span>
-                            </h3>
-                            <div id="ct-chart" class="chartist"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+												$sql2 = $db->query("SELECT * FROM items1 WHERE createdBy = '$username' ORDER BY itemId DESC");
+												$countItems = mysqli_num_rows($sql2);
+												if($countItems > 0){
+												while($row = mysqli_fetch_array($sql2)){
+												$itemId = $row['itemId'];
+												$postTitle = $row['itemName'];
+												//$priceStatus = $row['postDeadline'];
+												$price = number_format($row['unitPrice']);
+												
+												$rest = rand(10000,1000);
+												$progr = rand(100,10);
+												echo '
+													<tr class="uk-table-middle">
+							                            <td class="uk-width-3-10 uk-text-nowrap"><a href="userPost.php?postId='.$itemId.'">'.$postTitle.'</a></td>
+							                            <td class="uk-width-3-10">
+							                                <div class="uk-progress uk-progress-mini uk-progress-warning uk-margin-remove">
+							                                    <div class="uk-progress-bar" style="width: '.$progr.'%;"></div>
+							                                </div>
+							                            </td>
+							                            <td class="uk-width-2-10 uk-text-right uk-text-muted uk-text-small">'.number_format($rest).'</td>
+							                        </tr>
+													';
+												}}
+												else{
+													echo '<center><h4>Opps No Item Yet!!!, Please add some</h4></center>';
+												}
+											?>
+	                                    </tbody>
+	                                </table>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            	<div class="uk-width-medium-2-3">
+	                    <div class="md-card">
+	                        <div class="md-card-content">
+	                            <h3 class="heading_a uk-margin-bottom">Comparision of Banks <span class="uk-badge" style="background-color: unset;background-color: #1f77b4;">Deposit</span> & <span class="uk-badge" style="background-color: unset;background-color: #ff7f0e;">Total Assets</span>
+	                            </h3>
+	                            <div id="ct-chart" class="chartist"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
 			<?php
-			}
-					}
-				else
-					{
-						echo'<a href="javascript:void()" onclick="addcomp()">ADD A COMPANY</a>';
-					}
-			?>			
-							 
-        </div>
-    </div>
+				}
+				}
+				else{
+					echo'<a href="javascript:void()" onclick="addcomp()">ADD A COMPANY</a>';
+				}
+			?>							 
+	    </div>
+	</div>
 </div>
 
     <!-- google web fonts -->
