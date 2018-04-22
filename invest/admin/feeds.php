@@ -243,6 +243,7 @@ ini_set('display_errors', 0);
 
     <!-- google web fonts -->
     <script>
+        const host = location.protocol+"//"+location.host+"/";
         WebFontConfig = {
             google: {
                 families: [
@@ -310,100 +311,8 @@ ini_set('display_errors', 0);
     <script type="text/javascript" src="js/forums.js"></script>
 
     <script type="text/javascript">
-        var churchID  = 1;
-        $('.dropify#input-forum-logo').dropify();
         $(".selectize").selectize();
-
-        $("#delete_forum_btn").on('click', function(){
-            //when the foru, is to be deleted
-            forum_id = $(this).data('forum');
-
-            //ask for confirmation
-            UIkit.modal.confirm("Do you want to archive this forum?", function(){
-                // will be executed on confirm.
-                $.post('api/index.php', {action:'archive_forum', forum:forum_id, user:<?php echo $thisid; ?>}, function(data){
-                    // alert(data)
-                    if(typeof(data) != 'object'){
-                        ret = JSON.parse(data);
-                    }else{
-                        ret = data;
-                    }
-                    location = 'forums.php';
-                })
-            });
-        })
-
-        $("#activate_forum_btn").on('click', function(){
-            //when the foru, is to be activated
-            forum_id = $(this).data('forum');
-
-            //ask for confirmation
-            UIkit.modal.confirm("Do you want to Re-Activate this forum?", function(){
-                // will be executed on confirm.
-                $.post('api/index.php', {action:'activate_forum', forum:forum_id, user:<?php echo $thisid; ?>}, function(data){
-                    if(typeof(data) != 'object'){
-                        ret = JSON.parse();
-                    }else{
-                        ret = data;
-                    }
-
-                    location.reload();
-                })
-            })
-        })
-
-        function log(data){
-            console.log(data)
-        }
-
-        $("#create_forum_btn").on('click', function(e){
-            e.preventDefault();
-            //add individual user
-            title = $("#forumtitle_input").val();
-            intro = $("#forum_intro").val();
-            logo =  document.querySelector("#input-forum-logo").files[0];
-
-            if(title && intro){
-                //Marking the progress
-                //Marking the sending process
-                $("#add_member_modal .act-dialog[data-role=init]").hide();
-                $("#add_member_modal .act-dialog[data-role=done]").removeClass('display-none');
-
-                var formdata = new FormData();
-                fields = {action:'create_forum', title:title, intro:intro, admin:<?php echo $thisid; ?>, logo:logo};
-
-                for (var prop in fields) {
-                    formdata.append(prop, fields[prop]);
-                }
-                var ajax = new XMLHttpRequest();
-
-                ajax.addEventListener("load", function(){
-                    response = this.responseText;
-                    try{
-                        ret = JSON.parse(response);
-                        if(ret.status){
-                            //User done
-                            //create successfully(Giving notification and closing the modal);
-                            $("#addStatus").html("<p class='uk-text-success'>Forum added successfully!</p>");
-                            
-                            setTimeout(function(){
-                                UIkit.modal($("#add_member_modal")).hide();
-                                location.reload();
-                            }, 3000);
-                        }
-                    }catch(e){
-                        alert("error"+e)
-                    }
-
-                }, false);
-
-                ajax.open("POST", "api/index.php");
-                ajax.send(formdata);
-            }else{
-                alert("Provide user details")
-            }
-
-        })
+        
     </script>
 
     <!-- Firebase -->
@@ -518,7 +427,7 @@ ini_set('display_errors', 0);
                     ret = JSON.parse(response);
                     if(ret.status){
                         //create successfully(Giving notification and closing the modal);
-                        feeds_attachment.push(ret.msg)
+                        feeds_attachment.push(host+ret.msg)
 
                     }else{
                         msg = ret.msg;
@@ -573,8 +482,10 @@ ini_set('display_errors', 0);
             ajax.send(formdata);
 
             ajax.addEventListener("load", function(){
+                ret = this.responseText 
                 setTimeout(function(){
-                    location.reload()
+                    console.log(ret)
+                    // location.reload()
                 }, 1500)                    
             })
         }else{
@@ -600,6 +511,9 @@ ini_set('display_errors', 0);
             });
         }            
     })
+    function log(data){
+        console.log(data)
+    }
     </script>
 </body>
 </html>

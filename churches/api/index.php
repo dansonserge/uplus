@@ -129,7 +129,7 @@
 		//when the user want to join church
 		$userId = $request['user']??'';
 		$branch = $request['branch']??"";
-		$memberType = $request['member_type']??"";
+		$memberType = $request['member_type']??"visitor";
 
 		//meta
 		$platform = $request['platform']??'app'; //where was the activity performed
@@ -146,7 +146,6 @@
 		$query = $conn->query("SELECT * FROM church_members WHERE userCode = '$userId' AND branchid = '$branch' AND archived = 'no' ") or trigger_error($conn->error);
 		if($query->num_rows == 0){
 			$sql = "INSERT INTO church_members(userCode, branchid, joinedByPlatform, type, createdBy) VALUES('$userId', '$branch', \"$platform\", \"$memberType\", 'NOW')";
-			echo "$sql";
 			$query = $conn->query($sql) or trigger_error($conn->error);
 
 			if($conn->insert_id){

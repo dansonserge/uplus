@@ -11,6 +11,13 @@ url: https://uplus.com/churches/api/index.php
 			profile_picture
 			smsName
 
+	join_church
+		->
+			user
+			branch
+			platform - for app, make it 'app'
+		<-
+			status:true; status:false & msg
 	updateProfile
 		->
 			userId

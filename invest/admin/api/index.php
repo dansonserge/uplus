@@ -570,14 +570,16 @@
         $target_audience = $request['targetForum']; 
 
         $sql = "INSERT INTO feeds(feedContent, createdBy, feedForumId) VALUES(\"$post_content\", \"$userId\", \"$target_audience\")";
-
+        echo "$sql";
         $query = $conn->query($sql);
 
 
         if($query){
             for($n=0; $n<count($attachments) && is_array($attachments); $n++){
                 $att = $attachments[$n];
-                $conn->query("INSERT INTO investmentimg(imgUrl, investCode) VALUES(\"$att\", $conn->insert_id) ") or trigger_error($conn->error);
+                $sql = "INSERT INTO investmentimg(imgUrl, investCode) VALUES(\"$att\", $conn->insert_id) ";
+                echo "$sql";
+                $conn->query($sql) or trigger_error($conn->error);
             }
 
             $response = array('status'=>true, 'msg'=>array('postId'=>$conn->insert_id));
@@ -590,13 +592,13 @@
         $sent_file_name = $attachment['name'];
         $ext = strtolower(pathinfo($sent_file_name, PATHINFO_EXTENSION)); //extension
 
-        $filename = "gallery/feeds/".substr($sent_file_name, 0, -4)."_".time().".".$ext;
+        $filename = "invest/gallery/feeds/".substr($sent_file_name, 0, -4)."_".time().".".$ext;
 
         $allowed_extensions = array('preventerrorsguys_dont remove please', 'jpg', 'png', 'mp3', 'aac', 'mp4');
 
         if(array_search($ext, $allowed_extensions)){
             //we can now upload
-            move_uploaded_file($attachment['tmp_name'], "../".$filename);
+            move_uploaded_file($attachment['tmp_name'], "../../../".$filename);
             $response = array('status'=>true, 'msg'=>$filename);
         }else{
             $response = array('status'=>false, 'msg'=>"Invalid file type");
