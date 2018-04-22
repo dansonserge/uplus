@@ -96,7 +96,7 @@
 					'churchName'=>$data['name'],
 					'churchId'=>$branchid,
 					'churchImage'=>$data['profile_picture'],
-					'joined'=>$exiq->num_rows==1?true:false,
+					'joined'=>$exiq->num_rows==1?"Yes":"No",
 				);
 			}
 			$response = $response = array('status'=>true, 'data'=>$branches);
