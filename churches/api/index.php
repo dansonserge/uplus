@@ -81,7 +81,7 @@
 		}
 	}else if($action == "listChurches"){
 		//listing the church branches
-		$user = $request['user']??"";
+		$user = $request['userId']??"";
 		if($user){
 			$query = $conn->query("SELECT * FROM branches");
 
