@@ -1,7 +1,7 @@
-
 <?php
     error_reporting(E_ALL); 
-    ini_set('display_errors', 0);	
+    ini_set('display_errors', 0);
+    $HOSTNAME = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/";
 ?>
 
 <!doctype html>
@@ -31,11 +31,11 @@ include'functions.php';
 
                         $ext = strtolower(pathinfo($forum_logo['name'], PATHINFO_EXTENSION)); //extensin
 
-                        if($ext == 'png' || $ext == 'jpg'){
-                            $filename = "images/".strtolower(clean_string($title))."_".time().".$ext";
-                            if(!move_uploaded_file($forum_logo['tmp_name'], "$filename")){
+                        if($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg'){
+                            $filename = "invest/gallery/".strtolower(clean_string($title))."_".time().".$ext";
+                            if(!move_uploaded_file($forum_logo['tmp_name'], "../../$filename")){
                                 trigger_error("Error uploading the file");
-                                $filename = $forum_logo;
+                                $filename = $usual_logo;
                             }
                         }else{
                             $filename = $usual_logo;
@@ -44,11 +44,15 @@ include'functions.php';
                         $filename = $usual_logo;
                     }
 
+
+                    //referencing the host
+                    $filename = $HOSTNAME.$filename;
+
                     //updating
                     $sql = "UPDATE forums SET title = \"$title\", subtitle = \"$intro\", icon = \"$filename\", updatedDate = NOW(), updatedBy = '$userId' WHERE id = \"$forum\"  ";
                     $query = $conn->query($sql) or trigger_error($conn->error);
                     if($query){
-                        header("location:".$_SERVER['REQUEST_URI']);
+                        // header("location:".$_SERVER['REQUEST_URI']);
                     }
                 }else{
                     echo "Sure??";
@@ -580,8 +584,8 @@ include'functions.php';
                             $("#addStatus").html("<p class='uk-text-success'>Forum added successfully!</p>");
                             
                             setTimeout(function(){
-                                // UIkit.modal($("#add_member_modal")).hide();
-                                // location.reload();
+                                UIkit.modal($("#add_member_modal")).hide();
+                                location.reload();
                             }, 3000);
                         }
                     }catch(e){

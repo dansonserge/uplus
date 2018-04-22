@@ -520,18 +520,15 @@
         $filename = 'invest/gallery/forum_default.jpg'; //default forum image
 
         if(!empty($_FILES['logo'])){
-            echo "Image";
             $pic = $_FILES['logo'];
 
             //checking file image
             $ext = strtolower(pathinfo($pic['name'], PATHINFO_EXTENSION)); //extensin
-            echo "$ext";
 
-            if( ($ext == 'png' || $ext == 'jpg' && $ext == 'jpeg') ){
-                echo "Correct extensin";
+            if( ($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg') ){
                 $filename = "invest/gallery/$title"."_".time().".$ext";
 
-                if(move_uploaded_file($pic['tmp_name'], "../../$filename")){
+                if(move_uploaded_file($pic['tmp_name'], "../../../$filename")){
                 }else{
                     $response = array('status'=>false, 'msg'=>"Error keeping file on server\nPlease try again".json_encode($_FILES));
                 } 
