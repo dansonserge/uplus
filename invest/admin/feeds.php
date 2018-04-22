@@ -485,7 +485,7 @@ ini_set('display_errors', 0);
                 ret = this.responseText 
                 setTimeout(function(){
                     console.log(ret)
-                    // location.reload()
+                    location.reload()
                 }, 1500)                    
             })
         }else{

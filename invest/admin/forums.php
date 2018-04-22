@@ -669,7 +669,8 @@ function addcomp(){
 	});
 }
 </script>	
-<script> <!--1 Show subcat-->
+<script>
+    // <!--1 Show subcat-->
 function get_sub(){
 	var catId =$("#catId").val();
 	//alert(catId);

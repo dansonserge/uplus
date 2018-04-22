@@ -560,7 +560,7 @@
         $type = $request['title']??"";
 
         //attachments link
-        $attachments = json_decode($request['attachments'], true);
+        $attachments = json_decode($request['attachments'], true)??array();
 
         //the type of person who posted - admin or member if empty it'll be elisaa app
         $userType = $request['userType']??'member';
@@ -573,10 +573,10 @@
 
 
         if($query){
+            $feed_id = $conn->insert_id;
             for($n=0; $n<count($attachments) && is_array($attachments); $n++){
                 $att = $attachments[$n];
-                $sql = "INSERT INTO investmentimg(imgUrl, investCode) VALUES(\"$att\", $conn->insert_id) ";
-                echo "$sql";
+                $sql = "INSERT INTO investmentimg(imgUrl, investCode) VALUES(\"$att\", $feed_id) ";
                 $conn->query($sql) or trigger_error($conn->error);
             }
 
