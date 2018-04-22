@@ -128,7 +128,7 @@ ini_set('display_errors', 0);
                 <!-- Posted feeds -->
                 <div class="uk-grid" data-uk-grid-margin="">
                     <?php
-                        $posts = getPosts($thisid);
+                        $posts = getFeeds($thisid);
                         foreach ($posts as $key => $post) {
                             $post_title = $post['feedTitle'];
                             $post_content = $post['feedContent'];

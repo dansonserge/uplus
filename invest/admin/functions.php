@@ -205,11 +205,11 @@
 				return $query->fetch_assoc();
 			else return false;
 		}
-		function getPosts($user)
+		function getFeeds($user)
 		{
 			//function to return the posts from $user
 			global $db;
-			$query = $db->query("SELECT *, feeds.id as fid, (SELECT COUNT(*) FROM posts_like WHERE postId = feeds.id) as nlikes, (SELECT COUNT(*) FROM posts_comments  WHERE postId = feeds.id) as ncomments FROM feeds JOIN users ON feeds.createdBy = users.Id  WHERE users.id = \"$user\" ORDER BY createdDate DESC ") or trigger_error($db->error);
+			$query = $db->query("SELECT *, feeds.id as fid, (SELECT COUNT(*) FROM feed_likes WHERE feedCode = feeds.id) as nlikes, (SELECT COUNT(*) FROM feed_comments  WHERE feedCode = feeds.id) as ncomments FROM feeds JOIN users ON feeds.createdBy = users.Id  WHERE users.id = \"$user\" ORDER BY createdDate DESC ") or trigger_error("sdsd".$db->error, E_USER_ERROR);
 
 			$posts = array();
 

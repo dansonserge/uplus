@@ -13,7 +13,8 @@
 	
 	$action = $request['action']??"";
 
-	if($action == "export_members"){
+	if($action == "export_members")
+	{
 		$church_id = $request['church'];
 		// $branch = $request['branch'];
 		$user = $request['user'];
@@ -30,7 +31,9 @@
 		}else{
 			echo "No file uploaded";
 		}       
-	}else if($action ==  'create_church'){
+	}
+
+	else if($action ==  'create_church'){
 		//creating church
 		$name = $request['name']??"";
 		$location = $request['location']??"";
