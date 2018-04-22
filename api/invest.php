@@ -117,6 +117,8 @@
 				"feedContent"	=> $row['feedContent']
 			);
 		}
+
+		//getting forum images
 		foreach ($feeds as $i => $feed) 
 		{
 			$feedId 	= $feed['feedId'];
