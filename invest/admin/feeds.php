@@ -1,71 +1,15 @@
 
 <?php
 error_reporting(E_ALL); 
-ini_set('display_errors', 0);
-	if(isset($_POST['addpst']))
-	{
-		$itemName = $_POST['itemName'];
-		$productCode = $_POST['productCode'];
-		$itemCompanyCode = $_POST['itemCompanyCode'];
-		$unit = $_POST['unit'];
-		$unityPrice = $_POST['unityPrice'];
-		$quantity = $_POST['quantity'];
-		$description = $_POST['description'];
-		echo $itemName;
-		echo' itemName<br/>';
-		echo $productCode;echo' productCode<br/>';
-		echo $itemCompanyCode;echo' itemCompanyCode<br/>';
-		echo $unit;echo' unit<br/>';
-		echo $unityPrice;echo' unityPrice<br/>';
-		echo $quantity;echo' quantity<br/>';
-		echo $description ;echo' description<br/>';
-		$addtheitem = $db->query("INSERT INTO `items1`(`itemName`, `productCode`, `itemCompanyCode`, `unit`, `unityPrice`, description) 
-		VALUES ('$itemName','$productCode','$itemCompanyCode','$unit','$unityPrice','$description')
-		")or die (mysqli_error());
-		
-		
-		$sql2 = $db->query("SELECT * FROM items1 ORDER BY itemId DESC limit 1");
-			while($row = mysqli_fetch_array($sql2)){
-				$Imagename = $row['itemId'];
-			}
-			
-		$sql5 = $db->query("INSERT INTO `bids`
-		(`trUnityPrice`, `qty`, `itemCode`, `operation`,`companyId`,`operationStatus`, doneBy) 
-		VALUES  ('$unityPrice','$quantity','$Imagename','In','$itemCompanyCode','1','$thisid')")or die(mysqli_error());
-		
-		if ($_FILES['fileField']['tmp_name'] != "") {																	 										 
-			$newname = ''.$Imagename.'.jpg';
-			move_uploaded_file( $_FILES['fileField']['tmp_name'], "../products/$newname");
-		}
-		header("location: user.php");
-	}
-	elseif(isset($_POST['editpst']))
-	{
-		$postId = $_POST['postId'];
-		$postTitle = $_POST['postTitle'];
-		$productCode = $_POST['productCode'];
-		$quantity = $_POST['quantity'];
-		$price = $_POST['price'];
-		$priceStatus = $_POST['priceStatus'];
-		$postDesc = $_POST['postDesc'];
-		$postedBy = $username; //$_POST['postedBy'];
-		$postDeadline = $_POST['postDeadline'];
-		$productLocation = $_POST['productLocation'];
-		
-		include ("db.php");
-		$sql = $db->query("UPDATE posts SET postTitle='$postTitle',productCode='$productCode',quantity='$quantity',price='$price',priceStatus='$priceStatus',postDesc='$postDesc',postedBy='$postedBy',postDeadline='$postDeadline',productLocation='$productLocation' WHERE postId = '$postId'")or die (mysqli_error());
-		
-		header("location: user.php");
-	}			
+ini_set('display_errors', 0);			
 ?>
 
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
 <?php
-
-include'userheader.php';
-include'functions.php';
+    include'userheader.php';
+    include'functions.php';
 ?>
 
 <!-- main sidebar -->
@@ -196,13 +140,13 @@ include'functions.php';
                             ?>
                                 <div class="uk-margin-bottom uk-width-medium-2-3 uk-width-1-1" data-target-forum="<?php echo $post['feedForumId'] ?>">
                                     <div class="md-card">
-                                        <div class="md-card-content small-padding">
+                                        <div class="md-card-content">
                                             <div class="blog_list_teaser" style="margin-bottom: 12px;">
-                                                <?php if(!empty($post_title)){
+                                                <!-- <?php if(!empty($post_title)){
                                                     ?>
                                                     <h2 class="blog_list_teaser_title uk-text-truncate"><?php echo $post_title; ?></h2>
                                                     <?php
-                                                } ?>                                                    
+                                                } ?>  -->                                                   
                                                 <p>
                                                     <?php echo $post_content; ?>
                                                 </p>
