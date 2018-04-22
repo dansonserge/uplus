@@ -18,6 +18,43 @@ include'functions.php';
 	<?php
 	 $forum = $_GET['id']??"";
         if(!empty($forum)){
+
+            //If submit request is issued
+            if(!empty($_POST)){
+                $title = $_POST['forumtitle']??"";
+                $intro = $_POST['intro']??"";
+
+                if($intro && $title){
+                    $forum_logo = $_FILES['forum_logo'];
+
+                    if($forum_logo['size']>10){
+
+                        $ext = strtolower(pathinfo($forum_logo['name'], PATHINFO_EXTENSION)); //extensin
+
+                        if($ext == 'png' || $ext == 'jpg'){
+                            $filename = "images/".strtolower(clean_string($title))."_".time().".$ext";
+                            if(!move_uploaded_file($forum_logo['tmp_name'], "$filename")){
+                                trigger_error("Error uploading the file");
+                                $filename = $forum_logo;
+                            }
+                        }else{
+                            $filename = $usual_logo;
+                        }
+                    }else{
+                        $filename = $usual_logo;
+                    }
+
+                    //updating
+                    $sql = "UPDATE forums SET title = \"$title\", subtitle = \"$intro\", icon = \"$filename\", updatedDate = NOW(), updatedBy = '$userId' WHERE id = \"$forum\"  ";
+                    $query = $conn->query($sql) or trigger_error($conn->error);
+                    if($query){
+                        header("location:".$_SERVER['REQUEST_URI']);
+                    }
+                }else{
+                    echo "Sure??";
+                }
+            }
+
             $forumData = getForum($forum);
 
             $forum_id = $forumData['id'];
@@ -71,43 +108,7 @@ include'functions.php';
                                             </div>
                                         </div>
                                         <div class="user_content">
-                                            <?php
-                                                if(!empty($_POST)){
-                                                    $title = $_POST['forumtitle']??"";
-                                                    $intro = $_POST['intro']??"";
-
-                                                    if($intro && $title){
-                                                        $forum_logo = $_FILES['forum_logo'];
-
-                                                        if($forum_logo['size']>10){
-
-                                                            $ext = strtolower(pathinfo($forum_logo['name'], PATHINFO_EXTENSION)); //extensin
-
-                                                            if($ext == 'png' || $ext == 'jpg'){
-                                                                $filename = "images/".strtolower(clean_string($title))."_".time().".$ext";
-                                                                if(!move_uploaded_file($forum_logo['tmp_name'], "$filename")){
-                                                                    trigger_error("Error uploading the file");
-                                                                    $filename = $forum_logo;
-                                                                }
-                                                            }else{
-                                                                $filename = $usual_logo;
-                                                            }
-                                                        }else{
-                                                            $filename = $usual_logo;
-                                                        }
-
-                                                        //updating
-                                                        $sql = "UPDATE forums SET title = \"$title\", subtitle = \"$intro\", icon = \"$filename\", updatedDate = NOW(), updatedBy = '$userId' WHERE id = \"$forum\"  ";
-                                                        echo "$sql";
-                                                        $query = $conn->query($sql) or trigger_error($conn->error);
-                                                        if($query){
-                                                            header("location:".$_SERVER['REQUEST_URI']);
-                                                        }
-                                                    }else{
-                                                        echo "Sure??";
-                                                    }
-                                                }
-                                            ?>
+                                            
                                             <div class="md-input-wrapper md-input-filled">
                                                 <label>Forum title</label>
                                                 <input type="text" name="forumtitle" id="forumtitle_input" value="<?php echo $forum_title; ?>" class="md-input" required="required">
@@ -367,7 +368,8 @@ include'functions.php';
                                     <tbody>
                                         <?php 
                                         $n=0;
-                                        $sqlGetForum = $db->query("SELECT * FROM `forums` WHERE ISNULL(archivedDate) ORDER BY id DESC")or trigger_error($db->error);
+                                        $sql = "SELECT * FROM `forums` WHERE ISNULL(archivedDate) ORDER BY id DESC";
+                                        $sqlGetForum = $db->query($sql) or trigger_error($db->error);
                                         while($data = mysqli_fetch_array($sqlGetForum))
                                             {
                                                 $admin  = staff_details($data['createdBy']);

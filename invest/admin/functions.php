@@ -134,7 +134,8 @@
 		function staff_details($userid){
 			//Function to return details for users
 			global $db;
-			$query = $db->query("SELECT *, names as name FROM users WHERE Id = \"$userid\" LIMIT 1 ") or trigger_error("Can't get staff: $db->error");
+			$sql = "SELECT *, names as name FROM users WHERE Id = \"$userid\" LIMIT 1 ";
+			$query = $db->query($sql) or trigger_error("Can't get staff: $db->error");
 			return $query->fetch_assoc();
 		}
 
