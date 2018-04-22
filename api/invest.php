@@ -107,7 +107,7 @@
 			$feeds[] = array(
 				"feedId"		=> $row['feedId'],
 				"feedForumId"	=> $row['feedForumId'],
-				"feedTitle"		=> $row['feedTitle'],
+				"feedTitle"		=> $row['feedTitle']??"",
 				"feedBy"		=> $row['feedBy'],
 				"feedByImg"		=> $row['feedByImg'],
 				"feedLikes"		=> $row['feedLikes']??0,
