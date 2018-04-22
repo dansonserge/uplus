@@ -5,7 +5,7 @@
 	include '../mail.php';
 
 	//return JSON Content-Type
-	// header('Content-Type: application/json');
+	header('Content-Type: application/json');
 
 	$Message = new broadcast();
 	$request = array_merge($_POST, $_GET); //$_GET for devt nd $_POST for production
@@ -79,6 +79,30 @@
 				'smsName'=>$church['smsName'],
 			);
 		}
+	}else if($action == "church_branches"){
+		//listing the church branches
+		$church = $request['church']??"";
+
+		if($church){
+			$branches = church_branches($church);
+			$branches_ret = array();
+			for ($n=0; $n<count($branches); $n++) {
+				$branch = $branches[$n];
+				$branches_ret[] = array(
+					'id'=>(int)$branch['id'],
+					'name'=>$branch['name'],
+					'representative'=>$branch['repId'],
+					'location'=>$branch['location'],
+					'web'=>$branch['web'],
+					'profile_picture'=>$branch['profile_picture'],
+					'phone'=>$branch['phone']??"",
+				);
+			}
+			$response = array('status'=>true, 'data'=>$branches_ret);
+		}else{
+			$response = array('status'=>false, 'msg'=>"Provide church");
+		}
+		
 	}else if($action == "get_groups"){
 		//Elisaa want random groupps
 		//give the church ID u want groups of

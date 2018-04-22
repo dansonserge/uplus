@@ -517,28 +517,30 @@
         $intro = $request['intro']??"";
 
 
-        $filename = 'images/forum_default.jpg'; //default forum image
+        $filename = 'invest/gallery/forum_default.jpg'; //default forum image
 
         if(!empty($_FILES['logo'])){
+            echo "Image";
             $pic = $_FILES['logo'];
 
             //checking file image
             $ext = strtolower(pathinfo($pic['name'], PATHINFO_EXTENSION)); //extensin
+            echo "$ext";
 
             if( ($ext == 'png' || $ext == 'jpg' && $ext == 'jpeg') ){
-                $filename = "images/$title"."_".time().".$ext";
+                echo "Correct extensin";
+                $filename = "invest/gallery/$title"."_".time().".$ext";
 
-                if(move_uploaded_file($pic['tmp_name'], "../$filename")){
-                    
-
-                    // $response = array('status'=>true, 'msg'=>"Success", 'forumId'=>$conn->insert_id);
-
-                }else $response = array('status'=>false, 'msg'=>"Error keeping file on server\nPlease try again".json_encode($_FILES));
+                if(move_uploaded_file($pic['tmp_name'], "../../$filename")){
+                }else{
+                    $response = array('status'=>false, 'msg'=>"Error keeping file on server\nPlease try again".json_encode($_FILES));
+                } 
 
             }
         }
 
         //Creating forum in db
+        $filename = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/".$filename;
         $sql = "INSERT INTO forums(title, createdBy, subtitle, icon) VALUES(\"$title\", \"$admin\", \"$intro\", \"$filename\") ";
         $insert = $conn->query($sql);
 
@@ -570,7 +572,6 @@
         $target_audience = $request['targetForum']; 
 
         $sql = "INSERT INTO feeds(feedContent, createdBy, feedForumId) VALUES(\"$post_content\", \"$userId\", \"$target_audience\")";
-        echo "$sql";
         $query = $conn->query($sql);
 
 

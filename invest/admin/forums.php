@@ -1,7 +1,7 @@
 
 <?php
     error_reporting(E_ALL); 
-    ini_set('display_errors', 0);			
+    ini_set('display_errors', 0);	
 ?>
 
 <!doctype html>
@@ -580,8 +580,8 @@ include'functions.php';
                             $("#addStatus").html("<p class='uk-text-success'>Forum added successfully!</p>");
                             
                             setTimeout(function(){
-                                UIkit.modal($("#add_member_modal")).hide();
-                                location.reload();
+                                // UIkit.modal($("#add_member_modal")).hide();
+                                // location.reload();
                             }, 3000);
                         }
                     }catch(e){

@@ -18,6 +18,21 @@ url: https://uplus.com/churches/api/index.php
 			platform - for app, make it 'app'
 		<-
 			status:true; status:false & msg
+	church_branches
+		->
+			church
+		<-
+			status:true,
+			data ->
+				id
+				name
+				representative
+				location
+				web
+				profile_picture
+				phone
+
+			status:false & msg
 	updateProfile
 		->
 			userId
