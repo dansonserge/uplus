@@ -90,7 +90,7 @@
 			while ($data = $query->fetch_assoc()) {
 				//checking if the user joined
 				$branchid = $data['id'];
-				$exiq = $conn->query("SELECT * FROM church_members WHERE userCode = \"$user\" AND branchid = \"$branchid\" AND archive = 'no' ORDER BY createdDate DESC LIMIT 1");
+				$exiq = $conn->query("SELECT * FROM church_members WHERE userCode = \"$user\" AND branchid = \"$branchid\" AND archived = 'no' ORDER BY createdDate DESC LIMIT 1") or trigger_error($conn->error);
 
 				$branches[] = array(
 					'churchName'=>$data['name'],
