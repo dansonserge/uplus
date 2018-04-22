@@ -267,8 +267,7 @@ include'functions.php';
 
                                     <div class="md-input-wrapper md-input-filled uk-margin-top">
                                         <label>Invitation message</label>
-                                        <textarea id="invite_text"  class="md-input label-fixed" placeholder="Enter invitation">
-                                        You are invited to join '<?php echo $forum_title; ?>' forum on u-invest, https://uplus.rw click here for more info</textarea>
+                                        <textarea id="invite_text"  class="md-input label-fixed" placeholder="Enter invitation">You are invited to join '<?php echo $forum_title; ?>' forum on u-invest, https://uplus.rw click here for more info</textarea>
                                         <span class="md-input-bar "></span>
                                     </div>
                                 </form>
