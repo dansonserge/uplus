@@ -79,28 +79,29 @@
 				'smsName'=>$church['smsName'],
 			);
 		}
-	}else if($action == "church_branches"){
+	}else if($action == "listChurches"){
 		//listing the church branches
-		$church = $request['church']??"";
+		$user = $request['user']??"";
+		if($user){
+			$query = $conn->query("SELECT * FROM branches");
 
-		if($church){
-			$branches = church_branches($church);
-			$branches_ret = array();
-			for ($n=0; $n<count($branches); $n++) {
-				$branch = $branches[$n];
-				$branches_ret[] = array(
-					'id'=>(int)$branch['id'],
-					'name'=>$branch['name'],
-					'representative'=>$branch['repId'],
-					'location'=>$branch['location'],
-					'web'=>$branch['web'],
-					'profile_picture'=>$branch['profile_picture'],
-					'phone'=>$branch['phone']??"",
+			$branches = array();
+
+			while ($data = $query->fetch_assoc()) {
+				//checking if the user joined
+				$branchid = $data['id'];
+				$exiq = $conn->query("SELECT * FROM church_members WHERE userCode = \"$user\" AND branchid = \"$branchid\" AND archive = 'no' ORDER BY createdDate DESC LIMIT 1");
+
+				$branches[] = array(
+					'churchName'=>$data['name'],
+					'churchId'=>$branchid,
+					'churchImage'=>$data['profile_picture'],
+					'joined'=>$exiq->num_rows==1?true:false,
 				);
 			}
-			$response = array('status'=>true, 'data'=>$branches_ret);
+			$response = $response = array('status'=>true, 'data'=>$branches);
 		}else{
-			$response = array('status'=>false, 'msg'=>"Provide church");
+			$response = array('status'=>false, 'msg'=>'provide user');
 		}
 		
 	}else if($action == "get_groups"){

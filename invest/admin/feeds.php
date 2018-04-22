@@ -458,16 +458,16 @@ ini_set('display_errors', 0);
 
 
         //disabling submit button
-        $("#submit_feed").addClass('display-none')
-        $("#submit_feed").attr('disabled', 'disabled')
-        $(".progress-cont").removeClass('display-none')
+        $("#submit_feed").addClass('display-none');
+        $("#submit_feed").attr('disabled', 'disabled');
+        $(".progress-cont").removeClass('display-none');
 
         //we can save now
         var formdata = new FormData();
         var ajax = new XMLHttpRequest();
 
         var post_content = $("#post_content").val();
-        var postTo = $("#postTo").val()
+        var postTo = $("#postTo").val();
 ;
         if(post_content && postTo){
             formdata.append('action', 'create_post');

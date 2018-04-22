@@ -11,6 +11,15 @@ url: https://uplus.com/churches/api/index.php
 			profile_picture
 			smsName
 
+	listChurches
+		->
+			user
+		->
+			churchName
+			churchId
+			churchImage
+			joined
+
 	join_church
 		->
 			user
