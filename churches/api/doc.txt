@@ -13,7 +13,7 @@ url: https://uplus.com/churches/api/index.php
 
 	listChurches
 		->
-			user
+			userId
 		->
 			churchName
 			churchId
