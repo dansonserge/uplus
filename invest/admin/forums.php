@@ -189,10 +189,11 @@ include'functions.php';
                                                     {
                                                         $n++;
                                                         $memberData = user_details($member['userCode']);
+                                                        $gender  = empty($memberData['gender'])?"Male":"Female";
                                                         echo '<tr>
                                                         <td>'.$n.'</td>
                                                         <td>'.$memberData['name'].'</td>
-                                                        <td>'.$memberData['gender']??"Male".'</td>
+                                                        <td>'.$gender.'</td>
                                                         <td>'.date($standard_date, strtotime($member['createdDate']) ).'</td>';
                                                     }
                                                 ?> 
