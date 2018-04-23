@@ -105,7 +105,7 @@
 															<?php
 																foreach ($forums as $key => $forum) {
 																	?>
-																		<option value="<?php echo $forum['id'] ?>" <?php if($feed_type == 'forum' && $feed_data['targetForum'] == $forum['id']) echo "selected"; ?> >d<?php echo $forum['forumtitle'] ?></option>
+																		<option value="<?php echo $forum['id'] ?>" <?php if($feed_type == 'forum' && $feed_data['targetForum'] == $forum['id']) echo "selected"; ?> ><?php echo $forum['forumtitle'] ?></option>
 																	<?php
 																}
 															?>

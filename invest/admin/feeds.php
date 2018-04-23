@@ -119,7 +119,7 @@ ini_set('display_errors', 0);
                 <!-- Posted feeds -->
                 <div class="uk-grid" data-uk-grid-margin="">
                     <?php
-                        $posts = getFeeds($thisid);
+                        $posts = forumFeeds($thisid);
                         foreach ($posts as $key => $post) {
                             $post_title = $post['feedTitle'];
                             $post_content = $post['feedContent'];
@@ -174,6 +174,15 @@ ini_set('display_errors', 0);
                                                 <div class="blog_list_footer_info" style="cursor: pointer;">
                                                     <span class="uk-margin-right"><i class="material-icons"></i> <small><?php echo $post_likes; ?></small></span>
                                                     <span><i class="material-icons"></i> <small><?php echo $post_comments; ?></small></span>
+                                                </div>
+
+                                                <div class="uk-float-right">
+                                                    <span class="uk-margin-left">
+                                                        <a href="feeds.php?id=<?php echo $post['id']; ?>">
+                                                            <!-- <i class="md-icon material-icons md-color-green-500" style="cursor: pointer;" title="Remove podcast" data-post="<?php echo $post['id']; ?>">mode_edit</i> -->
+                                                        </a>
+                                                        <i class="md-icon material-icons md-color-red-500 post_remove" style="cursor: pointer;" title="Remove podcast" data-post="<?php echo $post['id']; ?>">delete</i>
+                                                    </span>
                                                 </div>
                                                 <!-- <a href="#" class="md-btn md-btn-small md-btn-flat md-btn-flat-primary uk-float-right">Read more</a> -->
                                             </div>
@@ -483,25 +492,27 @@ ini_set('display_errors', 0);
             alert("Specify details")
         }            
     })
-
-    //removing podcast
-    $(".podcast_remove").on('click', function(){
-        podcastId = $(this).data("podcast");
+    //removing feed
+    $(".post_remove").on('click', function(){
+        feedId = $(this).data("post");
         parent_elem = $(this).parents('.uk-margin-bottom');
 
-        del_prompt = window.confirm("Delete this podcast?");
+        del_prompt = window.confirm("Delete this feed?");
         if(del_prompt){
-            $.post('api/index.php', {action:'delete_podcast', podcast:podcastId}, function(data){
-                ret = JSON.parse(data)
+            $.post('api/index.php', {action:'delete_feed', feed:feedId, user:<?php echo $thisid; ?>}, function(data){
+                if(typeof(data) == 'object')
+                    ret = data
+                else
+                    ret = JSON.parse(data)
                 if(ret.status){
                     // parent container cleanin
-                    
+                    // location.reload();
                     parent_elem.hide(100);
                     $(this).parents('.uk-margin-bottom').remove();
                 }
             });
         }            
-    })
+    });
     function log(data){
         console.log(data)
     }

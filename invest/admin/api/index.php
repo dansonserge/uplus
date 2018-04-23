@@ -259,7 +259,6 @@
         $groupid = $request['group']??0;
 
         $conn->query("DELETE FROM groups WHERE id = \"$groupid\" ");
-    }else if($action == 'invoice'){        
     }else if($action == "create_branch"){
         //creating branch
         $name  = $request['name']??"";
@@ -503,17 +502,22 @@
             );
         }
         $response = $forums;
-    }else if($action == 'list_feeds'){
-        //listing FEEDS - all feeds
-        //TODO: pagination
-        $query = $conn->query("SELECT * FROM posts ORDER BY postedDate")or die(mysqli_error($conn));
-        $posts = array();
-        while ($data = mysqli_fetch_array($query))
-        {
-            $posts[] = $data;
+    }else if($action == 'delete_feed'){
+        //deleting the feed
+        $feed = $request['feed']??"";
+        $user = $request['user']??""; //who deleted this feed
+
+        if($user && $feed){
+            $sql = "UPDATE feeds SET archivedDate = NOW(), archivedBy = \"$user\", archive = 'YES', updatedDate = NOW(), updatedBy = \"$user\" WHERE id = \"$feed\"";
+            echo "$sql";
+            $query = $conn->query($sql) or trigger_error($conn->error);
+            $response = array('status'=>true);
+        }else{
+            $response = array('status'=>false, 'msg'=>"Provide details");
         }
-        $response = $posts;
-    }else if($action ==  'create_forum'){
+
+    }
+    else if($action ==  'create_forum'){
         //creating forum
         $title = $request['title']??"";
         $admin = $request['admin']??"";
