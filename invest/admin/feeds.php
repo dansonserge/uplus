@@ -73,6 +73,7 @@ ini_set('display_errors', 1);
                                                         <option>-- Target --</option>
                                                         <option value="public">Public</option>
                                                         <?php
+                                                            $forums = listForums();
                                                             foreach ($forums as $key => $forum) {
                                                                 ?>
                                                                     <option value="<?php echo $forum['id'] ?>"><?php echo $forum['title'] ?></option>

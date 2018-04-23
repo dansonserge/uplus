@@ -2,7 +2,6 @@
 	include_once("db.php");
 
 	$standard_date = "d F Y";
-	echo "string";
 	function total_users()
 	{
 		//returns all the users of church system
@@ -96,6 +95,7 @@
 		}
 		return $posts;
 	}
+
 	function listFeeds($memberId='')
 	{
 		//function to return the posts from $user
@@ -120,6 +120,18 @@
 			$posts[] = $data;
 		}
 		return $posts;
+	}
+
+	function listForums(){
+		//returns all the forums
+		global $conn;
+
+		$query = $conn->query("SELECT * FROM forums WHERE archive = 'NO' ") or trigger_error($conn->error);
+		$forums = array();
+		while ($data = $query->fetch_assoc()) {
+			$forums[] = $data;
+		}
+		return $forums;
 	}
 
 	function forumFeeds($forum)
