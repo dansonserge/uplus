@@ -55,6 +55,18 @@ link: https://uplus.rw/api/invest.php
 			feedComment
 		<-
 			"Done"
+
+	postFeed
+		->
+			memberId
+			targetForum
+			feedContent
+			targetForum
+			platform - 'app' for android
+
+		<-
+			status and msg
+
 	listCommentsFeed
 		->
 			feedId
