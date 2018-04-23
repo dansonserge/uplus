@@ -106,7 +106,7 @@
 	{
 		//function to return the posts from $user
 		global $db;
-		$query = $db->query("SELECT *, F.id as fid, (SELECT COUNT(*) FROM investments.feed_likes WHERE feedCode = F.id) as nlikes, (SELECT COUNT(*) FROM investments.feed_comments  WHERE feedCode = F.id) as ncomments, (SELECT COUNT(*) FROM investments.feed_likes WHERE feedCode = F.id AND userCode = '$memberId') as liked FROM investments.feeds as F WHERE archive = 'NO' OR ISNULL(archive) ORDER BY createdDate DESC ") or trigger_error($db->error, E_USER_ERROR);
+		$query = $db->query("SELECT F.*, F.id as fid, u.userImage as feedByImg, (SELECT COUNT(*) FROM investments.feed_likes WHERE feedCode = F.id) as nlikes, (SELECT COUNT(*) FROM investments.feed_comments  WHERE feedCode = F.id) as ncomments, (SELECT COUNT(*) FROM investments.feed_likes WHERE feedCode = F.id AND userCode = '$memberId') as liked FROM investments.feeds as F JOIN uplus.users AS u ON u.id = F.feedBy WHERE archive = 'NO' OR ISNULL(archive) ORDER BY createdDate DESC ") or trigger_error($db->error, E_USER_ERROR);
 
 		$posts = array();
 

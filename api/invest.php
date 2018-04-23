@@ -123,12 +123,13 @@
 				"feedForumId"	=> $row['feedForumId'],
 				"feedTitle"		=> $row['feedTitle']??"",
 				"feedBy"		=> $row['feedBy'],
-				// "feedByImg"		=> $row['feedByImg']??"",
+				"feedByImg"		=> $row['feedByImg']??"",
 				"feedLikes"		=> $row['nlikes'],
 				"feedLikeStatus"=> $liked, 
 				"feedComments" 	=> $row['ncomments'],
 				"feedDate"		=> $row['createdDate'],
-				"feedContent"	=> $row['feedContent']
+				"feedContent"	=> $row['feedContent'],
+				// "feedImage"	=> array(),
 			);
 		}
 
