@@ -191,8 +191,8 @@ include'functions.php';
                                                         $memberData = user_details($member['userCode']);
                                                         echo '<tr>
                                                         <td>'.$n.'</td>
-                                                        <td>'.$memberData['names'].'</td>
-                                                        <td>'.$memberData['gender'].'</td>
+                                                        <td>'.$memberData['name'].'</td>
+                                                        <td>'.$memberData['gender']??"Male".'</td>
                                                         <td>'.date($standard_date, strtotime($member['createdDate']) ).'</td>';
                                                     }
                                                 ?> 

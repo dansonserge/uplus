@@ -95,7 +95,7 @@
 		function user_details($userid){
 			//Function to get user's details
 			global $db;
-			$user = $db->query("SELECT * FROM users WHERE id = \"$userid\" LIMIT 1 ") or trigger_error("Errror getting user's details $db->error");
+			$user = $db->query("SELECT * FROM uplus.users WHERE id = \"$userid\" LIMIT 1 ") or trigger_error("Errror getting user's details $db->error");
 
 			$user = $user->fetch_assoc();
 			return $user;
