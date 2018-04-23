@@ -192,6 +192,8 @@
         //target forum
         $target_audience = $request['targetForum'];
 
+        print_r($request);
+
         // title
         $title = $request['title']??"";
 
