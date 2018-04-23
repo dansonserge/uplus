@@ -505,7 +505,7 @@ ini_set('display_errors', 1);
                     ret = JSON.parse(data)
                 if(ret.status){
                     // parent container cleanin
-                    // location.reload();
+                    location.reload();
                     parent_elem.hide(100);
                     $(this).parents('.uk-margin-bottom').remove();
                 }

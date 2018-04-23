@@ -509,7 +509,6 @@
 
         if($user && $feed){
             $sql = "UPDATE feeds SET archivedDate = NOW(), archivedBy = \"$user\", archive = 'YES', updatedDate = NOW(), updatedBy = \"$user\" WHERE id = \"$feed\"";
-            echo "$sql";
             $query = $conn->query($sql) or trigger_error($conn->error);
             $response = array('status'=>true);
         }else{
