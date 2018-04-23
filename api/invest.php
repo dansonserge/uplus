@@ -104,9 +104,8 @@
 	function loopFeeds()
 	{
 		require('db.php');
-		$memberId	= mysqli_real_escape_string($db, $_POST['memberId']);
-		$sql = $investDb->query("SELECT F.id feedId, F.feedForumId, F.feedTitle, U.name feedBy, U.userImage feedByImg,
-		 F.feedLikes, F.feedComents, F.createdDate feedDate,F.feedContent FROM investments.feeds F INNER JOIN uplus.users U ON F.createdBy = U.id")or die(mysqli_error($investDb));
+		$memberId	= mysqli_real_escape_string($db, $_POST['memberId']??"");
+		$sql = $investDb->query("SELECT F.id feedId, F.feedForumId, (SELECT COUNT(*) FROM feed_likes WHERE feedCode = F.id) as nlikes, (SELECT COUNT(*) FROM feed_comments  WHERE feedCode = F.id) as comments, F.feedTitle, U.name feedBy, U.userImage feedByImg, F.createdDate feedDate,F.feedContent FROM investments.feeds F INNER JOIN uplus.users U ON F.createdBy = U.id")or die(mysqli_error($investDb));
 		$feeds = array();
 		while ($row = mysqli_fetch_array($sql))
 		{
@@ -116,9 +115,9 @@
 				"feedTitle"		=> $row['feedTitle']??"",
 				"feedBy"		=> $row['feedBy'],
 				"feedByImg"		=> $row['feedByImg'],
-				"feedLikes"		=> $row['feedLikes']??0,
+				"feedLikes"		=> $row['nlikes'],
 				"feedLikeStatus"=> 'NO', 
-				"feedComments" 	=> "12",
+				"feedComments" 	=> $row['comments'],
 				"feedDate"		=> $row['feedDate'],
 				"feedContent"	=> $row['feedContent']
 			);
