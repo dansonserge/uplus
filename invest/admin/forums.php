@@ -1,6 +1,6 @@
 <?php
     error_reporting(E_ALL); 
-    ini_set('display_errors', 0);
+    ini_set('display_errors', 1);
     $HOSTNAME = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/";
 ?>
 
@@ -16,6 +16,7 @@ include'functions.php';
 <!-- main sidebar -->
 <div id="new_comp">
 	<?php
+
 	 $forum = $_GET['id']??"";
         if(!empty($forum)){
 
@@ -184,7 +185,6 @@ include'functions.php';
                                             <tbody>
                                                 <?php 
                                                 $n=0;
-
                                                 foreach($forum_joined as $key=> $member)
                                                     {
                                                         $n++;
@@ -354,6 +354,11 @@ include'functions.php';
                             </div>
                         </div> -->
                         <div class="md-card">
+                        	<?php
+                        		$forums = getForums();
+                        		foreach ($forums as $key => $data){
+                        		}
+                        	?>
                             <div id="status"></div>
                             <div class="md-card-content">
                                 <div class="dt_colVis_buttons">
@@ -371,11 +376,9 @@ include'functions.php';
                                     </thead>
                                     <tbody>
                                         <?php 
-                                        $n=0;
-                                        $sql = "SELECT * FROM `forums` WHERE ISNULL(archivedDate) ORDER BY id DESC";
-                                        $sqlGetForum = $db->query($sql) or trigger_error($db->error);
-                                        while($data = mysqli_fetch_array($sqlGetForum))
-                                            {
+                                            $n=0;
+                                            
+                                            foreach ($forums as $key => $data){
                                                 $admin  = staff_details($data['createdBy']);
                                                 $n++;
                                                 echo '<tr>

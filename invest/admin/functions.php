@@ -63,6 +63,12 @@
 		return $user;
 	}
 
+	function staff_details($staff){
+		//returns staff
+		global $conn;
+		return user_details($staff);
+	}
+
 	function clean_string($string)
 	{
 		$string = str_replace(' ', '_', $string); // Replaces all spaces with hyphens.
@@ -100,14 +106,14 @@
 	{
 		//function to return the posts from $user
 		global $db;
-		$query = $db->query("SELECT *, F.id as fid, (SELECT COUNT(*) FROM feed_likes WHERE feedCode = F.id) as nlikes, (SELECT COUNT(*) FROM feed_comments  WHERE feedCode = F.id) as ncomments, (SELECT COUNT(*) FROM feed_likes WHERE feedCode = F.id AND userCode = '$memberId') as liked FROM feeds as F WHERE archive = 'NO' OR ISNULL(archive) ORDER BY createdDate DESC ") or trigger_error($db->error, E_USER_ERROR);
+		$query = $db->query("SELECT *, F.id as fid, (SELECT COUNT(*) FROM investments.feed_likes WHERE feedCode = F.id) as nlikes, (SELECT COUNT(*) FROM investments.feed_comments  WHERE feedCode = F.id) as ncomments, (SELECT COUNT(*) FROM investments.feed_likes WHERE feedCode = F.id AND userCode = '$memberId') as liked FROM investments.feeds as F WHERE archive = 'NO' OR ISNULL(archive) ORDER BY createdDate DESC ") or trigger_error($db->error, E_USER_ERROR);
 
 		$posts = array();
 
 		while ($data = $query->fetch_assoc()) {
 
 			//getting post attachments
-			$attq = $db->query("SELECT imgUrl FROM investmentimg WHERE investCode = $data[fid]") or trigger_error($conn->error);
+			$attq = $db->query("SELECT imgUrl FROM investments.investmentimg WHERE investCode = $data[fid]") or trigger_error($db->error);
 
 			$att = array();
 			while ( $attData = $attq->fetch_assoc()) {
@@ -122,7 +128,7 @@
 		return $posts;
 	}
 
-	function listForums(){
+	function getForums(){
 		//returns all the forums
 		global $conn;
 

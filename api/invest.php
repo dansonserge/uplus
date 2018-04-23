@@ -104,23 +104,30 @@
 	function loopFeeds()
 	{
 		require('db.php');
+		require_once('../invest/admin/db.php');
+		require_once('../invest/admin/functions.php');
 		$memberId	= mysqli_real_escape_string($db, $_POST['memberId']??"");
-		$sql = $investDb->query("SELECT F.id feedId, F.feedForumId, (SELECT COUNT(*) FROM feed_likes WHERE feedCode = F.id) as nlikes, (SELECT COUNT(*) FROM feed_likes WHERE feedCode = F.id AND userCode = '$memberId') as liked, (SELECT COUNT(*) FROM feed_comments  WHERE feedCode = F.id) as comments, F.feedTitle, U.name feedBy, U.userImage feedByImg, F.createdDate feedDate,F.feedContent FROM investments.feeds F INNER JOIN uplus.users U ON F.createdBy = U.id")or die(mysqli_error($investDb));
+
+		$all_feeds = listFeeds($memberId);
+
+		// $sql = $investDb->query("SELECT F.id feedId, F.feedForumId, (SELECT COUNT(*) FROM feed_likes WHERE feedCode = F.id) as nlikes, (SELECT COUNT(*) FROM feed_likes WHERE feedCode = F.id AND userCode = '$memberId') as liked, (SELECT COUNT(*) FROM feed_comments  WHERE feedCode = F.id) as comments, F.feedTitle, U.name feedBy, U.userImage feedByImg, F.createdDate feedDate,F.feedContent FROM investments.feeds F INNER JOIN uplus.users U ON F.createdBy = U.id")or die(mysqli_error($investDb));
 		$feeds = array();
-		while ($row = mysqli_fetch_array($sql))
+
+		for ($n=0; $n<count($all_feeds) && $n<2; $n++)
 		{
+			$row = $all_feeds[$n];
 			//liked status of the user
 			$liked = $row['liked']==0?"NO":"YES";
 			$feeds[] = array(
-				"feedId"		=> $row['feedId'],
+				"feedId"		=> $row['id'],
 				"feedForumId"	=> $row['feedForumId'],
 				"feedTitle"		=> $row['feedTitle']??"",
 				"feedBy"		=> $row['feedBy'],
-				"feedByImg"		=> $row['feedByImg'],
+				// "feedByImg"		=> $row['feedByImg'],
 				"feedLikes"		=> $row['nlikes'],
 				"feedLikeStatus"=> $liked, 
-				"feedComments" 	=> $row['comments'],
-				"feedDate"		=> $row['feedDate'],
+				"feedComments" 	=> $row['ncomments'],
+				"feedDate"		=> $row['createdDate'],
 				"feedContent"	=> $row['feedContent']
 			);
 		}
