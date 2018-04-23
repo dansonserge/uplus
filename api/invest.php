@@ -190,9 +190,7 @@
         $type = $request['type']??"";
 
         //target forum
-        $target_audience = $request['targetForum'];
-
-        print_r($request);
+        $target_audience = $request['targetForum']??$request['feedId'];
 
         // title
         $title = $request['title']??"";
@@ -214,7 +212,7 @@
 	            for($n=0; $n<count($attachments); $n++){
 	                $att = $attachments[$n];
 	                $sql = "INSERT INTO investmentimg(imgUrl, investCode) VALUES(\"$att\", $feed_id) ";
-	                $investDb->query($sql) or trigger_error($conn->error);
+	                $investDb->query($sql) or trigger_error($investDb->error);
 	            }
 	        }else if(!empty($_FILES) ){
 	        	//here we've to upload these files, this oftenly happens for android requests
@@ -236,7 +234,7 @@
 			            
 			            if(move_uploaded_file($attachment['tmp_name'], "../".$filename)){
 			            	$sql = "INSERT INTO investmentimg(imgUrl, investCode) VALUES(\"$hostname$filename\", $feed_id) ";
-	                		$investDb->query($sql) or trigger_error($conn->error);
+	                		$investDb->query($sql) or trigger_error($investDb->error);
 			            }
 			        }else{
 			            $response = array('status'=>false, 'msg'=>"Invalid file type");
@@ -246,7 +244,7 @@
 
             $response = array('status'=>true, 'msg'=>array('postId'=>$investDb->insert_id));
         }else{
-            $response = array('status'=>false, 'msg'=>"Error $conn->error");   
+            $response = array('status'=>false, 'msg'=>"Error $investDb->error");   
         }
         echo json_encode($response);
 	}
