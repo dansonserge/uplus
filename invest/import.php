@@ -1,6 +1,6 @@
 <?php
 require '../db.php';
-die("Mind your ways");
+// die("Mind your ways");
 //get all users who came into evet
 $users = $eventDb->query("SELECT * FROM free_tickets_buy");
 while ($userData  = $users->fetch_assoc()) {
@@ -31,5 +31,6 @@ while ($userData  = $users->fetch_assoc()) {
 		echo "User inserted";
 	}
 }
+aksdj
 ?>
 

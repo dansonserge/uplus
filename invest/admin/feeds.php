@@ -1,23 +1,21 @@
 
 <?php
 error_reporting(E_ALL); 
-ini_set('display_errors', 0);			
+ini_set('display_errors', 1);			
 ?>
 
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
 <?php
-    include'userheader.php';
-    include'functions.php';
+    include 'userheader.php';
+    include 'functions.php';
 ?>
 
 <!-- main sidebar -->
 <div id="new_comp">
 <div id="page_content">
     <?php
-        //forums
-        $forums = church_forums();
         if(!empty($_GET['branch'])){
             $branchid = $_GET['branch'];
             $branch_data = get_branch($branchid);
@@ -119,7 +117,7 @@ ini_set('display_errors', 0);
                 <!-- Posted feeds -->
                 <div class="uk-grid" data-uk-grid-margin="">
                     <?php
-                        $posts = forumFeeds($thisid);
+                        $posts = listFeeds();
                         foreach ($posts as $key => $post) {
                             $post_title = $post['feedTitle'];
                             $post_content = $post['feedContent'];

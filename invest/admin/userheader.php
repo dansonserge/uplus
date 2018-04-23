@@ -128,8 +128,7 @@
 	</header><!-- main header end -->
 	<!-- main sidebar -->
 	   
-	 <aside id="sidebar_main">
-		
+	<aside id="sidebar_main">		
 		<div class="sidebar_main_header">
 			<div class="sidebar_logo">
 				<a href="index.html" class="sSidebar_hide sidebar_logo_large">
