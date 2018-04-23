@@ -5,7 +5,10 @@
     include '../../mail.php';
 
     //return JSON Content-Type
-    // header('Content-Type: application/json');
+    header('Content-Type: application/json');
+
+    //hostname for file referencing
+    $hostname = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/";
 
 	$Message = new broadcast();
 	$request = array_merge($_POST, $_GET); //$_GET for devt nd $_POST for production
@@ -537,7 +540,7 @@
         }
 
         //Creating forum in db
-        $filename = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/".$filename;
+        $filename = $hostname.$filename;
         $sql = "INSERT INTO forums(title, createdBy, subtitle, icon) VALUES(\"$title\", \"$admin\", \"$intro\", \"$filename\") ";
         $insert = $conn->query($sql);
 

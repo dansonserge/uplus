@@ -1,7 +1,13 @@
 <?php
 // START INITIATE
 	include ("db.php");
-	// var_dump($_SERVER["REQUEST_METHOD"]);
+
+	//return JSON Content-Type
+    // header('Content-Type: application/json');
+
+    //hostname for file referencing
+    $hostname = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/";
+
 	if ($_SERVER["REQUEST_METHOD"] == "POST") 
 	{
 		if(isset($_POST['action']))
@@ -173,16 +179,74 @@
 	function postFeed()
 	{
 		require('db.php');
-		$memberId		= mysqli_real_escape_string($db, $_POST['memberId']);
-		$forumId		= mysqli_real_escape_string($db, $_POST['feedId']);
-		$feedTitle		= mysqli_real_escape_string($db, $_POST['feedTitle']);
-		$feedContent	= mysqli_real_escape_string($db, $_POST['feedContent']);
-		
-		$sql = $investDb->query("INSERT INTO feeds(feedForumId, feedTitle, feedBy,
-		 feedContent, createdBy)
-		VALUES ('$forumId', '$feedTitle','$memberId',
-		'$feedContent','$memberId')")or die (mysqli_error($investDb));
-		echo "Done";
+		global $hostname;
+		$request = $_POST;
+
+		// /post feeds
+        $userId = $request['memberId']??"";
+        $post_content = $request['feedContent']??"";
+
+        //type of the post
+        $type = $request['type']??"";
+
+        //target forum
+        $target_audience = $request['targetForum'];
+
+        // title
+        $title = $request['title']??"";
+
+        //attachments link
+        $attachments = json_decode($request['attachments']??"", true);
+
+        //the type of person who posted - admin or member if empty it'll be elisaa app
+        $userType = $request['userType']??'member';        
+
+        $sql = "INSERT INTO feeds(feedContent, createdBy, feedForumId) VALUES(\"$post_content\", \"$userId\", \"$target_audience\")";
+        $query = $investDb->query($sql);
+
+        if($query){
+            $feed_id = $investDb->insert_id;
+            //checking sent attachments
+            if(is_array($attachments)){
+            	//already uploaded attachments
+	            for($n=0; $n<count($attachments); $n++){
+	                $att = $attachments[$n];
+	                $sql = "INSERT INTO investmentimg(imgUrl, investCode) VALUES(\"$att\", $feed_id) ";
+	                $investDb->query($sql) or trigger_error($conn->error);
+	            }
+	        }else if(!empty($_FILES) ){
+	        	//here we've to upload these files, this oftenly happens for android requests
+	        	$attachments = $_FILES;
+	        	foreach ($attachments as $handlename => $attachment) {
+	        		$sent_file_name = $attachment['name'];
+
+	        		$ext = strtolower(pathinfo($sent_file_name, PATHINFO_EXTENSION)); //extension
+
+	        		//forumlating how the file will be names
+	        		$filename = "invest/gallery/feeds/".substr($sent_file_name, 0, -4)."_".time().".".$ext;
+	        		
+
+	        		$allowed_extensions = array('preventerrorsguys_dont remove please', 'jpg', 'png', 'mp3', 'aac', 'mp4');
+
+	        		//checking extension
+	        		if(array_search($ext, $allowed_extensions)){
+			            //we can now upload
+			            
+			            if(move_uploaded_file($attachment['tmp_name'], "../".$filename)){
+			            	$sql = "INSERT INTO investmentimg(imgUrl, investCode) VALUES(\"$hostname$filename\", $feed_id) ";
+	                		$investDb->query($sql) or trigger_error($conn->error);
+			            }
+			        }else{
+			            $response = array('status'=>false, 'msg'=>"Invalid file type");
+			        }
+	        	}
+	        }
+
+            $response = array('status'=>true, 'msg'=>array('postId'=>$investDb->insert_id));
+        }else{
+            $response = array('status'=>false, 'msg'=>"Error $conn->error");   
+        }
+        echo json_encode($response);
 	}
 // END FORUMS
 ?>
