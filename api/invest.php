@@ -156,10 +156,11 @@
 		if($query->num_rows){
 			//here user already liked
 		}else{
-			//liked already
+			//make the user like
 			$investDb->query("INSERT INTO feed_likes(feedCode, userCode) VALUES(\"$feedId\", \"$userId\")");
+			echo "Done";
 		}
-		echo "Done";
+		
 		
 	}
 
