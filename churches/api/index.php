@@ -102,7 +102,7 @@
 					'joined'=>$exiq->num_rows==1?"Yes":"No",
 				);
 			}
-			$response = $response = array('status'=>true, 'data'=>$branches);
+			$response = $branches;
 		}else{
 			$response = array('status'=>false, 'msg'=>'provide user');
 		}

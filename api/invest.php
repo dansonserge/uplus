@@ -155,6 +155,7 @@
 		$query = $investDb->query("SELECT * FROM feed_likes WHERE feedCode = \"$feedId\" AND userCode = \"$userId\" ");
 		if($query->num_rows){
 			//here user already liked
+			echo "skipped";
 		}else{
 			//make the user like
 			$investDb->query("INSERT INTO feed_likes(feedCode, userCode) VALUES(\"$feedId\", \"$userId\")");
