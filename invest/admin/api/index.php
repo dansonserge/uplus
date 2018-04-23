@@ -600,7 +600,7 @@
         if(array_search($ext, $allowed_extensions)){
             //we can now upload
             move_uploaded_file($attachment['tmp_name'], "../../../".$filename);
-            $response = array('status'=>true, 'msg'=>$filename);
+            $response = array('status'=>true, 'msg'=>$hostname.$filename);
         }else{
             $response = array('status'=>false, 'msg'=>"Invalid file type");
         }

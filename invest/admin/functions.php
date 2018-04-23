@@ -189,12 +189,6 @@
 			var_dump($query);
 		}
 
-		function getChurch($church){
-			global $db;
-			//get church details
-			$query = $db->query("SELECT * FROM church WHERE id = \"$church\" ") or trigger_error("Can't get church $db->error");
-			return $query->fetch_assoc();
-		}
 
 		function churchAdmin($churchID){
 			global $db;
@@ -210,6 +204,31 @@
 			//function to return the posts from $user
 			global $db;
 			$query = $db->query("SELECT *, feeds.id as fid, (SELECT COUNT(*) FROM feed_likes WHERE feedCode = feeds.id) as nlikes, (SELECT COUNT(*) FROM feed_comments  WHERE feedCode = feeds.id) as ncomments FROM feeds JOIN users ON feeds.createdBy = users.Id  WHERE users.id = \"$user\" ORDER BY createdDate DESC ") or trigger_error("sdsd".$db->error, E_USER_ERROR);
+
+			$posts = array();
+
+			while ($data = $query->fetch_assoc()) {
+
+				//getting post attachments
+				$attq = $db->query("SELECT imgUrl FROM investmentimg WHERE investCode = $data[fid]") or trigger_error($conn->error);
+
+				$att = array();
+				while ( $attData = $attq->fetch_assoc()) {
+					$att[] = $attData['imgUrl'];
+				}
+
+				$data['feedAttachments'] = $att;
+
+				$posts[] = $data;
+			}
+			return $posts;
+		}
+
+		function forumFeeds($forum)
+		{
+			//function to return the posts in the forum
+			global $db;
+			$query = $db->query("SELECT *, feeds.id as fid, (SELECT COUNT(*) FROM feed_likes WHERE feedCode = feeds.id) as nlikes, (SELECT COUNT(*) FROM feed_comments  WHERE feedCode = feeds.id) as ncomments FROM feeds WHERE feeds.feedForumId= \"$forum\" ORDER BY createdDate DESC ") or trigger_error("sdsd".$db->error, E_USER_ERROR);
 
 			$posts = array();
 

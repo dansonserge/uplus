@@ -151,10 +151,17 @@
 		require('db.php');
 		$userId		= mysqli_real_escape_string($db, $_POST['userId']);
 		$feedId		= mysqli_real_escape_string($db, $_POST['feedId']);
-		
-		$sql = $investDb->query("UPDATE `feeds` SET feedLikes = feedLikes + 1")or die (mysqli_error());
-		$sql2= $investDb->query("SELECT feedLikes `feeds` WHERE id = '$feedId'")or die (mysqli_error());
+
+		//check if the user has liked the feed
+		$query = $investDb->query("SELECT * FROM feed_likes WHERE feedCode = \"$feedId\" AND userCode = \"$userId\" ");
+		if($query->num_rows){
+			//here user already liked
+		}else{
+			//liked already
+			$investDb->query("INSERT INTO feed_likes(feedCode, userCode) VALUES(\"$feedId\", \"$userId\")");
+		}
 		echo "Done";
+		
 	}
 
 	function listCommentsFeed()
@@ -168,12 +175,13 @@
 	function commentFeed()
 	{
 		require('db.php');
-		$userId		= mysqli_real_escape_string($db, $_POST['userId']);
-		$feedId		= mysqli_real_escape_string($db, $_POST['feedId']);
-		$feedComment= mysqli_real_escape_string($db, $_POST['feedComment']);
+		$userId		 = mysqli_real_escape_string($db, $_POST['userId']);
+		$feedId		 = mysqli_real_escape_string($db, $_POST['feedId']);
+		$feedComment = mysqli_real_escape_string($db, $_POST['feedComment']);
 
-		"Done";
-		$sql = $investDb->query("")or die (mysqli_error());
+		$investDb->query("INSERT INTO feed_comments(feedCode, userCode, comment) VALUES(\"$feedId\", \"$userId\", \"$feedComment\")");
+
+		echo "Done";
 	}
 
 	function postFeed()
