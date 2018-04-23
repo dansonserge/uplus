@@ -470,22 +470,22 @@ ini_set('display_errors', 0);
         var postTo = $("#postTo").val();
 ;
         if(post_content && postTo){
-            formdata.append('action', 'create_post');
-            formdata.append('content', post_content);
-            formdata.append('user', <?php echo $thisid; ?>);
+            formdata.append('action', 'postFeed');
+            formdata.append('feedContent', post_content);
+            formdata.append('memberId', <?php echo $thisid; ?>);
             formdata.append('attachments', JSON.stringify(feeds_attachment));
             formdata.append('userType', 'admin');
             formdata.append('platform', 'web');
             formdata.append('targetForum', postTo);
 
-            ajax.open("POST", "api/index.php");        
+            ajax.open("POST", host+"api/invest.php");        
             ajax.send(formdata);
 
             ajax.addEventListener("load", function(){
                 ret = this.responseText 
                 setTimeout(function(){
                     console.log(ret)
-                    location.reload()
+                    // location.reload()
                 }, 1500)                    
             })
         }else{

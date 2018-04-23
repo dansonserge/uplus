@@ -198,13 +198,11 @@
         //attachments link
         $attachments = json_decode($request['attachments']??"", true);
 
-        print_r($request);
-
-        //the type of person who posted - admin or member if empty it'll be elisaa app
+        //the type of person who posted - admin or member if empty it'll be elisa app
         $userType = $request['userType']??'member';        
 
         $sql = "INSERT INTO feeds(feedContent, createdBy, feedForumId) VALUES(\"$post_content\", \"$userId\", \"$target_audience\")";
-        $query = $investDb->query($sql);
+        $query = $investDb->query($sql) or trigger_error($investDb->error);
 
         if($query){
             $feed_id = $investDb->insert_id;
