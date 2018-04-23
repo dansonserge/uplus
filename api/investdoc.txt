@@ -61,7 +61,6 @@ link: https://uplus.rw/api/invest.php
 			memberId
 			targetForum
 			feedContent
-			targetForum
 			platform - 'app' for android
 
 		<-
