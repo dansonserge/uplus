@@ -105,10 +105,12 @@
 	{
 		require('db.php');
 		$memberId	= mysqli_real_escape_string($db, $_POST['memberId']??"");
-		$sql = $investDb->query("SELECT F.id feedId, F.feedForumId, (SELECT COUNT(*) FROM feed_likes WHERE feedCode = F.id) as nlikes, (SELECT COUNT(*) FROM feed_comments  WHERE feedCode = F.id) as comments, F.feedTitle, U.name feedBy, U.userImage feedByImg, F.createdDate feedDate,F.feedContent FROM investments.feeds F INNER JOIN uplus.users U ON F.createdBy = U.id")or die(mysqli_error($investDb));
+		$sql = $investDb->query("SELECT F.id feedId, F.feedForumId, (SELECT COUNT(*) FROM feed_likes WHERE feedCode = F.id) as nlikes, (SELECT COUNT(*) FROM feed_likes WHERE feedCode = F.id AND userCode = '$memberId') as liked, (SELECT COUNT(*) FROM feed_comments  WHERE feedCode = F.id) as comments, F.feedTitle, U.name feedBy, U.userImage feedByImg, F.createdDate feedDate,F.feedContent FROM investments.feeds F INNER JOIN uplus.users U ON F.createdBy = U.id")or die(mysqli_error($investDb));
 		$feeds = array();
 		while ($row = mysqli_fetch_array($sql))
 		{
+			//liked status of the user
+			$liked = $row['liked']==0?"NO":"YES";
 			$feeds[] = array(
 				"feedId"		=> $row['feedId'],
 				"feedForumId"	=> $row['feedForumId'],
@@ -116,7 +118,7 @@
 				"feedBy"		=> $row['feedBy'],
 				"feedByImg"		=> $row['feedByImg'],
 				"feedLikes"		=> $row['nlikes'],
-				"feedLikeStatus"=> 'NO', 
+				"feedLikeStatus"=> $liked, 
 				"feedComments" 	=> $row['comments'],
 				"feedDate"		=> $row['feedDate'],
 				"feedContent"	=> $row['feedContent']
