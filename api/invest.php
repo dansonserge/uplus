@@ -198,6 +198,8 @@
         //attachments link
         $attachments = json_decode($request['attachments']??"", true);
 
+        print_r($request);
+
         //the type of person who posted - admin or member if empty it'll be elisaa app
         $userType = $request['userType']??'member';        
 
