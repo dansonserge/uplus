@@ -232,7 +232,7 @@
 	                $sql = "INSERT INTO investmentimg(imgUrl, investCode) VALUES(\"$att\", $feed_id) ";
 	                $investDb->query($sql) or trigger_error($investDb->error);
 	            }
-	        }else if(!empty($_FILES) ){
+	        }else if(!empty($request['feedAttachments'])){}else if(!empty($_FILES) ){
 	        	//here we've to upload these files, this oftenly happens for android requests
 	        	$attachments = $_FILES;
 	        	foreach ($attachments as $handlename => $attachment) {
@@ -260,9 +260,9 @@
 	        	}
 	        }
 
-            $response = array('status'=>true, 'msg'=>array('postId'=>$investDb->insert_id));
+            $response = 'Done';
         }else{
-            $response = array('status'=>false, 'msg'=>"Error $investDb->error");   
+            $response = 'Failed';   
         }
         echo json_encode($response);
 	}

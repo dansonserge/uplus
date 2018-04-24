@@ -65,7 +65,7 @@ link: https://uplus.rw/api/invest.php
 			platform - 'app' for android
 
 		<-
-			status and msg
+			"Done" or "Failed"
 
 	listCommentsFeed
 		->

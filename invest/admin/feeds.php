@@ -118,13 +118,14 @@ ini_set('display_errors', 1);
                 <!-- Posted feeds -->
                 <div class="uk-grid" data-uk-grid-margin="">
                     <?php
-                        $posts = listFeeds();
+                        $posts = listFeeds($thisid);
                         foreach ($posts as $key => $post) {
                             $post_title = $post['feedTitle'];
                             $post_content = $post['feedContent'];
                             $post_pdate = $post['createdDate'];
                             $post_likes = $post['nlikes'];
                             $post_comments = $post['ncomments'];
+                            $posted_by = $post['feedByName'];
 
                             $post_attachments = $post['feedAttachments'];
                             ?>
@@ -132,11 +133,8 @@ ini_set('display_errors', 1);
                                     <div class="md-card">
                                         <div class="md-card-content">
                                             <div class="blog_list_teaser" style="margin-bottom: 12px;">
-                                                <!-- <?php if(!empty($post_title)){
-                                                    ?>
-                                                    <h2 class="blog_list_teaser_title uk-text-truncate"><?php echo $post_title; ?></h2>
-                                                    <?php
-                                                } ?>  -->                                                   
+                                                <h2 class="blog_list_teaser_title uk-text-truncate"><?php echo $posted_by; ?></h2>
+                                                    
                                                 <p>
                                                     <?php echo $post_content; ?>
                                                 </p>
@@ -172,10 +170,9 @@ ini_set('display_errors', 1);
                                             <div class="blog_list_footer">
                                                 <div class="blog_list_footer_info" style="cursor: pointer;">
                                                     <?php
-
                                                     //Indicating already liked
-                                                    if($post['liked'] == 'YES'){
-                                                        echo('<span class="uk-margin-right like_feed_button md-color-red-500" data-post="'.$post['id'].'"><i class="material-icons md-color-red-500"></i> <small>'.$post_likes.'</small></span>');
+                                                    if($post['liked'] != 0 ){
+                                                        echo('<span class="uk-margin-right like_feed_button md-color-green-500" data-post="'.$post['id'].'"><i class="material-icons md-color-green-500"></i> <small>'.$post_likes.'</small></span>');
                                                     }else{
                                                         echo('<span class="uk-margin-right like_feed_button" data-post="'.$post['id'].'"><i class="material-icons"></i> <small>'.$post_likes.'</small></span>');
                                                     }
