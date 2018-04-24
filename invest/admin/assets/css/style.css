@@ -19,6 +19,9 @@
 .otherTab:hover {
     background-color: #ddd;
 }
+.inline{
+    display: inline-block;
+}
 .activeTab{
 	text-transform: uppercase;
 	height: 40px;
@@ -32,4 +35,8 @@
 .itemStat {cursor: pointer;}
 .display_none, .display-none{
     display:none;
+}
+.clearfix
+{
+    clear: both;
 }
