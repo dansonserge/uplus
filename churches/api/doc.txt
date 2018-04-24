@@ -60,3 +60,16 @@ url: https://uplus.com/churches/api/index.php
 			groupName
 			groupImage
 --END GROUPS--
+
+
+--START FEEDS--
+	listPodcasts
+		->
+			churchId
+		<-
+			title
+			content
+			attachments
+--END FEEDS--
+
+

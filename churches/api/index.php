@@ -575,7 +575,26 @@
 			$posts[] = $data;
 		}
 		$response = $posts;
-	}else if($action ==  'create_forum'){
+	}
+	else if($action == 'listPodcasts')
+	{
+		//listing FEEDS - all feeds
+		//TODO: pagination
+		$church = $request['churchId'];
+		$query = $conn->query("SELECT * FROM posts WHERE type = 'podcast' AND targetChurch = '$church' ORDER BY postedDate")or die(mysqli_error($conn));
+		$posts = array();
+		while ($data = mysqli_fetch_array($query))
+		{
+			$posts[] = array(
+				'title'=>$data['title'],
+				'content'=>$data['content'],
+				'attachments'=> json_decode($data['attachment'])??array(),
+			);
+		}
+		
+		$response = $posts;
+	}
+	else if($action ==  'create_forum'){
 		//creating forum
 		$title = $request['title']??"";
 		$admin = $request['admin']??"";
