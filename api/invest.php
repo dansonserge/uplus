@@ -310,7 +310,7 @@
 			$query = $db->query("SELECT * FROM uplus.users WHERE id = \"$userId\" ");
 			$userData = $query->fetch_assoc();
 
-			$names = $userData['name']??" ";
+			$names = $userData['name']??"ASSS";
 			$gender = $userData['gender']??"Male";
 			$phone = $userData['phone']??"01";
 
@@ -320,7 +320,7 @@
 			$gender = $request['gender']??"";
 		}
 		
-		$dob = $request['dateOfBirth']??"";
+		$dob = date("Y-m-d", strtotime($request['dateOfBirth']??""));
 		$nationality = $request['nationality']??"";
 		$NID = $request['NID']??"";
 		$passport = $request['passport']??"";
@@ -328,7 +328,7 @@
 		$city = $request['city']??"";
 
 		if($names && $phone && $gender && $dob && $nationality){
-			$query->query("INSERT INTO clients(names, dob, gender, NID, passport, residentIn, country, city) VALUES(\"$names\", \"$dob\", \"$gender\", \"$NID\", \"$passport\", \"$nationality\", 'Rwanda', 'Kigali') ") OR trigger_error($investDb->error);
+			$query = $investDb->query("INSERT INTO clients(names, dob, gender, NID, residentIn, country, city, statusOn) VALUES(\"$names\", \"$dob\", \"$gender\", \"$NID\", \"$nationality\", 'Rwanda', 'Kigali', NOW()) ") OR trigger_error($investDb->error);
 			$response = 'Done';
 		}else{
 			$response =  "Failed";
