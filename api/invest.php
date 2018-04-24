@@ -222,10 +222,9 @@
         $query = $investDb->query($sql) or trigger_error($investDb->error);
 
         if($query){
-        	echo "Query done";
             $feed_id = $investDb->insert_id;
             //checking sent attachments
-            if(is_array($attachments)){
+            if(!empty($attachments)){
             	//already uploaded attachments
 	            for($n=0; $n<count($attachments); $n++){
 	                $att = $attachments[$n];
