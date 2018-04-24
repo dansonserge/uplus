@@ -239,11 +239,12 @@
 	            }
 	        }else if(!empty($request['feedAttachements'])){
 	        	//attachments from Android
-	        	$attachments = json_decode($request['feedAttachements'], true);
+	        	$attachments = (array)$request['feedAttachements'];
 	        	
 	        	if(is_array($attachments)){
 	        		//looping through image
 	        		foreach ($attachments as $key => $value) {
+	        			echo "string kk ";
 		        		$filename = "invest/gallery/feeds/";
 					    $image_parts = explode(";base64,", $value);
 					    $image_type_aux = explode("image/", $image_parts[0]);

@@ -19,7 +19,6 @@
 		// $branch = $request['branch'];
 		$user = $request['user'];
 
-
 		//checking file
 		if($_FILES['members-file']['size']>0){
 			$target_dir = "uploads/churchmembers/";
@@ -107,7 +106,7 @@
 			$response = array('status'=>false, 'msg'=>'provide user');
 		}
 		
-	}else if($action == "get_groups"){
+	}else if($action == "get_groups" || $action == "getGroups"){
 		//Elisaa want random groupps
 		//give the church ID u want groups of
 		$church = $request['church']??1; //1 is for Elisaa 's testing'
@@ -116,18 +115,18 @@
 		$groups = array();
 		while ($data = $query->fetch_assoc()) {
 			$groups[] = array(
-				'id'=>$data['id'],
-				'name'=>$data['name'],
-				'representative'=>$data['representative'],
-				'branchid'=>$data['branchid'],
-				'type'=>$data['type'],
-				'location'=>$data['location'],
-				'maplocation'=>$data['maplocation'],
-				'profile_picture'=>$data['profile_picture'],
+				'groupId'=>$data['id'],
+				'groupName'=>$data['name'],
+				// 'representative'=>$data['representative'],
+				// 'branchid'=>$data['branchid'],
+				// 'type'=>$data['type'],
+				// 'location'=>$data['location'],
+				// 'maplocation'=>$data['maplocation'],
+				'groupImage'=>$data['profile_picture'],
 			);
 		}
 
-		$response = array('status'=>true, 'data'=>$groups);
+		$response = $groups;
 
 	}else if($action == "add_member"){
 		$church_id = $request['church'];
