@@ -199,8 +199,6 @@
 		require('db.php');
 		global $hostname;
 		$request = $_POST;
-		print_r($request);
-		die(0);
 		// /post feeds
         $userId = $request['memberId']??"";
         $post_content = $request['feedContent']??"";
@@ -234,6 +232,7 @@
 	                $investDb->query($sql) or trigger_error($investDb->error);
 	            }
 	        }else if(!empty($request['feedAttachments'])){
+	        	echo "yssssssss";
 	        	//attachments from Android
 	        	$attachments = json_decode($request['feedAttachments'], true);
 	        	
