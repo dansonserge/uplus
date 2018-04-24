@@ -225,20 +225,16 @@
             $feed_id = $investDb->insert_id;
             //checking sent attachments
 
-            var_dump(array_keys($request));
-
             if(!empty($attachments)){
-            	echo "dont touch(filename)";
             	//already uploaded attachments
 	            for($n=0; $n<count($attachments); $n++){
 	                $att = $attachments[$n];
 	                $sql = "INSERT INTO investmentimg(imgUrl, investCode) VALUES(\"$att\", $feed_id) ";
 	                $investDb->query($sql) or trigger_error($investDb->error);
 	            }
-	        }else if(!empty($request['feedAttachments'])){
-	        	echo "yssssssss";
+	        }else if(!empty($request['feedAttachements'])){
 	        	//attachments from Android
-	        	$attachments = json_decode($request['feedAttachments'], true);
+	        	$attachments = json_decode($request['feedAttachements'], true);
 	        	
 	        	if(is_array($attachments)){
 	        		//looping through image
