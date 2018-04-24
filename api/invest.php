@@ -3,7 +3,7 @@
 	include ("db.php");
 
 	//return JSON Content-Type
-    header('Content-Type: application/json');
+    // header('Content-Type: application/json');
 
     //hostname for file referencing
     $hostname = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/";
@@ -199,6 +199,8 @@
 		require('db.php');
 		global $hostname;
 		$request = $_POST;
+		print_r($request);
+		die(0);
 		// /post feeds
         $userId = $request['memberId']??"";
         $post_content = $request['feedContent']??"";
@@ -287,4 +289,46 @@
         echo json_encode($response);
 	}
 // END FORUMS
+
+
+// START INVESTMENT
+	function requestCSD()
+	{
+		// user requesting CSD account
+		require 'db.php';
+		$request = $_POST;
+		$title = $request['tilte']??'';
+
+		$userId = $request['userId']??"";
+		if($userId){
+			//here we fetch details from app
+			$query = $db->query("SELECT * FROM uplus.users WHERE id = \"$userId\" ");
+			$userData = $query->fetch_assoc();
+
+			$names = $userData['name']??" ";
+			$gender = $userData['gender']??"Male";
+			$phone = $userData['phone']??"01";
+
+		}else{
+			$names = $request['names']??"";
+			$phone = $request['phone']??"";
+			$gender = $request['gender']??"";
+		}
+		
+		$dob = $request['dateOfBirth']??"";
+		$nationality = $request['nationality']??"";
+		$NID = $request['NID']??"";
+		$passport = $request['passport']??"";
+		$country = $request['country']??"";
+		$city = $request['city']??"";
+
+		if($names && $phone && $gender && $dob && $nationality){
+			$query->query("INSERT INTO clients(names, dob, gender, NID, passport, residentIn, country, city) VALUES(\"$names\", \"$dob\", \"$gender\", \"$NID\", \"$passport\", \"$nationality\", 'Rwanda', 'Kigali') ") OR trigger_error($investDb->error);
+			$response = 'Done';
+		}else{
+			$response =  "Failed";
+		}
+		echo json_encode($response);
+	}
+// END INVESTMENT
 ?>

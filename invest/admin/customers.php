@@ -45,7 +45,7 @@
 												<tr>
 													<td>'.$n.'</td>
 													<td>'.$row['statusOn'].'</td>
-													<td>'.$row['title'].' '.$row['surname'].' '.$row['otherNames'].'</td>
+													<td>'.$row['names'].'</td>
 													<td>'.$row['country'].'</td>
 													<td>'.$row['status'].'</td>
 													<td><a href="view.php?viewid='.$row['id'].'">View</a></td>

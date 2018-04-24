@@ -75,3 +75,15 @@ link: https://uplus.rw/api/invest.php
 			"Done"
 
 --END FORUM--
+
+
+--START INVESTMENT--
+	requestCSD
+		->
+		userId
+		dateOfBirth
+		nationality
+		NID
+		<-
+			"Done"
+--END INVESTMENT--
