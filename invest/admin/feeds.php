@@ -196,18 +196,19 @@ ini_set('display_errors', 1);
 												<div class="clearfix">
 												</div>
 												<div class="commentsContainer uk-hidden" data-feed='<?php echo $feedId ?>'>
+													<div style="height: 32px; width: 100%; padding: 0px; margin: 0 -100px;"></div>
 													<form class="commentForm" data-feed="<?php echo $feedId;  ?>">
 														<div class="md-input-wrapper">
 															<label>Description</label>
-															<textarea id="podcast-intro" class="md-input" style="border: 1px solid #eee; border-radius: 2px;"></textarea>
+															<textarea class="md-input" style="border: 1px solid #eee; border-radius: 2px;"></textarea>
 															<span class="md-input-bar "></span>
 														</div>
 														<div class="md-input-wrapper">
-															<button class="uk-button uk-button-default uk-float-right">Comment</button>
+															<button class="uk-button uk-button-default uk-float-right" type="submit">Comment</button>
 															<span class="md-input-bar "></span>
 														</div>
 													</form>
-													<div style="height: 32px; width: 100%; padding: 0px; margin: 0 -100px;"></div>
+													<div style="height: 12px; width: 100%; padding: 0px; margin: 0 -100px;"></div>
 													<div class="clearfix uk-margin-top">                                                    
 														<ul class="uk-list uk-list-line">
 															<?php
@@ -565,6 +566,27 @@ ini_set('display_errors', 1);
 
 		//make comment element visible
 		$(".commentsContainer[data-feed='"+feed+"']").removeClass('uk-hidden')
+
+	});
+
+	//submitting feed comment
+	$(".commentForm").on('submit', function(e){
+		e.preventDefault();
+		feed = $(this).data('feed');
+		comment = $(this).find('textarea').val()
+
+		if(comment.length>1){
+			//submitting a comment
+			$.post('../../api/invest.php', {action:'commentFeed', userId:current_user, feedId:feed, feedComment:comment}, function(data){
+				if(data.toLowerCase() == 'done'){
+					location.reload();
+				}else{
+					alert("Problem with commenting, try again later")
+				}
+			})
+		}else{
+			alert("Please type comment")
+		}
 
 	});
 

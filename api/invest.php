@@ -3,7 +3,7 @@
 	include ("db.php");
 
 	//return JSON Content-Type
-    // header('Content-Type: application/json');
+    header('Content-Type: application/json');
 
     //hostname for file referencing
     $hostname = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/";
@@ -191,7 +191,7 @@
 
 		$investDb->query("INSERT INTO feed_comments(feedCode, userCode, comment) VALUES(\"$feedId\", \"$userId\", \"$feedComment\")");
 
-		echo "Done";
+		echo json_encode("Done");
 	}
 
 	function postFeed()
