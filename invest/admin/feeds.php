@@ -171,8 +171,8 @@ ini_set('display_errors', 1);
                                             </div>
                                             <div class="blog_list_footer">
                                                 <div class="blog_list_footer_info" style="cursor: pointer;">
-                                                    <span class="uk-margin-right"><i class="material-icons"></i> <small><?php echo $post_likes; ?></small></span>
-                                                    <span><i class="material-icons"></i> <small><?php echo $post_comments; ?></small></span>
+                                                    <span class="uk-margin-right like_feed_button" data-post="<?php echo $post['id']; ?>"><i class="material-icons"></i> <small><?php echo $post_likes; ?></small></span>
+                                                    <span class="comment_feed_button" data-post="<?php echo $post['id']; ?>"><i class="material-icons"></i> <small><?php echo $post_comments; ?></small></span>
                                                 </div>
 
                                                 <div class="uk-float-right">
@@ -357,6 +357,7 @@ ini_set('display_errors', 1);
     </script>
 
 <script type="text/javascript">
+    const current_user = <?php echo $thisid; ?>;
     $('.dropify').dropify({
         messages: {
             'default': 'Drag and drop a podcast here or click',
@@ -467,7 +468,6 @@ ini_set('display_errors', 1);
 
         var post_content = $("#post_content").val();
         var postTo = $("#postTo").val();
-;
         if(post_content && postTo){
             formdata.append('action', 'postFeed');
             formdata.append('feedContent', post_content);
@@ -491,6 +491,24 @@ ini_set('display_errors', 1);
             alert("Specify details")
         }            
     })
+
+    $(".like_feed_button").on('click', function(){
+        //liking a feed
+        feed = $(this).data('post');
+        like_btn = $(this)
+        $.post('../../api/invest.php', {action:'likeFeed', userId:current_user, feedId:feed}, function(data){
+            log(data)
+            if(data == 'Done'){
+                //Indicate a like
+                like_btn.addClass('md-color-green-500');
+                like_btn.find("i").addClass('md-color-green-500')
+
+                //increasing the number of likes
+                like_btn.find('small').html(parseInt(like_btn.find('small').html())+1)
+            }
+        })
+    })
+
     //removing feed
     $(".post_remove").on('click', function(){
         feedId = $(this).data("post");

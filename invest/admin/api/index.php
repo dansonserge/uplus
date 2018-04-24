@@ -603,7 +603,13 @@
         if(array_search($ext, $allowed_extensions)){
             //we can now upload
             move_uploaded_file($attachment['tmp_name'], "../../../".$filename);
-            $response = array('status'=>true, 'msg'=>$hostname.$filename);
+
+            //checking if there is hostname in the filename
+            if(strpos($filename, $hostname) <= 1 && strpos($filename, $hostname) !=false ){
+                $filename = $hostname.$filename;
+            }
+
+            $response = array('status'=>true, 'msg'=>$filename);
         }else{
             $response = array('status'=>false, 'msg'=>"Invalid file type");
         }
