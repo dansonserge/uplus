@@ -3,7 +3,7 @@
 	include ("db.php");
 
 	//return JSON Content-Type
-    header('Content-Type: application/json');
+    // header('Content-Type: application/json');
 
     //hostname for file referencing
     $hostname = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/";
@@ -232,7 +232,29 @@
 	                $sql = "INSERT INTO investmentimg(imgUrl, investCode) VALUES(\"$att\", $feed_id) ";
 	                $investDb->query($sql) or trigger_error($investDb->error);
 	            }
-	        }else if(!empty($request['feedAttachments'])){}else if(!empty($_FILES) ){
+	        }else if(!empty($request['feedAttachments'])){
+	        	//attachments from Android
+	        	$attachments = json_decode($request['feedAttachments'], true);
+	        	
+	        	if(is_array($attachments)){
+	        		//looping through image
+	        		foreach ($attachments as $key => $value) {
+		        		$filename = "invest/gallery/feeds/";
+					    $image_parts = explode(";base64,", $value);
+					    $image_type_aux = explode("image/", $image_parts[0]);
+					    $image_type = $image_type_aux[1];
+					    $image_base64 = base64_decode($image_parts[1]);
+					    $file = $filename . uniqid() . '.png';
+					    file_put_contents("../".$file, $image_base64);
+
+					    //storing in the database
+					    $sql = "INSERT INTO investmentimg(imgUrl, investCode) VALUES(\"$hostname$file\", $feed_id) ";
+	                	$investDb->query($sql) or trigger_error($investDb->error);
+		        	}
+	        	}else{
+	        		die("Failed");
+	        	}
+	        }else if(!empty($_FILES) ){
 	        	//here we've to upload these files, this oftenly happens for android requests
 	        	$attachments = $_FILES;
 	        	foreach ($attachments as $handlename => $attachment) {
@@ -259,7 +281,6 @@
 			        }
 	        	}
 	        }
-
             $response = 'Done';
         }else{
             $response = 'Failed';   
