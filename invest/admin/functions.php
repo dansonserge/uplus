@@ -170,7 +170,7 @@
 		//returns the comments on the feed
 		global $conn;
 
-		$query = $conn->query("SELECT C.*, U.name as commentByName, U.userImage as commentByImg FROM feed_comments as C JOIN uplus.users as U ON C.userCode = U.id WHERE c.feedCode = \"$feedId\" ") or trigger_error($conn->error);
+		$query = $conn->query("SELECT C.*, U.name as commentByName, U.userImage as commentByImg FROM feed_comments as C JOIN uplus.users as U ON C.userCode = U.id WHERE C.feedCode = \"$feedId\" ") or trigger_error($conn->error);
 		$comments = array();
 
 		while ($data = $query->fetch_assoc()) {
