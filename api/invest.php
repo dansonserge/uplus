@@ -199,9 +199,6 @@
 		require('db.php');
 		global $hostname;
 		$request = $_POST;
-		print_r($request);
-		die();
-
 		// /post feeds
         $userId = $request['memberId']??"";
         $post_content = $request['feedContent']??"";
