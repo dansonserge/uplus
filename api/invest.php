@@ -8,6 +8,11 @@
     //hostname for file referencing
     $hostname = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/";
 
+    //keep api request log for debuggin
+    $f = fopen("investapilog.txt", 'a+');
+    fwrite($f, json_encode($_POST)."\n\n");
+    fclose($f);
+
 	if ($_SERVER["REQUEST_METHOD"] == "POST") 
 	{
 		if(isset($_POST['action']))
