@@ -52,16 +52,11 @@ url: https://uplus.com/churches/api/index.php
 --END ACCOUNTS--
 
 --START GROUPS--
-	get_groups
+	getGroups
 		->
-			church
+			churchId
 		<-
-			id
-			name
-			representative
-			branchid
-			type
-			location
-			maplocation
-			profile_picture
+			groupId
+			groupName
+			groupImage
 --END GROUPS--

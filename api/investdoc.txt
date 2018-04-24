@@ -81,7 +81,7 @@ link: https://uplus.rw/api/invest.php
 	requestCSD
 		->
 		userId
-		dateOfBirth
+		dateOfBirth DD/MM/YYYY
 		nationality
 		NID
 		<-
