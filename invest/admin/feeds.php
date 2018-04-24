@@ -171,7 +171,16 @@ ini_set('display_errors', 1);
                                             </div>
                                             <div class="blog_list_footer">
                                                 <div class="blog_list_footer_info" style="cursor: pointer;">
-                                                    <span class="uk-margin-right like_feed_button" data-post="<?php echo $post['id']; ?>"><i class="material-icons"></i> <small><?php echo $post_likes; ?></small></span>
+                                                    <?php
+
+                                                    //Indicating already liked
+                                                    if($post['liked'] == 'YES'){
+                                                        echo('<span class="uk-margin-right like_feed_button md-color-red-500" data-post="'.$post['id'].'"><i class="material-icons md-color-red-500"></i> <small>'.$post_likes.'</small></span>');
+                                                    }else{
+                                                        echo('<span class="uk-margin-right like_feed_button" data-post="'.$post['id'].'"><i class="material-icons"></i> <small>'.$post_likes.'</small></span>');
+                                                    }
+                                                    ?>
+                                                    
                                                     <span class="comment_feed_button" data-post="<?php echo $post['id']; ?>"><i class="material-icons"></i> <small><?php echo $post_comments; ?></small></span>
                                                 </div>
 
