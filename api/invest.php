@@ -225,6 +225,7 @@
             $feed_id = $investDb->insert_id;
             //checking sent attachments
             if(!empty($attachments)){
+            	echo "dont touch(filename)";
             	//already uploaded attachments
 	            for($n=0; $n<count($attachments); $n++){
 	                $att = $attachments[$n];
