@@ -225,7 +225,7 @@
             $feed_id = $investDb->insert_id;
             //checking sent attachments
 
-            var_dump($request['feedAttachments']);
+            var_dump(array_keys($request));
 
             if(!empty($attachments)){
             	echo "dont touch(filename)";
