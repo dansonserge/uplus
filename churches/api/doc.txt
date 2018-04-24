@@ -27,6 +27,15 @@ url: https://uplus.com/churches/api/index.php
 			platform - for app, make it 'app'
 		<-
 			status:true; status:false & msg
+
+	listBaskets
+		->
+			churchId
+		<-
+			id
+			name
+			description
+
 	church_branches
 		->
 			church

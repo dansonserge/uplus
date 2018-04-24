@@ -500,16 +500,20 @@
 		}
 	}else if($action == "listBaskets"){
 		//listing the baskets
-		$church = $request['church']??"";
+		$church = $request['churchId']??"";
 		$query = $conn->query("SELECT * FROM service WHERE church = \"$church\" ");
 		if($query){
 			$baskets = array();
 			while ($data = $query->fetch_assoc()) {
-				$baskets[]  = $data;
+				$baskets[]  = array(
+					'id'=> $data['id'],
+					'name'=> $data['name'],
+					'description'=> $data['description'],
+				);
 			}
-			$response = array('status'=>true, 'data'=>$baskets);
+			$response = $baskets;
 		}else{
-		  $response = array('status'=>false, 'msg'=>"Error: $conn->error");  
+		  $response = "Failed"; 
 		}
 	}else if($action == "addDonation"){
 		//adding donation
@@ -578,8 +582,6 @@
 	}
 	else if($action == 'listPodcasts')
 	{
-		//listing FEEDS - all feeds
-		//TODO: pagination
 		$church = $request['churchId'];
 		$query = $conn->query("SELECT * FROM posts WHERE type = 'podcast' AND targetChurch = '$church' ORDER BY postedDate")or die(mysqli_error($conn));
 		$posts = array();
