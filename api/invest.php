@@ -242,7 +242,7 @@
 
 	        	//attachments from Android
 	        	$attachments = json_decode($request['feedAttachments'], true);
-	        	print_r(array_keys($request));
+	        	print_r($attachments);
 	        	if(is_array($attachments)){
 
 	        		//looping through image
