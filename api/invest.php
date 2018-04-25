@@ -9,9 +9,9 @@
     $hostname = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/";
 
     //keep api request log for debuggin
-    // $f = fopen("investapilog.txt", 'a+');
-    // fwrite($f, json_encode($_POST)."\n\n");
-    // fclose($f);
+    $f = fopen("investapilog.txt", 'a+');
+    fwrite($f, json_encode($_POST)."\n\n");
+    fclose($f);
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") 
 	{
@@ -240,9 +240,11 @@
 	        }else if(!empty($request['feedAttachments'])){
 
 
+	        	// echo $request['feedAttachments'][1];
+
 	        	//attachments from Android
 	        	$attachments = json_decode($request['feedAttachments'], true);
-	        	print_r($attachments);
+	        	
 	        	if(is_array($attachments)){
 
 	        		//looping through image
