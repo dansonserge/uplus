@@ -3,7 +3,7 @@
 	include ("db.php");
 
 	//return JSON Content-Type
-    header('Content-Type: application/json');
+    // header('Content-Type: application/json');
 
     //hostname for file referencing
     $hostname = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/";

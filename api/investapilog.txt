@@ -1,1 +1,2 @@
-dfk
+dfk{"action":"requestCSD","userId":"11","gender":"Male","dateOfBirth":"11\/04\/2000","nationality":"Rwanda","NID":"111"}
+
