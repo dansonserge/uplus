@@ -239,6 +239,7 @@
 	            }
 	        }else if(!empty($request['feedAttachments'])){
 	        	//attachments from Android
+	        	print_r($request);
 	        	$attachments = json_decode($request['feedAttachments'], true);
 	        	
 	        	if(is_array($attachments)){
