@@ -237,14 +237,13 @@
 	                $sql = "INSERT INTO investmentimg(imgUrl, investCode) VALUES(\"$att\", $feed_id) ";
 	                $investDb->query($sql) or trigger_error($investDb->error);
 	            }
-	        }else if(!empty($request['feedAttachements'])){
+	        }else if(!empty($request['feedAttachments'])){
 	        	//attachments from Android
-	        	$attachments = (array)$request['feedAttachements'];
+	        	$attachments = json_decode($request['feedAttachments'], true);
 	        	
 	        	if(is_array($attachments)){
 	        		//looping through image
 	        		foreach ($attachments as $key => $value) {
-	        			echo "string kk ";
 		        		$filename = "invest/gallery/feeds/";
 					    $image_parts = explode(";base64,", $value);
 					    $image_type_aux = explode("image/", $image_parts[0]);

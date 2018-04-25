@@ -38,6 +38,7 @@ if(isset($_GET['viewid']))
 
 	$userData = user_details($viewid);
 	$imgId = $userData['userImage'];
+	var_dump($userData);
 }?>
     <div id="page_content">
         <div id="page_content_inner">
