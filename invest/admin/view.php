@@ -1,7 +1,10 @@
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
-<?php include("userheader.php");?>
+<?php
+	include("userheader.php");
+	include_once("functions.php");
+?>
 <?php
 if(isset($_GET['viewid']))
 {
@@ -10,11 +13,11 @@ if(isset($_GET['viewid']))
 	while($row = mysqli_fetch_array($sqlview))
 	{
 		$title = $row['title'];
-		$surname = $row['surname'];
-		$otherNames = $row['otherNames'];
+		$names = $row['names'];
 		$dob = $row['dob'];
 		$gender = $row['gender'];
-		$nidPassport = $row['nidPassport'];
+		$status = $row['status'];
+		$nidPassport = $row['NID'];
 		$nationality = $row['nationality'];
 		$postalLine1 = $row['postalLine1'];
 		$postalLine2 = $row['postalLine2'];
@@ -32,9 +35,9 @@ if(isset($_GET['viewid']))
 		$accountNumber = $row['accountNumber'];
 		$csdAccount= $row['csdAccount'];
 	}
-	$sqlImg = $uplusdb->query("SELECT * FROM investments WHERE requestId = '$viewid'");
-	$rowImg = mysqli_fetch_array($sqlImg);
-	$imgId = $rowImg['userId'];
+
+	$userData = user_details($viewid);
+	$imgId = $userData['userImage'];
 }?>
     <div id="page_content">
         <div id="page_content_inner">
@@ -47,11 +50,13 @@ if(isset($_GET['viewid']))
 							<h4>Securities Account Opening/Update Form - Individuals: No <b>12345</b></h4>
 						</center>
 					</td>
-					<td width="15%"><img src="../../uplusProd/temp/investor<?php echo $imgId;?>.jpeg" width="300" height="100"></td>
+					<td width="15%"><img src="<?php echo $imgId;?>.jpeg" width="300" height="100"></td>
 				<tr>
 			</table>
+
+
 			<hr style="margin: unset;">
-			</b>
+
             <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
                 <div class="uk-width-large-4-4">
                     <div class="md-card uk-margin-medium-bottom">
@@ -68,9 +73,7 @@ if(isset($_GET['viewid']))
 												<td>
 													<table>
 														<tr>
-															<td width="5%">Title:<br><input value="<?php echo $title;?>" disabled></td>
-															<td width="65%">Surname:<br><input value="<?php echo $surname;?>" disabled></td>
-															<td width="30%">OtherName:<br><input value="<?php echo $otherNames;?>" disabled></td>
+															<td width="100%">Names:<br><input value="<?php echo $names;?>" disabled></td>
 														</tr>
 													</table>
 												</td>
@@ -91,20 +94,146 @@ if(isset($_GET['viewid']))
 											<tr><td></td></tr>
 										</table>
 									</td>
+								</tr>
 							</table>
-<br>
-
-<div id="csd"><button onclick="approved()">Approved</button>
-<button>Declined</button>
-</div>
-<button onClick="window.print()" class="md-btn"><i class="material-icons">print</i></button>
-
+							<div id="csd" class="uk-margin-top">
+								<?php
+									if($status == 'approved'){
+										echo "Approved";
+									}else if($status == 'declined'){
+										echo "Declined";
+									}else{
+										?>
+											<button data-uk-modal="{target:'#approve_csd_modal'}" class="uk-button uk-button-primary">Approve</button>
+											<button data-uk-modal="{target:'#deny_csd_modal'}" class="uk-button uk-button-danger">Decline</button>
+										<?php
+									}
+								?>
+								
+							</div>
+							<div class="uk-margin-top">
+								<button onClick="window.print()" class="md-btn"><i class="material-icons">print</i></button>
+							</div>
 						</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+					</div>
+					<?php
+						if($status == 'approved'){
+							//Load some other stuffs for customer relationship
+							?>
+								<div class="md-card uk-margin-medium-bottom">
+									<div class="md-card-content">
+										<div class="commentsContainer uk-hidden" data-feed='<?php echo $feedId ?>'>
+											<div style="height: 32px; width: 100%; padding: 0px; margin: 0 -100px;"></div>
+											<form class="commentForm" data-feed="<?php echo $feedId;  ?>">
+												<div class="md-input-wrapper">
+													<label>Message</label>
+													<textarea class="md-input" style="border: 1px solid #eee; border-radius: 2px;"></textarea>
+													<span class="md-input-bar "></span>
+												</div>
+												<div class="md-input-wrapper">
+													<button class="uk-button uk-button-default uk-float-right" type="submit">SEND</button>
+													<span class="md-input-bar "></span>
+												</div>
+											</form>
+											<div style="height: 12px; width: 100%; padding: 0px; margin: 0 -100px;"></div>
+											<div class="clearfix uk-margin-top">                                                    
+												<ul class="uk-list uk-list-line">
+													<?php
+														foreach ($comments as $key => $comment) {
+															?>
+															<li>
+																<div class="uk-grid">
+																	<div class="comment-head">
+																		<div class="thumbnail">
+																			<img class="user avatar inline" style="height: 32px; width: 32px; border-radius: 50%" src="<?php echo $comment['commentByImg'] ?>">
+																			<p class="inline" style="vertical-align: middle; font-weight: bold; font-family: verdana; color: #0a3482">
+																				<i><?php echo $comment['commentByName'] ?></i>
+																			</p>
+																		</div>
+																	</div>
+																	<div class="uk-width-1-1 uk-margin-top">
+																		<?php echo $comment['comment'] ?>
+																	</div>
+																</div>
+															</li>
+															<?php
+														}
+													?>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							<?php
+						}
+					?>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="uk-modal" id="approve_csd_modal" aria-hidden="true" style="display: none; overflow-y: auto;">
+		<div class="uk-modal-dialog" style="top: 339.5px;">
+			<div class="uk-modal-header uk-tile uk-tile-default">
+				<h3 class="d_inline">Approve CSD Account Request</h3>
+			</div>
+			<form id="csdRequest" method="POST" enctype="multipart/form-data">				
+				<div class="md-card">
+					<div class="md-card-content">
+						<div class="md-input-wrapper md-input-filled">
+							<label>CSD Account Number</label>
+							<input type="text" name="forumtitle" id="csd_account_input" class="md-input" required="required">
+							<span class="md-input-bar "></span>
+						</div>
+
+						<div class="md-input-wrapper md-input-filled">
+							<p>
+                                <input type="checkbox" name="checkbox_demo_mercury" id="checkbox_demo_1" data-md-icheck required />
+                                <label for="checkbox_demo_1" class="inline-label">I confirm the authenticity to this user and agree to terms and conditions</label>
+                            </p>
+						</div>                    
+					</div>
+				</div>
+				<input type="hidden" id="csd_account_user" value="<?php echo $viewid; ?>">
+				<div class="uk-modal-footer uk-text-right">
+					<button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
+					<button type="submit" class="md-btn md-btn-success pull-right">APPROVE</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="uk-modal" id="deny_csd_modal" aria-hidden="true" style="display: none; overflow-y: auto;">
+		<div class="uk-modal-dialog" style="top: 339.5px;">
+			<div class="uk-modal-header uk-tile uk-tile-default">
+				<h3 class="d_inline">Decline CSD Account Request</h3>
+			</div>
+			<form id="denyCSDform" method="POST" enctype="multipart/form-data">				
+				<div class="md-card">
+					<div class="md-card-content">
+						<div class="md-input-wrapper md-input-filled">
+							<label>Reason for denial</label>
+							<textarea class="md-input" id="denialMessage"></textarea>
+							<span class="md-input-bar "></span>
+						</div>
+
+						<div class="md-input-wrapper md-input-filled">
+							<p>
+                                <input type="checkbox" name="checkbox_demo_mercury" id="checkbox_demo_1" data-md-icheck required />
+                                <label for="checkbox_demo_1" class="inline-label">I confirm the authenticity to this user and agree to terms and conditions</label>
+                            </p>
+						</div>                    
+					</div>
+				</div>
+				<input type="hidden" id="csd_account_user" value="<?php echo $viewid; ?>">
+				<div class="uk-modal-footer uk-text-right">
+					<button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
+					<button type="submit" class="md-btn md-btn-success pull-right">DECLINE</button>
+				</div>
+			</form>
+		</div>
+	</div>
 
     <!-- google web fonts -->
     <script>
@@ -181,8 +310,36 @@ if(isset($_GET['viewid']))
         });
     </script>
 <script>
+	const current_user = <?php echo $thisid; ?>;
+	$("#csdRequest").on('submit', function(e){
+		e.preventDefault();
+		csd_account = $("#csd_account_input").val();
+		csd_account_user = $("#csd_account_user").val();
+
+		$.post('../../api/invest.php', {action:'approveCSD', CSDAccount:csd_account, accountUser:csd_account_user, approvedBy:current_user}, function(data){
+			if(data == 'Done'){
+				location.reload();
+			}else{
+				alert("Error approving the CSD request")
+			}
+		})
+	})
+	$("#denyCSDform").on('submit', function(e){
+		e.preventDefault();
+		message = $("#denialMessage").val();
+		csd_account_user = $("#csd_account_user").val();
+
+		$.post('../../api/invest.php', {action:'declineCSD', accountUser:csd_account_user, message:message, approvedBy:current_user}, function(data){
+			if(data == 'Done'){
+				location.reload();
+			}else{
+				alert("Error Declining the CSD request")
+			}
+		})
+	});
+
 	function approved(){
-		document.getElementById('csd').innerHTML = 'CSD Account Number:<input type="text" id="csdnumber"><button onclick="saveCsd()">Approve</button>';
+		document.getElementById('csd').innerHTML = 'CSD Account Number:<input type="text" class="md-input" id="csdnumber"><button onclick="saveCsd()">Approve</button>';
 	}
 	function saveCsd(){
 		var csdnumber =$("#csdnumber").val();	
