@@ -229,6 +229,7 @@
         if($query){
             $feed_id = $investDb->insert_id;
             //checking sent attachments
+            die("Hello");
 
             if(!empty($attachments)){
             	//already uploaded attachments
