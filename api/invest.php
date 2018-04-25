@@ -238,12 +238,13 @@
 	                $investDb->query($sql) or trigger_error($investDb->error);
 	            }
 	        }else if(!empty($request['feedAttachments'])){
-	        	die("Hello");
+
 
 	        	//attachments from Android
 	        	$attachments = json_decode($request['feedAttachments'], true);
 	        	
 	        	if(is_array($attachments)){
+	        		die("Hello");
 	        		//looping through image
 	        		foreach ($attachments as $key => $value) {
 		        		$filename = "invest/gallery/feeds/";
