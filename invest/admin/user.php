@@ -82,7 +82,7 @@ ini_set('display_errors', 0);
 	                <div>
 	                    <a href="items.php?compId=<?php echo $comanyId;?>">
 						<div class="md-card md-card-hover md-card-overlay">
-	                        <img src="/<?php echo $Company->standardLogo;?>" alt="">
+	                        <img src="<?php echo $Company->standardLogo;?>" alt="">
 	                        <div class="md-card-overlay-content">
 	                            <div class="uk-clearfix md-card-overlay-header">
 	                                <i class="md-icon material-icons md-card-overlay-toggler">&#xE5D4;</i>

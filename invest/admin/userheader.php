@@ -29,7 +29,7 @@
 		$row = mysqli_fetch_array($sql);
 
 		$thisid = $row["id"];
-		$names = $row["names"];
+		$userName = $names = $row["names"];
 		$user_profile = $row["profile_picture"];
 		$account_type = $row["account_type"];
 		if($account_type =='admin')

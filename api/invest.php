@@ -3,7 +3,7 @@
 	include ("db.php");
 
 	//return JSON Content-Type
-    header('Content-Type: application/json');
+    // header('Content-Type: application/json');
 
     //hostname for file referencing
     $hostname = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/";
@@ -240,7 +240,6 @@
 	            }
 	        }else if(!empty($request['feedAttachments'])){
 	        	//attachments from Android
-	        	print_r($request);
 	        	$attachments = json_decode($request['feedAttachments'], true);
 	        	
 	        	if(is_array($attachments)){
@@ -336,7 +335,8 @@
 		echo json_encode($response);
 	}
 
-	function approveCSD(){
+	function approveCSD()
+	{
 		//broker is going to approve the CSD request
 		require 'db.php';
 		$request = $_POST;
@@ -361,7 +361,8 @@
 		echo json_encode($response);
 	}
 
-	function declineCSD(){
+	function declineCSD()
+	{
 		//broker is going to decline the CSD request
 		require 'db.php';
 		$request = $_POST;
@@ -389,14 +390,33 @@
 	{
 		# Broker messaging a client
 		require 'db.php';
+		require '../invest/admin/functions.php';
+
 		$request = $_POST;
 
 		$client = $request['clientId']??"";
 		$broker = $request['brokerId']??"";
 		$message = $request['message']??"";
-		$channels = implode(",", $request['channels']??"");
+		// $channels = implode(",", json_decode($request['channels']??array(), true));
+		$channels = (array)$request['channels']??"[]";
+		var_dump($request['channels']);
 
 		if($client && $broker && $message){
+
+			//checking the contact of the user
+			$userq = $investDb->query("SELECT * FROM uplus.users WHERE id = \" $client\" ") or trigger_error($investDb->error);
+			if($userq){
+				$userdata = $userq->fetch_assoc();
+				if($userdata['email'] && 0){
+					echo "string";
+					Semail($userdata['email'], "Uplus broker message", $message);
+				}
+
+				if($userdata['phone']){
+					sendsms($userdata['phone'], $message);
+				}
+			}
+
 			//inserting a message
 			$query = $investDb->query("INSERT INTO clients_messaging(userCode, messageBy, createdBy, message, channels) VALUES(\"$client\", \"$broker\", \"$broker\", \"$message\", \"$channels\") ") or trigger_error($db->error);
 			$response = "Done";

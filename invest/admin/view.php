@@ -154,10 +154,16 @@ if(isset($_GET['viewid']))
 																<div class="uk-grid">
 																	<div class="comment-head">
 																		<div class="thumbnail">
-																			<img class="user avatar inline" style="height: 32px; width: 32px; border-radius: 50%" src="<?php echo $imgId ?>">
-																			<p class="inline" style="vertical-align: middle; font-weight: bold; font-family: verdana; color: #0a3482">
-																				<i><?php echo "Me" ?></i>
-																			</p>
+																			<img class="user avatar inline" style="height: 72px; width: 72px; border-radius: 50%" src="<?php echo $Company->standardLogo ?>">
+																			<div class="inline">
+																				<p style="vertical-align: middle; font-family: verdana; color: #0a3482">
+																					<i><?php echo $userName ?></i>
+																				</p>
+																				<p class="uk-text-muted" style="margin: -15px 0 0 0">
+																					<small><?php echo $message['createdDate'] ?></small>
+																				</p>
+																			</div>
+																																						
 																		</div>
 																	</div>
 																	<div class="uk-width-1-1 uk-margin-top">

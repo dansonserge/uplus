@@ -133,7 +133,7 @@
 	{
 		//return s messages between broker to $client
 		global $conn;
-		$query = $conn->query("SELECT * FROM clients_messaging WHERE userCode = \"$client\" AND messageBy = \"$broker\" ") or trigger_error($conn->error);
+		$query = $conn->query("SELECT * FROM clients_messaging WHERE userCode = \"$client\" AND messageBy = \"$broker\" ORDER BY createdDate DESC ") or trigger_error($conn->error);
 		$messages = array();
 		while ($data = $query->fetch_assoc()) {
 			$messages[] = $data;
