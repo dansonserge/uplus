@@ -38,7 +38,6 @@ if(isset($_GET['viewid']))
 
 	$userData = user_details($viewid);
 	$imgId = $userData['userImage'];
-	var_dump($userData);
 }?>
     <div id="page_content">
         <div id="page_content_inner">
@@ -135,6 +134,32 @@ if(isset($_GET['viewid']))
 															<span class="md-input-bar "></span>
 														</div>
 														<input type="hidden" id="userId" value="<?php echo $viewid; ?>">
+														<div class="md-input-wrapper uk-float-right">
+															<p>
+																<?php
+																	if($telephone){
+																		?>
+																		<span>
+											                                <input type="checkbox" class="uk-checkbox messageChannels" name="smsMessage" data-md-icheck id='msgsendemail' />
+											                                <label for="msgsendemail" class="inline-label">email</label>
+											                            </span>&nbsp;&nbsp;&nbsp;&nbsp;
+											                            <?php
+																	}
+																?>
+
+																<?php
+																	if($email){
+																		?>
+																		<span>
+											                                <input type="checkbox" class="uk-checkbox messageChannels" name="emailMessage" data-md-icheck id="msgsendsms" />
+											                                <label for="msgsendsms" class="inline-label">SMS</label>
+											                            </span>
+											                            <?php
+																	}
+																?>						
+											                            
+								                            </p>
+														</div>
 														<div class="md-input-wrapper">
 															<button class="uk-button uk-button-default uk-float-right" type="submit">SEND</button>
 															<span class="md-input-bar "></span>
@@ -338,7 +363,8 @@ if(isset($_GET['viewid']))
 				alert("Error approving the CSD request")
 			}
 		})
-	})
+	});
+
 	$("#denyCSDform").on('submit', function(e){
 		e.preventDefault();
 		message = $("#denialMessage").val();
@@ -358,10 +384,21 @@ if(isset($_GET['viewid']))
 		e.preventDefault();
 
 		user = $(this).find('#userId').val();
-		message = $(this).find('textarea').val()
-		channels = ['sms'];
+		message = $(this).find('textarea').val();
 
-		if(message.length>1){
+		var channels = [];
+
+		sendSms = $('#msgsendsms');
+		sendEmail = $('#msgsendemail');
+		
+		if(sendEmail.prop('checked')){
+			channels.push('email')
+		}
+		if(sendSms.prop('checked')){
+			channels.push('sms')
+		}
+
+		if(message.length>1 && channels.length>0){
 			//submitting a message
 			$.post('../../api/invest.php', {action:'messageBrokerClient', brokerId:current_user, clientId:user, message:message, channels:channels}, function(data){
 				if(data.toLowerCase() == 'done'){
@@ -371,7 +408,7 @@ if(isset($_GET['viewid']))
 				}
 			})
 		}else{
-			alert("Please type message")
+			alert("Please type message and select communication channels")
 		}
 
 	});

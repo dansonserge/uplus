@@ -39,7 +39,7 @@ FROM `items1` I WHERE I.itemCompanyCode= '$companyid' ORDER BY Balance DESC");
 				$tableshow.='No records Yet';
 				$totalHave = 0;
 			}
-										?>
+			?>
 	<!-- main sidebar -->
 
 	

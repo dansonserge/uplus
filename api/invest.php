@@ -3,7 +3,7 @@
 	include ("db.php");
 
 	//return JSON Content-Type
-    // header('Content-Type: application/json');
+    header('Content-Type: application/json');
 
     //hostname for file referencing
     $hostname = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/";
@@ -229,7 +229,6 @@
         if($query){
             $feed_id = $investDb->insert_id;
             //checking sent attachments
-            print_r(array_keys($request));
 
             if(!empty($attachments)){
             	//already uploaded attachments
@@ -398,22 +397,29 @@
 		$broker = $request['brokerId']??"";
 		$message = $request['message']??"";
 		// $channels = implode(",", json_decode($request['channels']??array(), true));
-		$channels = (array)$request['channels']??"[]";
-		var_dump($request['channels']);
+		$channels = implode(", ", $request['channels']??"");
+		$channels_array = (array)$request['channels']??"[]";
 
 		if($client && $broker && $message){
 
+			//getting client's phone
+
+
 			//checking the contact of the user
-			$userq = $investDb->query("SELECT * FROM uplus.users WHERE id = \" $client\" ") or trigger_error($investDb->error);
+			$userq = $investDb->query("SELECT * FROM clients WHERE id = \" $client\" ") or trigger_error($investDb->error);
 			if($userq){
 				$userdata = $userq->fetch_assoc();
-				if($userdata['email'] && 0){
-					echo "string";
-					Semail($userdata['email'], "Uplus broker message", $message);
+				$phone = $userdata['telephone'];
+
+				if(array_search('email', $channels_array) !== false){
+					$sql = "SELECT * FROM uplus.users WHERE phone = \"$phone\" ";
+					$userq = $investDb->query($sql) or trigger_error($investDb->error);
+					$userqdata = $userq->fetch_assoc();
+					// Semail($userqdata['email'], "Uplus broker message", $message);
 				}
 
-				if($userdata['phone']){
-					sendsms($userdata['phone'], $message);
+				if($userdata['telephone'] && array_search('sms', $channels_array) !== false){
+					sendsms($phone, $message);
 				}
 			}
 
