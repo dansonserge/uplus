@@ -227,9 +227,9 @@
         $query = $investDb->query($sql) or trigger_error($investDb->error);
 
         if($query){
-        	echo "string";
             $feed_id = $investDb->insert_id;
             //checking sent attachments
+            print_r(array_keys($request));
 
             if(!empty($attachments)){
             	//already uploaded attachments
