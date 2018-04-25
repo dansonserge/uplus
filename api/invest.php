@@ -229,7 +229,6 @@
         if($query){
             $feed_id = $investDb->insert_id;
             //checking sent attachments
-            die("Hello");
 
             if(!empty($attachments)){
             	//already uploaded attachments
@@ -239,6 +238,8 @@
 	                $investDb->query($sql) or trigger_error($investDb->error);
 	            }
 	        }else if(!empty($request['feedAttachments'])){
+	        	die("Hello");
+
 	        	//attachments from Android
 	        	$attachments = json_decode($request['feedAttachments'], true);
 	        	
