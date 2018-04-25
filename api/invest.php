@@ -326,6 +326,8 @@
 			$phone = $request['phone']??"";
 			$gender = $request['gender']??"";
 		}
+
+		$gender = $request['gender']??"";
 		
 		$dob = date("Y-m-d", strtotime($request['dateOfBirth']??""));
 		$nationality = $request['nationality']??"";
