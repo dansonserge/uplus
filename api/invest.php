@@ -384,5 +384,27 @@
 		}
 		echo json_encode($response);
 	}
+	function messageBrokerClient()
+	{
+		# Broker messaging a client
+		require 'db.php';
+		$request = $_POST;
+
+		$client = $request['clientId']??"";
+		$broker = $request['brokerId']??"";
+		$message = $request['message']??"";
+		$channels = implode(",", $request['channels']??"");
+
+		if($client && $broker && $message){
+			//inserting a message
+			$query = $investDb->query("INSERT INTO clients_messaging(userCode, messageBy, createdBy, message, channels) VALUES(\"$client\", \"$broker\", \"$broker\", \"$message\", \"$channels\") ") or trigger_error($db->error);
+			$response = "Done";
+		}else{
+			$response = "Failed";
+		}
+		echo json_encode($response);
+
+			
+	}
 // END INVESTMENT
 ?>

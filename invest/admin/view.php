@@ -350,20 +350,21 @@ if(isset($_GET['viewid']))
 	$(".messageForm").on('submit', function(e){
 		e.preventDefault();
 
-		feed = $(this).find('#userId').val();
+		user = $(this).find('#userId').val();
 		message = $(this).find('textarea').val()
+		channels = ['sms'];
 
-		if(comment.length>1){
+		if(message.length>1){
 			//submitting a message
-			$.post('../../api/invest.php', {action:'messageBrokerClient', brokerId:current_user, userId:feed, message:message}, function(data){
+			$.post('../../api/invest.php', {action:'messageBrokerClient', brokerId:current_user, clientId:user, message:message, channels:channels}, function(data){
 				if(data.toLowerCase() == 'done'){
 					location.reload();
 				}else{
-					alert("Problem with commenting, try again later")
+					alert("Problem with messaging, try again later")
 				}
 			})
 		}else{
-			alert("Please type comment")
+			alert("Please type message")
 		}
 
 	});
