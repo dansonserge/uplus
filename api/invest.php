@@ -310,9 +310,8 @@
 			$query = $db->query("SELECT * FROM uplus.users WHERE id = \"$userId\" ");
 			$userData = $query->fetch_assoc();
 
-			$names = $userData['name']??"ASSS";
-			$gender = $userData['gender']??"Male";
-			$phone = $userData['phone']??"01";
+			$names = $userData['name'];
+			$phone = $userData['phone'];
 
 		}else{
 			$names = $request['names']??"";
@@ -332,6 +331,56 @@
 			$response = 'Done';
 		}else{
 			$response =  "Failed";
+		}
+		echo json_encode($response);
+	}
+
+	function approveCSD(){
+		//broker is going to approve the CSD request
+		require 'db.php';
+		$request = $_POST;
+
+		$csd = $request['CSDAccount']??"";
+		$doneBy = $request['approvedBy']??"";
+		$user = $request['accountUser']??"";
+
+		if($csd && $doneBy){
+			//checking id the user is a broker
+			$query = $investDb->query("SELECT * FROM users WHERE id = \"$doneBy\" AND account_type = 'broker' LIMIT 1 ") or trigger_error($db->error);
+			if($query->num_rows){
+				//here user is a  broker we can now assign the CSD
+				$investDb->query("UPDATE clients SET csdAccount = \"$doneBy\", status = 'approved', statusBy = \"$doneBy\", statusOn = NOW() WHERE id = \"$user\" ") or trigger_error($db->error);
+				$response = "Done";
+			}else{
+				$response = "Failed";
+			}
+		}else{
+			$response = "Failed";
+		}
+		echo json_encode($response);
+	}
+
+	function declineCSD(){
+		//broker is going to decline the CSD request
+		require 'db.php';
+		$request = $_POST;
+
+		$doneBy = $request['approvedBy']??"";
+		$user = $request['accountUser']??"";
+		$message = $request['message']??"";
+
+		if($user && $doneBy){
+			//checking id the user is a broker
+			$query = $investDb->query("SELECT * FROM users WHERE id = \"$doneBy\" AND account_type = 'broker' LIMIT 1 ") or trigger_error($db->error);
+			if($query->num_rows){
+				//here user is a  broker we can now assign the CSD
+				$investDb->query("UPDATE clients SET status = 'declined', statusBy = \"$doneBy\", statusOn = NOW() WHERE id = \"$user\" ") or trigger_error($db->error);
+				$response = "Done";
+			}else{
+				$response = "Failed";
+			}
+		}else{
+			$response = "Failed";
 		}
 		echo json_encode($response);
 	}
