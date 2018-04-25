@@ -119,40 +119,48 @@ if(isset($_GET['viewid']))
 					<?php
 						if($status == 'approved'){
 							//Load some other stuffs for customer relationship
+							$messages = brokerMessages($thisid, $viewid);
 							?>
 								<div class="md-card uk-margin-medium-bottom">
 									<div class="md-card-content">
-										<div class="commentsContainer uk-hidden" data-feed='<?php echo $feedId ?>'>
-											<div style="height: 32px; width: 100%; padding: 0px; margin: 0 -100px;"></div>
-											<form class="commentForm" data-feed="<?php echo $feedId;  ?>">
-												<div class="md-input-wrapper">
-													<label>Message</label>
-													<textarea class="md-input" style="border: 1px solid #eee; border-radius: 2px;"></textarea>
-													<span class="md-input-bar "></span>
+										<div class="commentsContainer uka-hidden">
+											<div class="uk-grid">
+												<div class="uk-width-3-4">
+													<div style="height: 32px; width: 100%; padding: 0px; margin: 0 -100px;"></div>
+													<form class="messageForm" method="POST" action="view.php?viewid=<?php echo $viewid; ?>">
+														<div class="md-input-wrapper">
+															<label>Message</label>
+															<textarea class="md-input" style="border: 1px solid #eee; border-radius: 2px;"></textarea>
+															<span class="md-input-bar "></span>
+														</div>
+														<input type="hidden" id="userId" value="<?php echo $viewid; ?>">
+														<div class="md-input-wrapper">
+															<button class="uk-button uk-button-default uk-float-right" type="submit">SEND</button>
+															<span class="md-input-bar "></span>
+														</div>
+													</form>
 												</div>
-												<div class="md-input-wrapper">
-													<button class="uk-button uk-button-default uk-float-right" type="submit">SEND</button>
-													<span class="md-input-bar "></span>
+												<div class="uk-width-1-4">
 												</div>
-											</form>
+											</div>
 											<div style="height: 12px; width: 100%; padding: 0px; margin: 0 -100px;"></div>
 											<div class="clearfix uk-margin-top">                                                    
 												<ul class="uk-list uk-list-line">
 													<?php
-														foreach ($comments as $key => $comment) {
+														foreach ($messages as $key => $message) {
 															?>
 															<li>
 																<div class="uk-grid">
 																	<div class="comment-head">
 																		<div class="thumbnail">
-																			<img class="user avatar inline" style="height: 32px; width: 32px; border-radius: 50%" src="<?php echo $comment['commentByImg'] ?>">
+																			<img class="user avatar inline" style="height: 32px; width: 32px; border-radius: 50%" src="<?php echo $imgId ?>">
 																			<p class="inline" style="vertical-align: middle; font-weight: bold; font-family: verdana; color: #0a3482">
-																				<i><?php echo $comment['commentByName'] ?></i>
+																				<i><?php echo "Me" ?></i>
 																			</p>
 																		</div>
 																	</div>
 																	<div class="uk-width-1-1 uk-margin-top">
-																		<?php echo $comment['comment'] ?>
+																		<?php echo $message['message'] ?>
 																	</div>
 																</div>
 															</li>
@@ -336,6 +344,28 @@ if(isset($_GET['viewid']))
 				alert("Error Declining the CSD request")
 			}
 		})
+	});
+
+	//submitting feed comment
+	$(".messageForm").on('submit', function(e){
+		e.preventDefault();
+
+		feed = $(this).find('#userId').val();
+		message = $(this).find('textarea').val()
+
+		if(comment.length>1){
+			//submitting a message
+			$.post('../../api/invest.php', {action:'messageBrokerClient', brokerId:current_user, userId:feed, message:message}, function(data){
+				if(data.toLowerCase() == 'done'){
+					location.reload();
+				}else{
+					alert("Problem with commenting, try again later")
+				}
+			})
+		}else{
+			alert("Please type comment")
+		}
+
 	});
 
 	function approved(){
