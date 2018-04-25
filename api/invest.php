@@ -3,7 +3,7 @@
 	include ("db.php");
 
 	//return JSON Content-Type
-    header('Content-Type: application/json');
+    // header('Content-Type: application/json');
 
     //hostname for file referencing
     $hostname = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/";
@@ -240,10 +240,14 @@
 	        }else if(!empty($request['feedAttachments'])){
 
 
-	        	// echo $request['feedAttachments'][1];
-
 	        	//attachments from Android
-	        	$attachments = json_decode($request['feedAttachments'], true);
+	        	$attachments = $request['feedAttachments'];
+
+	        	$attachments = trim($attachments, '{');
+	        	$attachments = trim($attachments, '}');
+
+	        	$attachments = explode(",", $attachments);
+	        	// echo($attachments);
 	        	
 	        	if(is_array($attachments)){
 
