@@ -242,9 +242,9 @@
 
 	        	//attachments from Android
 	        	$attachments = json_decode($request['feedAttachments'], true);
-	        	
+	        	print_r(array_keys($request));
 	        	if(is_array($attachments)){
-	        		die("Hello");
+
 	        		//looping through image
 	        		foreach ($attachments as $key => $value) {
 		        		$filename = "invest/gallery/feeds/";
