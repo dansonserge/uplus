@@ -36,6 +36,10 @@
 		{
 			header("location: admin.php");
 			exit();
+		}else if($account_type =='broker'){
+			//getting brokerage company
+			$query = $db->query("SELECT * FROM broker_user WHERE userCode = \"$thisid\" AND archived = 'NO' LIMIT 1 ") or trigger_error($db->error);
+			$Broker = $query->fetch_assoc();
 		}
 
 		//getting user company
@@ -199,6 +203,21 @@
 									</li>
 									<li>
 										<a href="feeds.php">Feeds</a>
+									</li>
+								</ul>
+							</li>
+							<li title="Stocks">
+								<a href="javascript:void()">
+									<span class="menu_icon"><i class="material-icons">monetization_on</i></span>
+									<span class="menu_title">Stocks</span>
+								</a>
+								
+								<ul>
+									<li>
+										<a href="stock_companies.php">Companies</a>
+									</li>
+									<li>
+										<a href="feeds.php">Shares</a>
 									</li>
 								</ul>
 							</li>

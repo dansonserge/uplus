@@ -66,31 +66,32 @@
                     <div class="navbar nav-menu">
                         <div class="navbar-label"><h3 class="title"><span class="icon fa fa-star"></span><span class="label-prod">INVESTMENTS IN RWANDA</span></h3></div>
                     </div>
+                    <div id="container"></div>
                     <div class="tab-container">
                         <div id="tab-1" class="tab-panel active">
                             <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"480":{"items":2}, "991":{"items":3},"1200":{"items":4}}'>
                              <?php
-        							include ("db.php");
-        							$sql2 = $db->query("SELECT * FROM `items1` ORDER BY itemId DESC");
+        							$sql2 = $db->query("SELECT * FROM company WHERE type ='stock' ");
         							while($row = mysqli_fetch_array($sql2))
         								{
-        									$postTitle = $row['itemName'];
+        									$postTitle = $row['companyName'];
+                                            $companyId = $row['companyId'];
         									//$priceStatus = $row['unit'];
-        									$price = $row['unitPrice'];
+        									$price = $row['unitPrice']??12;
         									//$postDeadline = $row['postDeadline'];
-        									echo'   <li class="item">
+        									echo '   <li class="item">
         															<div class="left-block">
-                                        <a href="post.php?postId='.$row['itemId'].'">
-                                            <img class="img-responsive" alt="'.$postTitle.'" src="products/'.$row['itemId'].'.jpg"/>
+                                        <a href="post.php?postId='.$companyId.'">
+                                            <img class="img-responsive" alt="'.$row['logo'].'.jpg"/>
                                         </a>
                                         <br/><br/>
                                         <div class="add-to-cart">
-                                            <a title="Add to Cart" class="" href="post.php?postId='.$row['itemId'].'">View</a>
+                                            <a title="Add to Cart" class="" href="post.php?postId='.$companyId.'">View</a>
                                         </div>
                                     </div>
                                     <div class="right-block">
                                         <div class="left-p-info">
-                                            <h5 class="product-name"><a href="post.php?postId='.$row['itemId'].'">'.$postTitle.'</a></h5>
+                                            <h5 class="product-name"><a href="post.php?postId='.$companyId.'">'.$postTitle.'</a></h5>
                                             <div class="product-star">
                                                 <i class="fa fa-star-o"></i>
                                                 <i class="fa fa-star-o"></i>
@@ -121,8 +122,7 @@
                 </div>
                 <?php
             }
-        ?>
-       
+        ?>       
      </div>
 </div>
 <div class="modal fade" id="buyModal" tabindex="-1" role="dialog" aria-labelledby="buyModal" aria-hidden="true">
@@ -201,9 +201,9 @@
                         <input type="number" class="form-control" id="shares_input" aria-describedby="emailHelp" placeholder="Number of shares">
                     </div>
                 </div>
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     Here comes me
-                </div>
+                </div> -->
             </div>
         </form>
       </div>
@@ -305,7 +305,9 @@ $("#comfirm_buy").on('click', function(){
 
 
 $.getJSON('aapl-c.json', function (data) {
-
+    <?php
+        $company_name = 'BK';
+    ?>
     // Create the chart
     Highcharts.stockChart('container', {
 

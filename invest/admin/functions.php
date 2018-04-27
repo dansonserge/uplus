@@ -42,6 +42,7 @@
 		return $users;
 	}
 
+
 	function n_forum_users($forumId)
 	{
 		//function to return number of the users in forum
@@ -103,10 +104,46 @@
 		return $posts;
 	}
 
+	function brokerCompanies($brokerId)
+	{
+		//returns the company that the broker works with a broker is a company with $brokerId
+		global $conn;
+		$query = $conn->query("SELECT * FROM broker_companies as B WHERE B.brokerId = $brokerId ") or trigger_error($conn->error);
+		$companies = array();
+		while ($data = $query->fetch_assoc()) {
+			$companies[] = $data;
+		}
+		return $companies;
+	}
+
+	function getStockCompanies()
+	{
+		//returns the company that the broker works with a broker is a company with $brokerId
+		global $conn;
+		$query = $conn->query("SELECT * FROM company WHERE type ='stock' ") or trigger_error($conn->error);
+		$companies = array();
+		while ($data = $query->fetch_assoc()) {
+			$companies[] = $data;
+		}
+		return $companies;
+	}
+
+	function getStocks()
+	{
+		#Lists all the stocks
+		global $conn;
+		$query = $conn->query("SELECT B.*, C.companyName FROM broker_security AS B JOIN company AS C ON C.companyId = B.brokerId WHERE type ='stock' ") or trigger_error($conn->error);
+		$companies = array();
+		while ($data = $query->fetch_assoc()) {
+			$companies[] = $data;
+		}
+		return $companies;
+	}
+
 	function listFeeds($memberId='')
 	{
 		//function to return the posts from $user
-		global $db;
+		global $db;		
 		$query = $db->query("SELECT F.*, F.id as fid, u.userImage as feedByImg, COALESCE(u.name, u.phone) as feedByName, (SELECT COUNT(*) FROM investments.feed_likes WHERE feedCode = F.id) as nlikes, (SELECT COUNT(*) FROM investments.feed_comments  WHERE feedCode = F.id) as ncomments, (SELECT COUNT(*) FROM investments.feed_likes WHERE feedCode = F.id AND userCode = '$memberId') as liked FROM investments.feeds as F JOIN uplus.users AS u ON u.id = F.createdBy WHERE archive = 'NO' OR ISNULL(archive) ORDER BY createdDate DESC") or trigger_error($db->error, E_USER_ERROR);
 
 		$posts = array();
@@ -178,7 +215,8 @@
 		return $posts;
 	}
 
-	function feedComments($feedId){
+	function feedComments($feedId)
+	{
 		//returns the comments on the feed
 		global $conn;
 

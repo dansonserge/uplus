@@ -87,4 +87,15 @@ link: https://uplus.rw/api/invest.php
 		NID
 		<-
 			"Done"
+
+	getStocks
+		->
+		<-
+			companyId
+			brokerId
+			sharesNumber
+			unitPrice
+			createdDate
+			companyName
+			brokerName
 --END INVESTMENT--

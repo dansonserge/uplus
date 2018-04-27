@@ -440,9 +440,56 @@
 		}else{
 			$response = "Failed";
 		}
+		echo json_encode($response);			
+	}
+
+	function addStock(){
+		//company adding stocks
+		require 'db.php';
+		require '../invest/admin/functions.php';
+
+		$request = $_POST;
+		$stockCompany = $request['company']??"";
+		$number = $request['numberOfShares']??"";
+		$unitPrice = $request['unitPrice']??"";
+		$createdBy = $request['createdBy']??"";
+
+
+		//Check the company associated woth user - #createdBy
+		$companyq = $investDb->query("SELECT companyId FROM broker_user WHERE userCode = \"$createdBy\" AND archived = 'no' LIMIT 1 ") or trigger_error($investDb->error);
+		if($companyq->num_rows){
+			$companyData = $companyq->fetch_assoc();
+			$brokerId = $companyData['companyId'];
+			//insert the stocks
+			$investDb->query("INSERT INTO broker_security(brokerId, companyId, sharesNumber, unitPrice, createdBy) VALUES($brokerId, \"$stockCompany\", \"$number\", \"$unitPrice\", \"$createdBy\") ") or trigger_error($investDb->error);
+			$response = "Done";
+		}else{
+			$response = "Failed";
+
+		}
 		echo json_encode($response);
 
-			
+	}
+
+	function listStocks(){
+		//list stock prices with their stock people
+
+		// require 'db.php';
+		require_once '../invest/admin/db.php';
+		require '../invest/admin/functions.php';
+
+
+		global $investDb;
+		$request = $_POST;
+		$query = $investDb->query("SELECT B.companyId, B.brokerId, B.sharesNumber, B.unitPrice, B.createdDate, C.companyName, (SELECT companyName FROM company WHERE companyId = B.brokerId ) AS brokerName	 FROM broker_security AS B JOIN company AS C ON C.companyId = B.companyId WHERE type ='stock' ") or trigger_error($investDb->error);
+		$companies = array();
+		while ($data = $query->fetch_assoc()) {
+			$companies[] = $data;
+		}
+		$response = $companies;		
+
+		echo json_encode($response);
+
 	}
 // END INVESTMENT
 ?>
