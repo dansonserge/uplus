@@ -72,7 +72,10 @@ link: https://uplus.rw/api/invest.php
 		->
 			feedId
 		<-
-			"Done"
+			comment
+			commentDate
+			commentByName
+			commentByImg
 
 --END FORUM--
 

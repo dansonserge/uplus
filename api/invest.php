@@ -182,9 +182,22 @@
 	function listCommentsFeed()
 	{
 		require('db.php');
-		$feedId		= mysqli_real_escape_string($db, $_POST['feedId']);
-		"Done";
-		//$sql = $investDb->query("")or die (mysqli_error());
+
+		$feed = $_POST['feedId']??"";
+
+		if($feed){
+			$query = $investDb->query("SELECT C.comment, C.commentDatetime as commentDate, U.name as commentByName, U.userImage as commentByImg FROM feed_comments as C JOIN uplus.users as U ON C.userCode = U.id WHERE C.feedCode = \"$feed\" ORDER BY commentDatetime DESC ") or trigger_error($investDb->error);
+			$comments = array();
+
+			while ($data = $query->fetch_assoc()) {
+				$comments[] = $data;
+			}
+			echo json_encode($comments);			
+		}else{
+			echo json_encode("Fail");
+		}
+
+		
 	}
 
 	function commentFeed()
