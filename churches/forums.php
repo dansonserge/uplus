@@ -329,6 +329,7 @@
     <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
     <script type="text/javascript">
         var messagesRef = new Firebase('https://learnbase-baa6d.firebaseio.com/forumChats');
+        var forumsRef = new Firebase('https://learnbase-baa6d.firebaseio.com/forums');
 
         var forums_member_count = 0,  n=0, forums_member = {};
 
@@ -423,6 +424,7 @@
                         if(ret.status){
                             //User done
                             //create successfully(Giving notification and closing the modal);
+                            forumsRef.push({foumSubtitle:intro, forumTitle:title, forumLogo:ret.data.logo, forumId:ret.data.forumId});   
                             $("#addStatus").html("<p class='uk-text-success'>Forum added successfully!</p>");
                             
                             setTimeout(function(){

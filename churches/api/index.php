@@ -669,12 +669,12 @@
 				$insert = $conn->query($sql);
 
 				if($insert){
-					$response = array('status'=>true, 'msg'=>"Created");
+					$response = array('status'=>true, 'msg'=>"Created", 'data'=>array('id'=>$conn->insert_id));
 				}else{
 					$response = array('status'=>false, 'msg'=>"Can't create: $conn->error");
 				}
 
-				$response = array('status'=>true, 'msg'=>"Success", 'forumId'=>$conn->insert_id);
+				$response = array('status'=>true, 'msg'=>"Success", 'data'=>array('forumId'=>$conn->insert_id, 'logo'=>$filename));
 
 			}else $response = array('status'=>false, 'msg'=>"Error keeping file on server\nPlease try again".json_encode($_FILES));
 
