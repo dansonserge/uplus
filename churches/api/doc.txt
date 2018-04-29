@@ -1,5 +1,5 @@
 UPLUS church API V1.1 DOCUMENTATION
-url: https://uplus.com/churches/api/index.php
+url: https://uplus.rw/churches/api/index.php
 --START CHURCH--
 	list_churches
 		->
@@ -35,6 +35,26 @@ url: https://uplus.com/churches/api/index.php
 			id
 			name
 			description
+
+	donate
+		->
+			userId
+			amount
+			account			
+			method (mtn, tigo, master_card)
+		<-
+			'Done'
+
+	donate
+		->
+			userId
+			amount
+			basketId
+			account			
+			method (mtn, tigo, master_card)
+		<-
+			'Done'			
+			
 
 	church_branches
 		->
@@ -80,5 +100,8 @@ url: https://uplus.com/churches/api/index.php
 			content
 			attachments
 --END FEEDS--
+
+
+
 
 

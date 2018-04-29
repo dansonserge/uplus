@@ -5,7 +5,7 @@
 	include '../mail.php';
 
 	//return JSON Content-Type
-	header('Content-Type: application/json');
+	// header('Content-Type: application/json');
 
 	$Message = new broadcast();
 	$request = array_merge($_POST, $_GET); //$_GET for devt nd $_POST for production
@@ -182,6 +182,58 @@
 			$response = array('status'=>false, 'msg'=>"User already existed");
 		}
 		
+
+	}else if($action == 'donate'){
+		//api for donation
+		$amount = $request['amount']??"";
+		$account = $request['account']??"";
+		$userId = $request['userId']??"";
+		$method = $request['method']??"mtn";
+
+
+		if($userId && $account && $method){
+			//getting user's church
+			$userData = user_details($userId);
+
+			$userChurch = $userData['church'];
+
+			//inserting the donation
+			$query = $conn->query("INSERT INTO donations(member, church, amount, account, source) VALUES(\"$userId\", \"$userChurch\", \"$amount\", \"$account\", \"$method\") ");
+			if($query){
+				$response = 'Pending';
+			}else{
+				$response = 'Failed';
+			}
+		}else{
+			$response = 'Failed';
+		}
+
+	}else if($action == 'pledge'){
+		//api for donation
+		$amount = $request['amount']??"";
+		$account = $request['account']??"";
+		$userId = $request['userId']??"";
+		$basket = $request['basketId']??"";
+		$method = $request['method']??"mtn";
+
+
+		if($userId && $account && $method){
+			//getting user's church
+			$userData = user_details($userId);
+
+			$userChurch = $userData['church'];
+
+			//inserting the donation
+			$query = $conn->query("INSERT INTO donations(member, church, service, amount, account, source) VALUES(\"$userId\", \"$userChurch\", \"$basket\", \"$amount\", \"$account\", \"$method\") ");
+			if($query){
+				$response = 'Done';
+			}else{
+				$response = 'Failed';
+			}
+		}else{
+			$response = 'Failed';
+		}	
+
 
 	}else if($action == 'buy'){
 		$phonenumber = $request['phone'];

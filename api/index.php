@@ -1871,7 +1871,7 @@
 
 		if($outCon)
 		{
-			$remId =mysqli_insert_id($outCon);
+			$remId = mysqli_insert_id($outCon);
 			$pullTransactionId = $remId['id'];
 			$pushTransactionId = $pullTransactionId - 1;
 
