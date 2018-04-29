@@ -253,6 +253,11 @@
 
 	        		//looping through image
 	        		foreach ($attachments as $key => $value) {
+	        			if($value == 'none'){
+	        				continue;
+	        			}
+
+
 		        		$filename = "invest/gallery/feeds/";
 					    // $image_parts = explode(";base64,", $value);
 					    // $image_type_aux = explode("image/", $image_parts[0]);
@@ -490,6 +495,41 @@
 
 		echo json_encode($response);
 
+	}
+	function purchase(){
+		//user buying the shares
+		require 'db.php';
+		require_once '../invest/admin/db.php';
+		require '../invest/admin/functions.php';
+
+		$request = $_POST;
+		$securityId = $request['securityId']??""; //id of the security the user is buying
+		$userId = $request['userId']??""; //iWho's buying
+		$quantity = $request['quantity']??""; //id of the security the user is buying
+
+		if($securityId && $userId && $quantity){
+			//checking price per share
+			$shareQuery = $investDb->query("SELECT B.*, C.number AS remaining FROM broker_security as B JOIN broker_companies AS C ON C.brokerId = B.brokerId WHERE id = \"$securityId\" AND B.archived = 'no' ") or trigger_error($investDb->error);
+			if($shareQuery){
+				$shares = $shareQuery->fetch_assoc();
+
+				$totalAmt = $quantity*$shares['unitPrice'];
+				if($quantity<=$shares['remaining']){
+					//here we can buy
+					//todo: implement payment
+					$investDb->query("INSERT INTO transactions(securityId, userCode, quantity, totalAmount, type, createdBy) VALUES(\"$securityId\", \"$userId\", \"$quantity\", \"$totalAmt\", \"buy\", \"$userId\") ") or trigger_error($investDb->error);
+					$response = 'Done';
+				}else{
+					$response = 'Fail';
+				}
+			}else{
+				$response = 'Fail';
+			}			
+		}else{
+			$response = 'Fail';
+		}
+		$userId = $request['userId']??""; //id of the security the user is buying
+		echo json_encode($response);
 	}
 // END INVESTMENT
 ?>
