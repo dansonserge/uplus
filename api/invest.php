@@ -9,9 +9,9 @@
     $hostname = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/";
 
     //keep api request log for debuggin
-    $f = fopen("investapilog.txt", 'a+');
-    fwrite($f, json_encode($_POST)."\n\n");
-    fclose($f);
+    // $f = fopen("investapilog.txt", 'a+');
+    // fwrite($f, json_encode($_POST)."\n\n");
+    // fclose($f);
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") 
 	{
@@ -247,13 +247,13 @@
 	        	$attachments = trim($attachments, '}');
 
 	        	$attachments = explode(",", $attachments);
-	        	// echo($attachments);
 	        	
 	        	if(is_array($attachments)){
 
+
 	        		//looping through image
 	        		foreach ($attachments as $key => $value) {
-	        			if($value == 'none'){
+	        			if($value == "'none'"){
 	        				continue;
 	        			}
 
