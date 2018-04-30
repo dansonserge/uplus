@@ -489,7 +489,7 @@
 
 	}
 
-	function listStocks(){
+	function getStocks(){
 		//list stock prices with their stock people
 
 		// require 'db.php';
