@@ -91,7 +91,7 @@ link: https://uplus.rw/api/invest.php
 		<-
 			"Done"
 
-	getStocks
+	listStocks
 		->
 		<-
 			companyId
