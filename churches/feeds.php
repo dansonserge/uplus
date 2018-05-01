@@ -512,7 +512,7 @@
 
 			post_str = {};
 
-			post_target_forum = post_target_church = ''; //handler for t fprum and church
+			post_target_forum = post_target_church = 0; //handler for t fprum and church
 
 			if(postTo == 'church'){
 				feed_type = 'church'
