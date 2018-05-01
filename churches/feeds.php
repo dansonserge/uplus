@@ -516,8 +516,9 @@
 
 			if(postTo == 'church'){
 				feed_type = 'church'
-				post_target_church = <?php echo $churchID ?>
+				post_target_church = <?php echo $churchID ?>;
 			}else if(postTo == 'podcast'){
+				post_target_church = <?php echo $churchID ?>;
 				feed_type = 'podcast'
 			}else if(postTo == 'public'){
 				feed_type = 'public'
