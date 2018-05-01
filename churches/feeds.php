@@ -545,8 +545,8 @@
 
 				ajax.addEventListener("load", function(){
 					setTimeout(function(){
-						// location.reload()
-					}, 1500)                    
+						location.reload()
+					}, 100)                    
 				})
 			}else{
 				alert("Specify details")
