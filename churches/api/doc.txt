@@ -97,8 +97,9 @@ url: https://uplus.rw/churches/api/index.php
 			churchId
 		<-
 			title
-			content
-			attachments
+			podcastDescription
+			podcastThumb
+			podcastMediaLink
 --END FEEDS--
 
 

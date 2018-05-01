@@ -639,10 +639,14 @@
 		$posts = array();
 		while ($data = mysqli_fetch_array($query))
 		{
+			// print_r($data['attachment']);
+			// echo "<br />";
+			// continue;
 			$posts[] = array(
 				'title'=>$data['title'],
-				'content'=>$data['content'],
-				'attachments'=> json_decode($data['attachment'])??array(),
+				'podcastDescription'=>$data['content'],
+				'podcastThumb'=>'gallery/podcast/sermon.jpg',
+				'podcastMediaLink'=> json_decode($data['attachment'], true)[0]??"",
 			);
 		}
 		

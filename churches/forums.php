@@ -424,7 +424,7 @@
                         if(ret.status){
                             //User done
                             //create successfully(Giving notification and closing the modal);
-                            forumsRef.push({foumSubtitle:intro, forumTitle:title, forumlogo:ret.data.logo, forumtId:ret.data.forumId.toString()});   
+                            forumsRef.push({forumSubtitle:intro, forumTitle:title, forumlogo:ret.data.logo, forumId:ret.data.forumId.toString()});   
                             $("#addStatus").html("<p class='uk-text-success'>Forum added successfully!</p>");
                             
                             setTimeout(function(){
