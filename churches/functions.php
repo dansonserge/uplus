@@ -169,7 +169,7 @@
 		{
 			//function to return the posts from $churc
 			global $conn;
-			$sql = "SELECT *, posts.type as type, (SELECT COUNT(*) FROM posts_like WHERE postId = posts.id) as nlikes, (SELECT COUNT(*) FROM posts_comments  WHERE postId = posts.id) as ncomments FROM posts JOIN users ON posts.postChurchAdmin = users.Id  WHERE users.church = \"$church\" AND  posts.archived = 'no') ORDER BY postedDate DESC ";
+			$sql = "SELECT *, posts.type as type, (SELECT COUNT(*) FROM posts_like WHERE postId = posts.id) as nlikes, (SELECT COUNT(*) FROM posts_comments  WHERE postId = posts.id) as ncomments FROM posts JOIN users ON posts.postChurchAdmin = users.Id  WHERE users.church = \"$church\" AND  posts.archived = 'no' ORDER BY postedDate DESC ";
 
 			$query = $conn->query($sql) or trigger_error($conn->error);
 
