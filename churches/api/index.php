@@ -635,7 +635,7 @@
 	else if($action == 'listPodcasts')
 	{
 		$church = $request['churchId'];
-		$query = $conn->query("SELECT * FROM posts WHERE type = 'podcast' AND targetChurch = '$church' AND archive = 'no' ORDER BY postedDate")or die(mysqli_error($conn));
+		$query = $conn->query("SELECT * FROM posts WHERE type = 'podcast' AND targetChurch = '$church' AND archived = 'no' ORDER BY postedDate")or die(mysqli_error($conn));
 		$posts = array();
 		while ($data = mysqli_fetch_array($query))
 		{
