@@ -5,7 +5,7 @@
 	include '../mail.php';
 
 	//return JSON Content-Type
-	// header('Content-Type: application/json');
+	header('Content-Type: application/json');
 
 	$Message = new broadcast();
 	$request = array_merge($_POST, $_GET); //$_GET for devt nd $_POST for production
