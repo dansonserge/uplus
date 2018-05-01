@@ -695,7 +695,7 @@
 		$title = $request['title']??"";
 
 		//if there targeted church
-		$target_audience = $request['church']??null;
+		$target_audience = $request['church']??1;
 
 		//if there targeted forum
 		$target_forum = $request['postForumId']??null;
