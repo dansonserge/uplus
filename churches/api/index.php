@@ -698,7 +698,7 @@
 		$target_audience = $request['church']??1;
 
 		//if there targeted forum
-		$target_forum = $request['postForumId']??null;
+		$target_forum = $request['postForumId']??'';
 
 		//type of the post
 		$type = $request['type']??"";
