@@ -703,6 +703,8 @@
 		//type of the post
 		$type = $request['type']??"";
 
+		print_r($request);
+
 		if($type && !$target_audience){
 			$userData = staff_details($target_audience);
 			$target_audience = $userData['church'];
@@ -723,6 +725,8 @@
 		}else{
 			$sql = "INSERT INTO posts(title, content, postedBy, type,  postMemberId, attachment, targetChurch, targetForum, platform) VALUES(\"$title\", \"$post_content\", 'member', \"$type\", \"$userId\", \"$attachments\", \"$target_audience\", \"$target_forum\", \"$platform\") ";
 		}
+		echo "$sql";
+		die();
 		$query = $conn->query($sql);
 
 
