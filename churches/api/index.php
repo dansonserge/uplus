@@ -646,7 +646,7 @@
 				'title'=>$data['title'],
 				'podcastDescription'=>$data['content'],
 				'podcastThumb'=>'gallery/podcast/sermon.jpg',
-				'podcastMediaLink'=> json_decode($data['attachment'], true)[0]??"",
+				'podcastMediaLink'=> str_ireplace(" ", "_", json_decode($data['attachment'], true)[0]??""),
 			);
 		}
 		
@@ -744,7 +744,7 @@
 		$sent_file_name = $attachment['name'];
 		$ext = strtolower(pathinfo($sent_file_name, PATHINFO_EXTENSION)); //extension
 
-		$filename = "gallery/feeds/".substr($sent_file_name, 0, -4)."_".time().".".$ext;
+		$filename = "gallery/feeds/".substr(str_ireplace(" ", "_", $sent_file_name), 0, -4)."_".time().".".$ext;
 
 		$allowed_extensions = array('preventerrorsguys_dont remove please', 'jpg', 'png', 'mp3', 'aac', 'mp4');
 

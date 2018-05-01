@@ -101,4 +101,12 @@ link: https://uplus.rw/api/invest.php
 			createdDate
 			companyName
 			brokerName
+
+	purchase
+		->
+			securityId
+			userId
+			quantity
+		<-
+			'Done' or 'Failed'
 --END INVESTMENT--
