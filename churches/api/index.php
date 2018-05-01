@@ -647,7 +647,7 @@
 				'title'=>$data['title']??"",
 				'podcastId'=>$data['id'],
 				'podcastDescription'=>$data['content']??"",
-				'podcastThumb'=>'gallery/podcast/sermon.jpg',
+				'podcastThumb'=>'gallery/podcasts/sermon.jpg',
 				'podcastMediaLink'=> str_ireplace(" ", "_", json_decode($data['attachment'], true)[0]??""),
 			);
 		}
@@ -723,7 +723,7 @@
 		}else{
 			$sql = "INSERT INTO posts(title, content, postedBy, type,  postMemberId, attachment, targetChurch, targetForum, platform) VALUES(\"$title\", \"$post_content\", 'member', \"$type\", \"$userId\", \"$attachments\", \"$target_audience\", \"$target_forum\", \"$platform\") ";
 		}
-		
+
 		$query = $conn->query($sql);
 
 
