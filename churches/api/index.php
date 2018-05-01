@@ -5,7 +5,7 @@
 	include '../mail.php';
 
 	//return JSON Content-Type
-	header('Content-Type: application/json');
+	// header('Content-Type: application/json');
 
 	$Message = new broadcast();
 	$request = array_merge($_POST, $_GET); //$_GET for devt nd $_POST for production
@@ -635,7 +635,8 @@
 	else if($action == 'listPodcasts')
 	{
 		$church = $request['churchId'];
-		$query = $conn->query("SELECT * FROM posts WHERE type = 'podcast' AND targetChurch = '$church' AND !ISNULL(archivedDate) OR archivedDate = '' ORDER BY postedDate")or die(mysqli_error($conn));
+		$sql = "SELECT * FROM posts WHERE type = 'podcast' AND targetChurch = '$church' AND archivedDate = 'no' ORDER BY postedDate";
+		$query = $conn->query($sql) or die(mysqli_error($conn));
 		$posts = array();
 		while ($data = mysqli_fetch_array($query))
 		{
@@ -702,6 +703,11 @@
 		//type of the post
 		$type = $request['type']??"";
 
+		if($type && !$target_audience){
+			$userData = staff_details($target_audience);
+			$target_audience = $userData['church'];
+		}
+
 		//attachments link
 		$attachments = $conn->real_escape_string($request['attachments'])??"[]";
 
@@ -710,8 +716,6 @@
 
 		//platform which the user posted with
 		$platform = $request['platform']??"app";
-
-		print_r($request);
 
 		if($userType == 'admin'){
 			$sql = "INSERT INTO posts(title, content, postedBy, type, postChurchAdmin, attachment, targetChurch, targetForum, platform) VALUES(\"$title\", \"$post_content\", 'admin', \"$type\", \"$userId\", \"$attachments\", \"$target_audience\", \"$target_forum\", \"$platform\") ";
@@ -733,7 +737,7 @@
 		$user = $request['user']??""; //who deleted this feed
 
 		if($user && $feed){
-			$query = $conn->query("UPDATE posts SET archivedDate = NOW(), archivedBy = \"$user\", updatedDate = NOW(), updatedBy = \"$user\" WHERE id = \"$feed\"  ") or trigger_error($conn->error);
+			$query = $conn->query("UPDATE posts SET archived = 'yes', archivedDate = NOW(), archivedBy = \"$user\", updatedDate = NOW(), updatedBy = \"$user\" WHERE id = \"$feed\"  ") or trigger_error($conn->error);
 			$response = array('status'=>true);
 		}else{
 			$response = array('status'=>false, 'msg'=>"Provide details");
