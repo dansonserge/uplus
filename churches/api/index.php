@@ -644,6 +644,7 @@
 			// continue;
 			$posts[] = array(
 				'title'=>$data['title'],
+				'podcastId'=>$data['id'],
 				'podcastDescription'=>$data['content'],
 				'podcastThumb'=>'gallery/podcast/sermon.jpg',
 				'podcastMediaLink'=> str_ireplace(" ", "_", json_decode($data['attachment'], true)[0]??""),

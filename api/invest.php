@@ -499,7 +499,7 @@
 
 		global $investDb;
 		$request = $_POST;
-		$query = $investDb->query("SELECT B.companyId, B.brokerId, B.sharesNumber, B.unitPrice, B.createdDate, C.companyName, (SELECT companyName FROM company WHERE companyId = B.brokerId ) AS brokerName	 FROM broker_security AS B JOIN company AS C ON C.companyId = B.companyId WHERE type ='stock' ") or trigger_error($investDb->error);
+		$query = $investDb->query("SELECT B.companyId, B.id as securityId, B.brokerId, B.sharesNumber, B.unitPrice, B.createdDate, C.companyName, (SELECT companyName FROM company WHERE companyId = B.brokerId ) AS brokerName	 FROM broker_security AS B JOIN company AS C ON C.companyId = B.companyId WHERE type ='stock' ") or trigger_error($investDb->error);
 		$companies = array();
 		while ($data = $query->fetch_assoc()) {
 			$companies[] = $data;
