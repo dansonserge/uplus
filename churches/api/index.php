@@ -85,7 +85,7 @@
 		//listing the church branches
 		$user = $request['userId']??"";
 		if($user){
-			$query = $conn->query("SELECT * FROM branches");
+			$query = $conn->query("SELECT B.*, CONCAT(B.name, ' ', C.name) as churchName FROM branches as B JOIN church as C ON C.id = B.church") or trigger_error($conn->error);
 
 			$branches = array();
 
@@ -95,7 +95,7 @@
 				$exiq = $conn->query("SELECT * FROM church_members WHERE userCode = \"$user\" AND branchid = \"$branchid\" AND archived = 'no' ORDER BY createdDate DESC LIMIT 1") or trigger_error($conn->error);
 
 				$branches[] = array(
-					'churchName'=>$data['name'],
+					'churchName'=>$data['churchName'],
 					'churchId'=>$branchid,
 					'churchImage'=>$data['profile_picture'],
 					'joined'=>$exiq->num_rows==1?"Yes":"No",
