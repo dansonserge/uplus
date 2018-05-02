@@ -499,7 +499,7 @@
 
 		global $investDb;
 		$request = $_POST;
-		$query = $investDb->query("SELECT B.companyId, B.id as securityId, B.brokerId, B.sharesNumber, B.unitPrice, B.createdDate, C.companyName, (SELECT companyName FROM company WHERE companyId = B.brokerId ) AS brokerName	 FROM broker_security AS B JOIN company AS C ON C.companyId = B.companyId WHERE type ='stock' ") or trigger_error($investDb->error);
+		$query = $investDb->query("SELECT B.companyId, B.id as securityId, B.brokerId, B.sharesNumber, B.unitPrice, B.createdDate, C.companyName, (SELECT companyName FROM company WHERE companyId = B.brokerId ) AS brokerName	 FROM broker_security AS B JOIN company AS C ON C.companyId = B.companyId WHERE type ='stock' ORDER BY B.createdDate ") or trigger_error($investDb->error);
 		$companies = $companyDetails = array();
 
 		
@@ -547,13 +547,13 @@
 		require '../invest/admin/functions.php';
 
 		$request = $_POST;
-		$securityId = $request['securityId']??""; //id of the security the user is buying
+		$stockId = $request['stockId']??""; //id of the stock the user is buying
 		$userId = $request['userId']??""; //iWho's buying
-		$quantity = $request['quantity']??""; //id of the security the user is buying
+		$quantity = $request['quantity']??""; //quantity
 
-		if($securityId && $userId && $quantity){
+		if($stockId && $userId && $quantity){
 			//checking price per share
-			$shareQuery = $investDb->query("SELECT B.*, C.number AS remaining FROM broker_security as B JOIN broker_companies AS C ON C.brokerId = B.brokerId WHERE id = \"$securityId\" AND B.archived = 'no' ") or trigger_error($investDb->error);
+			$shareQuery = $investDb->query("SELECT B.*, C.number AS remaining FROM broker_security as B JOIN broker_companies AS C ON C.brokerId = B.brokerId WHERE id = \"$stockId\" AND B.archived = 'no' ") or trigger_error($investDb->error);
 			if($shareQuery){
 				$shares = $shareQuery->fetch_assoc();
 
@@ -561,7 +561,7 @@
 				if($quantity<=$shares['remaining']){
 					//here we can buy
 					//todo: implement payment
-					$investDb->query("INSERT INTO transactions(securityId, userCode, quantity, totalAmount, type, createdBy) VALUES(\"$securityId\", \"$userId\", \"$quantity\", \"$totalAmt\", \"buy\", \"$userId\") ") or trigger_error($investDb->error);
+					$investDb->query("INSERT INTO transactions(stockId, userCode, quantity, totalAmount, type, createdBy) VALUES(\"$stockId\", \"$userId\", \"$quantity\", \"$totalAmt\", \"buy\", \"$userId\") ") or trigger_error($investDb->error);
 					$response = 'Done';
 				}else{
 					$response = 'Fail';
