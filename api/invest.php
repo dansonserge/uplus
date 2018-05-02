@@ -500,11 +500,42 @@
 		global $investDb;
 		$request = $_POST;
 		$query = $investDb->query("SELECT B.companyId, B.id as securityId, B.brokerId, B.sharesNumber, B.unitPrice, B.createdDate, C.companyName, (SELECT companyName FROM company WHERE companyId = B.brokerId ) AS brokerName	 FROM broker_security AS B JOIN company AS C ON C.companyId = B.companyId WHERE type ='stock' ") or trigger_error($investDb->error);
-		$companies = array();
+		$companies = $companyDetails = array();
+
+		
 		while ($data = $query->fetch_assoc()) {
-			$companies[] = $data;
+			$compData = $cd = array(
+						'unitPrice'=>$data['unitPrice'],
+						'date'=>$data['createdDate'],
+						'securityId'=>$data['securityId'],
+					);
+			if(isset($companies[$data['companyId']])){				
+				//here we'll concatenate				
+				$companies[$data['companyId']][] = $compData;
+			}else{
+				$companies[$data['companyId']][] = $compData;
+			}
+
+			//Packing company details
+			if(!isset($companyDetails[$data['companyId']])){				
+				//keep once only
+				$companyDetails[$data['companyId']] = $data;
+			}
+
 		}
-		$response = $companies;		
+
+		//android format
+		foreach ($companyDetails as $key => $data) {
+			$ret[] = array(
+				'companyName'=>$data['companyName'],
+				'brokerName'=>$data['brokerName'],
+				'companyId'=>$data['companyId'],
+				'brokerId'=>$data['brokerId'],
+				'data'=>$companies[$data['companyId']]
+			);
+		}
+
+		$response = $ret;		
 
 		echo json_encode($response);
 
