@@ -94,13 +94,15 @@ link: https://uplus.rw/api/invest.php
 	listStocks
 		->
 		<-
-			companyId
+			stockName
+			stockId
+			brokerName			
 			brokerId
-			sharesNumber
-			unitPrice
-			createdDate
-			companyName
-			brokerName
+			data:
+				[{
+				date
+				unitPrice
+				}]
 
 	purchase
 		->

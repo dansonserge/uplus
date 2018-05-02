@@ -527,9 +527,9 @@
 		//android format
 		foreach ($companyDetails as $key => $data) {
 			$ret[] = array(
-				'companyName'=>$data['companyName'],
+				'stockName'=>$data['companyName'],
+				'stockId'=>$data['companyId'],
 				'brokerName'=>$data['brokerName'],
-				'companyId'=>$data['companyId'],
 				'brokerId'=>$data['brokerId'],
 				'data'=>$companies[$data['companyId']]
 			);
@@ -543,7 +543,6 @@
 	function purchase(){
 		//user buying the shares
 		require 'db.php';
-		require_once '../invest/admin/db.php';
 		require '../invest/admin/functions.php';
 
 		$request = $_POST;
@@ -574,6 +573,32 @@
 		}
 		$userId = $request['userId']??""; //id of the security the user is buying
 		echo json_encode($response);
+	}
+	function sellMyStocks(){
+		//allows user to sell her stocks
+		require 'db.php';
+		require '../invest/admin/functions.php';
+		$request = $_POST;
+
+		$userId = $request['userId']??"";
+		$quantity = $request['quantity']??""; //how much user wants to sell
+		$stockId = $request['stockId']??"";
+
+		//insert into transactions
+		if($stockId && $userId && $quantity){
+			//check if the user has the stocks in $stockId
+			$check = $investDb->query("SELECT SUM(quantity) FROM transactions WHERE userCode = \"$userId\" AND stockId = \"$stockId\" AND archived = 'no' AND type = 'buy' ") or trigger_error("Failed"+$investDb->error);
+			if($check->num_rows){
+				//check the number
+				$cdata = $check->fetch_assoc();
+				if($quantity <= $cdata['quantity']){
+					//order can be placed
+					$investDb->query("INSERT INTO transactions(stockId, userCode, quantity, totalAmount, type, createdBy) VALUES(\"$stockId\", \"$userId\", \"$quantity\", \"$totalAmt\", \"buy\", \"$userId\") ") or trigger_error($investDb->error);
+					$response = 'Done';
+
+				}
+			}
+		}
 	}
 // END INVESTMENT
 ?>
