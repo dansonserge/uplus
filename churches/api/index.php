@@ -179,7 +179,7 @@
 				$response = "Done";
 			}
 		}else{
-			$response = "Fail";
+			$response = "Done";
 		}
 	}else if($action == 'donate'){
 		//api for donation
