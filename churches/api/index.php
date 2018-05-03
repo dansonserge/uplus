@@ -166,7 +166,7 @@
 		//checking if the user was already the active church member
 		$query = $conn->query("SELECT * FROM church_members WHERE userCode = '$userId' AND branchid = '$branch' AND archived = 'no' ") or trigger_error($conn->error);
 		if($query->num_rows == 0){
-			$sql = "INSERT INTO church_members(userCode, branchid, joinedByPlatform, type, createdBy) VALUES('$userId', '$branch', \"$platform\", \"$memberType\", 'NOW')";
+			$sql = "INSERT INTO church_members(userCode, branchid, joinedByPlatform, type, createdBy) VALUES('$userId', '$branch', \"$platform\", \"$memberType\", '$createdBy')";
 			$query = $conn->query($sql) or trigger_error($conn->error);
 
 			if($conn->insert_id){
