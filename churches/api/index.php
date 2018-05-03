@@ -5,7 +5,7 @@
 	include '../mail.php';
 
 	//return JSON Content-Type
-	header('Content-Type: application/json');
+	// header('Content-Type: application/json');
 
 	$Message = new broadcast();
 	$request = array_merge($_POST, $_GET); //$_GET for devt nd $_POST for production
@@ -30,9 +30,7 @@
 		}else{
 			echo "No file uploaded";
 		}       
-	}
-
-	else if($action ==  'create_church'){
+	}else if($action ==  'create_church'){
 		//creating church
 		$name = $request['name']??"";
 		$location = $request['location']??"";
@@ -104,8 +102,7 @@
 			$response = $branches;
 		}else{
 			$response = array('status'=>false, 'msg'=>'provide user');
-		}
-		
+		}		
 	}else if($action == "get_groups" || $action == "getGroups"){
 		//Elisaa want random groupps
 		//give the church ID u want groups of
@@ -127,7 +124,6 @@
 		}
 
 		$response = $groups;
-
 	}else if($action == "add_member"){
 		$church_id = $request['church'];
 		$name = $request['name']??"";
@@ -152,8 +148,7 @@
 		}else{
 			$response = array('status'=>false, 'msg'=>"Please provide info to create church member");
 		}
-	}else if($action == "joinChurch"){
-		echo "string";
+	}else if($action == "joinChurch"){		
 		//when the user want to join church
 		$userId = $request['user']??'';
 		$branch = $request['branch']??"";
@@ -167,8 +162,6 @@
 		}else{
 			$createdBy = $request['createdBy']??"";            
 		}
-
-		//doing the query
 
 		//checking if the user was already the active church member
 		$query = $conn->query("SELECT * FROM church_members WHERE userCode = '$userId' AND branchid = '$branch' AND archived = 'no' ") or trigger_error($conn->error);
