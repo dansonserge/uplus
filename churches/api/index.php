@@ -152,7 +152,7 @@
 		}else{
 			$response = array('status'=>false, 'msg'=>"Please provide info to create church member");
 		}
-	}else if($action == "join_church"){
+	}else if($action == "joinChurch"){
 		//when the user want to join church
 		$userId = $request['user']??'';
 		$branch = $request['branch']??"";
@@ -176,13 +176,13 @@
 			$query = $conn->query($sql) or trigger_error($conn->error);
 
 			if($conn->insert_id){
-				$response = array('status'=>true);
+				$response = "Done";
 			}
 		}else{
-			$response = array('status'=>false, 'msg'=>"User already existed");
+			$response = "Fail";
 		}
 		
-
+		echo json_encode($response);
 	}else if($action == 'donate'){
 		//api for donation
 		$amount = $request['amount']??"";

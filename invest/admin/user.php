@@ -96,7 +96,7 @@ ini_set('display_errors', 0);
 	                    </a>
 	                </div>   
 					<div>
-						<a href="purchase.php?compId=<?php echo $comanyId;?>">
+						<a href="stocks.php">
 						<div class="md-card md-card-hover md-card-overlay">
 	                        <div class="md-card-content uk-flex uk-flex-center uk-flex-middle">
 	                            <span class="peity_conversions_large peity_data">5,3,9,6,5,9,7</span>
@@ -105,7 +105,7 @@ ini_set('display_errors', 0);
 	                            <div class="uk-clearfix md-card-overlay-header">
 	                                <i class="md-icon material-icons md-card-overlay-toggler">&#xE5D4;</i>
 	                                <h3>
-	                                    Finance
+	                                    Stocks
 	                                </h3>
 	                            </div>
 	                            Total Share Value:

@@ -15,9 +15,9 @@
 	function forum_users($forumId)
 	{
 		//function to return all the users of the forum
-		global $conn;
-		$forumId = $conn->real_escape_string($forumId);
-		$query = $conn->query("SELECT * FROM forumuser WHERE forumCode = \"$forumId\" and archive = 'NO' ") or trigger_error($conn->error);
+		global $investDb;
+		$forumId = $investDb->real_escape_string($forumId);
+		$query = $investDb->query("SELECT * FROM forumuser WHERE forumCode = \"$forumId\" and archive = 'NO' ") or trigger_error($investDb->error);
 
 		$users = array();
 		while ($data = $query->fetch_assoc()) {
@@ -30,9 +30,9 @@
 	function forumn_non_users($forumId)
 	{
 		//function to return all the users of the forum
-		global $conn;
-		$forumId = $conn->real_escape_string($forumId);
-		$query = $conn->query("SELECT * FROM users WHERE id NOT IN (SELECT userCode FROM forumuser WHERE forumCode = \"$forumId\" and archive = 'NO') ") or trigger_error($conn->error);
+		global $investDb;
+		$forumId = $investDb->real_escape_string($forumId);
+		$query = $investDb->query("SELECT * FROM users WHERE id NOT IN (SELECT userCode FROM forumuser WHERE forumCode = \"$forumId\" and archive = 'NO') ") or trigger_error($investDb->error);
 
 		$users = array();
 		while ($data = $query->fetch_assoc()) {
@@ -46,9 +46,9 @@
 	function n_forum_users($forumId)
 	{
 		//function to return number of the users in forum
-		global $conn;
-		$forumId = $conn->real_escape_string($forumId);
-		$query = $conn->query("SELECT COUNT(*) as num FROM forumuser WHERE forumCode = \"$forumId\" and archive = 'NO' LIMIT 1 ") or trigger_error($conn->error);
+		global $investDb;
+		$forumId = $investDb->real_escape_string($forumId);
+		$query = $investDb->query("SELECT COUNT(*) as num FROM forumuser WHERE forumCode = \"$forumId\" and archive = 'NO' LIMIT 1 ") or trigger_error($investDb->error);
 		$data = $query->fetch_assoc();
 		$n_user = $data['num'];
 		
@@ -67,7 +67,7 @@
 
 	function staff_details($staff){
 		//returns staff
-		global $conn;
+		global $investDb;
 		return user_details($staff);
 	}
 
@@ -91,7 +91,7 @@
 		while ($data = $query->fetch_assoc()) {
 
 			//getting post attachments
-			$attq = $db->query("SELECT imgUrl FROM investmentimg WHERE investCode = $data[fid]") or trigger_error($conn->error);
+			$attq = $db->query("SELECT imgUrl FROM investmentimg WHERE investCode = $data[fid]") or trigger_error($investDb->error);
 
 			$att = array();
 			while ( $attData = $attq->fetch_assoc()) {
@@ -108,8 +108,8 @@
 	function brokerCompanies($brokerId)
 	{
 		//returns the company that the broker works with a broker is a company with $brokerId
-		global $conn;
-		$query = $conn->query("SELECT * FROM broker_companies as B WHERE B.brokerId = $brokerId ") or trigger_error($conn->error);
+		global $investDb;
+		$query = $investDb->query("SELECT * FROM broker_companies as B WHERE B.brokerId = $brokerId ") or trigger_error($investDb->error);
 		$companies = array();
 		while ($data = $query->fetch_assoc()) {
 			$companies[] = $data;
@@ -120,8 +120,8 @@
 	function getStockCompanies()
 	{
 		//returns the company that the broker works with a broker is a company with $brokerId
-		global $conn;
-		$query = $conn->query("SELECT * FROM company WHERE type ='stock' ") or trigger_error($conn->error);
+		global $investDb;
+		$query = $investDb->query("SELECT * FROM company WHERE type ='stock' ") or trigger_error($investDb->error);
 		$companies = array();
 		while ($data = $query->fetch_assoc()) {
 			$companies[] = $data;
@@ -137,7 +137,7 @@
 		$date = date('Y-m-d h:i:s', strtotime($date));
 
 		$sql = "SELECT unitPrice FROM broker_security WHERE companyId = \"$stockId\" AND createdDate>= '$date' LIMIT 1 ";
-		echo "$sql";
+		// echo "$sql";
 		$query = $investDb->query($sql) or trigger_error($investDb->error);
 
 		$data = $query->fetch_assoc();
@@ -159,8 +159,8 @@
 	function getStocks()
 	{
 		#Lists all the stocks
-		global $conn;
-		$query = $conn->query("SELECT B.*, C.companyName FROM broker_security AS B JOIN company AS C ON C.companyId = B.brokerId WHERE type ='stock' ") or trigger_error($conn->error);
+		global $investDb;
+		$query = $investDb->query("SELECT B.*, C.companyName FROM broker_security AS B JOIN company AS C ON C.companyId = B.brokerId WHERE type ='stock' ") or trigger_error($investDb->error);
 		$companies = array();
 		while ($data = $query->fetch_assoc()) {
 			$companies[] = $data;
@@ -197,8 +197,8 @@
 	function brokerMessages($broker, $client)
 	{
 		//return s messages between broker to $client
-		global $conn;
-		$query = $conn->query("SELECT * FROM clients_messaging WHERE userCode = \"$client\" AND messageBy = \"$broker\" ORDER BY createdDate DESC ") or trigger_error($conn->error);
+		global $investDb;
+		$query = $investDb->query("SELECT * FROM clients_messaging WHERE userCode = \"$client\" AND messageBy = \"$broker\" ORDER BY createdDate DESC ") or trigger_error($investDb->error);
 		$messages = array();
 		while ($data = $query->fetch_assoc()) {
 			$messages[] = $data;
@@ -206,11 +206,38 @@
 		return $messages;
 	}
 
+	function stockSales($brokerId){
+		//returns stock sales of the broker
+		global $investDb;
+
+		$query = $investDb->query("SELECT T.*, U.name as clientName, C.companyName FROM transactions as T JOIN company as C ON T.stockId = C.companyId JOIN uplus.users AS U ON U.id = T.usercode WHERE T.type ='buy' ") or trigger_error($investDb->error);
+		$sales = array();
+
+		while ($data = $query->fetch_assoc()) {
+			$sales[] = $data;
+		}
+
+		return $sales;
+	}
+	function stockPurchases($brokerId){
+		//returns stock sales of the broker
+		global $investDb;
+
+		$query = $investDb->query("SELECT T.*, U.name as clientName, C.companyName FROM transactions as T JOIN company as C ON T.stockId = C.companyId JOIN uplus.users AS U ON U.id = T.usercode WHERE T.type ='sell' ") or trigger_error($investDb->error);
+		$sales = array();
+
+		while ($data = $query->fetch_assoc()) {
+			$sales[] = $data;
+		}
+
+		return $sales;
+	}
+
 	function getForums(){
 		//returns all the forums
-		global $conn;
+		global $investDb;
 
-		$query = $conn->query("SELECT * FROM forums WHERE archive = 'NO' ") or trigger_error($conn->error);
+		$query = $investDb->query("SELECT * FROM forums WHERE archive = 'NO' ") or trigger_error($investDb->error);
 		$forums = array();
 		while ($data = $query->fetch_assoc()) {
 			$forums[] = $data;
@@ -229,7 +256,7 @@
 		while ($data = $query->fetch_assoc()) {
 
 			//getting post attachments
-			$attq = $db->query("SELECT imgUrl FROM investmentimg WHERE investCode = $data[fid]") or trigger_error($conn->error);
+			$attq = $db->query("SELECT imgUrl FROM investmentimg WHERE investCode = $data[fid]") or trigger_error($investDb->error);
 
 			$att = array();
 			while ( $attData = $attq->fetch_assoc()) {
@@ -246,9 +273,9 @@
 	function feedComments($feedId)
 	{
 		//returns the comments on the feed
-		global $conn;
+		global $investDb;
 
-		$query = $conn->query("SELECT C.*, U.name as commentByName, U.userImage as commentByImg FROM feed_comments as C JOIN uplus.users as U ON C.userCode = U.id WHERE C.feedCode = \"$feedId\" ORDER BY commentDatetime DESC ") or trigger_error($conn->error);
+		$query = $investDb->query("SELECT C.*, U.name as commentByName, U.userImage as commentByImg FROM feed_comments as C JOIN uplus.users as U ON C.userCode = U.id WHERE C.feedCode = \"$feedId\" ORDER BY commentDatetime DESC ") or trigger_error($investDb->error);
 		$comments = array();
 
 		while ($data = $query->fetch_assoc()) {
