@@ -552,24 +552,27 @@
 
 		if($stockId && $userId && $quantity){
 			//checking price per share
-			$shareQuery = $investDb->query("SELECT B.*, C.number AS remaining FROM broker_security as B JOIN broker_companies AS C ON C.brokerId = B.brokerId WHERE id = \"$stockId\" AND B.archived = 'no' ") or trigger_error($investDb->error);
+			$shareQuery = $investDb->query("SELECT B.*, C.number AS remaining FROM broker_security as B JOIN broker_companies AS C ON C.brokerId = B.brokerId WHERE B.companyId = \"$stockId\" AND B.archived = 'no' ORDER BY createdDate DESC ") or trigger_error($investDb->error);
 			if($shareQuery){
 				$shares = $shareQuery->fetch_assoc();
 
 				$totalAmt = $quantity*$shares['unitPrice'];
-				if($quantity<=$shares['remaining']){
+
+				//NOTE: we are not checking stock remaining now
+
+				if($quantity<=$shares['remaining'] || 1){
 					//here we can buy
 					//todo: implement payment
 					$investDb->query("INSERT INTO transactions(stockId, userCode, quantity, totalAmount, type, createdBy) VALUES(\"$stockId\", \"$userId\", \"$quantity\", \"$totalAmt\", \"buy\", \"$userId\") ") or trigger_error($investDb->error);
 					$response = 'Done';
 				}else{
-					$response = 'Fail';
+					$response = 'Fail, insufficient stock';
 				}
 			}else{
-				$response = 'Fail';
+				$response = "Fail, can't find stock";
 			}			
 		}else{
-			$response = 'Fail';
+			$response = 'Fail, provide all required parameters';
 		}
 		$userId = $request['userId']??""; //id of the security the user is buying
 		echo json_encode($response);
