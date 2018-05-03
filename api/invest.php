@@ -337,7 +337,7 @@
 			$userData = $query->fetch_assoc();
 
 			$names = $userData['name'];
-			$phone = $userData['phone'];
+			$phone = $userData['phone']; 
 
 		}else{
 			$names = $request['names']??"";
@@ -355,7 +355,7 @@
 		$city = $request['city']??"";
 
 		if($names && $phone && $gender && $dob && $nationality){
-			$query = $investDb->query("INSERT INTO clients(names, dob, gender, NID, residentIn, country, city, statusOn) VALUES(\"$names\", \"$dob\", \"$gender\", \"$NID\", \"$nationality\", 'Rwanda', 'Kigali', NOW()) ") OR trigger_error($investDb->error);
+			$query = $investDb->query("INSERT INTO clients(names, dob, gender, telephone, NID, residentIn, nationality, country, city, status, statusOn) VALUES(\"$names\", \"$dob\", \"$gender\", \"$phone\", \"$NID\", \"$nationality\", \"$nationality\", 'Rwanda', 'Kigali', 'pending', NOW()) ") OR trigger_error($investDb->error);
 			$response = 'Done';
 		}else{
 			$response =  "Failed";
@@ -367,11 +367,15 @@
 	{
 		//broker is going to approve the CSD request
 		require 'db.php';
+		require '../invest/admin/functions.php';
 		$request = $_POST;
 
 		$csd = $request['CSDAccount']??"";
 		$doneBy = $request['approvedBy']??"";
 		$user = $request['accountUser']??"";
+
+		
+
 
 		if($csd && $doneBy){
 			//checking id the user is a broker
@@ -379,6 +383,25 @@
 			if($query->num_rows){
 				//here user is a  broker we can now assign the CSD
 				$investDb->query("UPDATE clients SET csdAccount = \"$doneBy\", status = 'approved', statusBy = \"$doneBy\", statusOn = NOW() WHERE id = \"$user\" ") or trigger_error($db->error);
+
+				//broker data
+				$brokerQ = $investDb->query("SELECT C.companyName FROM broker_user B JOIN company C ON B.companyId = C.companyId WHERE B.userCode = '$doneBy'");
+				$brokerData = $brokerQ->fetch_assoc();
+
+
+				$clientData = $investDb->query("SELECT * FROM clients WHERE clients.id = \"$user\" ");
+				$userData = $clientData->fetch_assoc();
+
+				$userphone = $userData['telephone'];
+				$clientName = $userData['names'];
+				if($userphone){
+					//Sending the message to the user					
+					$message = "Dear $clientName, your csd account has been approved with account number: $csd in $brokerData[companyName] broker, you can now start investing today";
+
+					sendsms($userphone, $message);
+
+				}
+				
 				$response = "Done";
 			}else{
 				$response = "Failed";

@@ -111,4 +111,14 @@ link: https://uplus.rw/api/invest.php
 			quantity
 		<-
 			'Done' or 'Failed'
+
+	sellStocks
+		->
+			stockId
+			userId
+			quantity
+		<-
+			'Done' or 'Failed'
+
+
 --END INVESTMENT--

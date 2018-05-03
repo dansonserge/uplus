@@ -38,6 +38,13 @@ if(isset($_GET['viewid']))
 
 	$userData = user_details($viewid);
 	$imgId = $userData['userImage'];
+
+	//getting uplus user ID
+	$userQ = $investDb->query("SELECT * FROM uplus.users WHERE phone = \"$telephone\" ") or trigger_error($investDb->error);
+	$userSData = $userQ->fetch_assoc();
+	$clientData = user_details($userSData['id']);
+	$clientUserId = $userSData['id']; //Actual uplus user ID of the client
+
 }?>
     <div id="page_content">
         <div id="page_content_inner">
@@ -352,9 +359,11 @@ if(isset($_GET['viewid']))
 <script>
 	const current_user = <?php echo $thisid; ?>;
 	$("#csdRequest").on('submit', function(e){
+
 		e.preventDefault();
 		csd_account = $("#csd_account_input").val();
 		csd_account_user = $("#csd_account_user").val();
+
 
 		$.post('../../api/invest.php', {action:'approveCSD', CSDAccount:csd_account, accountUser:csd_account_user, approvedBy:current_user}, function(data){
 			if(data == 'Done'){
