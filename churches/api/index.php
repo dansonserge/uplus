@@ -153,6 +153,7 @@
 			$response = array('status'=>false, 'msg'=>"Please provide info to create church member");
 		}
 	}else if($action == "joinChurch"){
+		echo "string";
 		//when the user want to join church
 		$userId = $request['user']??'';
 		$branch = $request['branch']??"";
