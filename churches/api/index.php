@@ -171,6 +171,8 @@
 
 			if($conn->insert_id){
 				$response = "Done";
+			}else{
+				$response = "Failed, $conn->error";				
 			}
 		}else{
 			$response = "Done";
