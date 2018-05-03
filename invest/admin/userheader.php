@@ -175,12 +175,12 @@
 								</a>
 								<ul>
 									<li>
-										<a href="customers.php?compId=<?php echo $Company->companyId;?>">All</a>
+										<a href="customers.php?compId=<?php echo $Company->companyId;?>">Clients</a>
 									</li>
-									<li>
-										<a href="visitors.php">Individual</a>
-									</li>
-									<li>
+									<!-- <li>
+										<a href="visitors.php">Clients</a>
+									</li> -->
+									<!-- <li>
 										<a href="#">Institution</a>
 									</li>
 									<li>
@@ -188,7 +188,7 @@
 									</li>
 									<li>
 										<a href="#">Domestic</a>
-									</li>
+									</li> -->
 								</ul>
 							</li>
 							<li title="Communication">

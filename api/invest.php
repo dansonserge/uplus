@@ -577,7 +577,7 @@
 		$userId = $request['userId']??""; //id of the security the user is buying
 		echo json_encode($response);
 	}
-	function sellMyStocks(){
+	function sellStocks(){
 		//allows user to sell her stocks
 		require 'db.php';
 		require '../invest/admin/functions.php';
@@ -590,17 +590,37 @@
 		//insert into transactions
 		if($stockId && $userId && $quantity){
 			//check if the user has the stocks in $stockId
-			$check = $investDb->query("SELECT SUM(quantity) FROM transactions WHERE userCode = \"$userId\" AND stockId = \"$stockId\" AND archived = 'no' AND type = 'buy' ") or trigger_error("Failed"+$investDb->error);
-			if($check->num_rows){
+			$check = $investDb->query("SELECT SUM(quantity) as quantity FROM transactions WHERE userCode = \"$userId\" AND stockId = \"$stockId\" AND archived = 'no' AND type = 'buy' ") or trigger_error("Failed"+$investDb->error);
+			if($check->num_rows)
+			{
 				//check the number
 				$cdata = $check->fetch_assoc();
-				if($quantity <= $cdata['quantity']){
+				if($quantity <= $cdata['quantity'])
+				{
+					//details about stock
+					$stockq = $investDb->query("SELECT * FROM company WHERE companyId = '$stockId' LIMIT 1 ") or trigger_error($investDb->error);
+					$stockData = $stockq->fetch_assoc(); 
+					//Going to send message to the user
+					$userData = user_details($userId);
+					$message = "Dear $userData[name], your $quantity stocks of $stockData[companyName] are pending sale for $totalAmt. "
+					sendsms($userData['phone'], $message);
+					
 					//order can be placed
 					$investDb->query("INSERT INTO transactions(stockId, userCode, quantity, totalAmount, type, createdBy) VALUES(\"$stockId\", \"$userId\", \"$quantity\", \"$totalAmt\", \"buy\", \"$userId\") ") or trigger_error($investDb->error);
 					$response = 'Done';
 
+				}else{
+					$response = "Fail";
 				}
 			}
+			else
+			{
+				$response = 'Fail';
+
+			}
+		}else{
+			$response = 'Fail';
+
 		}
 	}
 // END INVESTMENT
