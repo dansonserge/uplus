@@ -181,8 +181,6 @@
 		}else{
 			$response = "Fail";
 		}
-		
-		echo json_encode($response);
 	}else if($action == 'donate'){
 		//api for donation
 		$amount = $request['amount']??"";
