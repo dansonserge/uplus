@@ -597,14 +597,19 @@
 				$cdata = $check->fetch_assoc();
 				if($quantity <= $cdata['quantity'])
 				{
+					//Amount to be paid
+					$totalAmt = latestStockPrice($stockId)*$quantity;
+					var_dump($stockId);
+					die();
+
 					//details about stock
 					$stockq = $investDb->query("SELECT * FROM company WHERE companyId = '$stockId' LIMIT 1 ") or trigger_error($investDb->error);
 					$stockData = $stockq->fetch_assoc(); 
 					//Going to send message to the user
 					$userData = user_details($userId);
-					$message = "Dear $userData[name], your $quantity stocks of $stockData[companyName] are pending sale for $totalAmt. "
+					$message = "Dear $userData[name], your $quantity stocks of $stockData[companyName] are pending sale for $totalAmt";
 					sendsms($userData['phone'], $message);
-					
+
 					//order can be placed
 					$investDb->query("INSERT INTO transactions(stockId, userCode, quantity, totalAmount, type, createdBy) VALUES(\"$stockId\", \"$userId\", \"$quantity\", \"$totalAmt\", \"buy\", \"$userId\") ") or trigger_error($investDb->error);
 					$response = 'Done';

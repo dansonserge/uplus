@@ -71,6 +71,7 @@
 		return user_details($staff);
 	}
 
+
 	function clean_string($string)
 	{
 		$string = str_replace(' ', '_', $string); // Replaces all spaces with hyphens.
@@ -126,6 +127,33 @@
 			$companies[] = $data;
 		}
 		return $companies;
+	}
+
+	function timeStockPrice($stockId, $date)
+	{
+		# Stock price at $date moment
+		global $investDb;
+
+		$date = date('Y-m-d h:i:s', strtotime($date));
+
+		$sql = "SELECT unitPrice FROM broker_security WHERE companyId = \"$stockId\" AND createdDate>= '$date' LIMIT 1 ";
+		echo "$sql";
+		$query = $investDb->query($sql) or trigger_error($investDb->error);
+
+		$data = $query->fetch_assoc();
+		return $data['unitPrice']??0;
+	}
+
+	function latestStockPrice($stockId)
+	{
+		# Stock price at $date moment
+		global $investDb;
+
+		$sql = "SELECT unitPrice FROM broker_security WHERE companyId = \"$stockId\" ORDER BY createdDate DESC LIMIT 1 ";
+		$query = $investDb->query($sql) or trigger_error($investDb->error);
+
+		$data = $query->fetch_assoc();
+		return $data['unitPrice']??0;
 	}
 
 	function getStocks()
