@@ -651,6 +651,30 @@
 		}
 		echo json_encode($response);
 	}
-	// function stocksTransaction
+	function stocksTransactions(){
+		//user sale and purchase histories
+		require 'db.php';
+		require '../invest/admin/functions.php';
+		$request = $_POST;
+
+		$user = $request['userId']??"";
+
+		if($user){
+			$query = $investDb->query("SELECT * FROM transactions WHERE userCode = \"$user\" ") or trigger_error($investDb->error);
+
+			$hist = array();
+			while ($data = $query->fetch_assoc()) {
+				$hist[] = array(
+					'stockId'=>$data['stockId'],
+					'userCode'=>$data['userCode'],
+					'quantity'=>$data['quantity'],
+					'totalAmount'=>$data['totalAmount'],
+					'type'=>$data['type'],
+					'date'=>$data['createdDate']
+				);
+			}
+		}
+		echo json_encode($hist);
+	}
 // END INVESTMENT
 ?>
