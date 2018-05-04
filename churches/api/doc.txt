@@ -19,6 +19,15 @@ url: https://uplus.rw/churches/api/index.php
 			churchId
 			churchImage
 			joined
+	getChurch
+		->
+			churchId
+			userId - optional
+		->
+			churchName
+			churchId
+			churchImage
+			joined
 
 	join_church
 		->
