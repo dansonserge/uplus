@@ -172,6 +172,7 @@
 					//progress changing
 					nGenerated++
 					console.log(nGenerated)
+					alert()
 					percentage = (nGenerated/nhandleElems)*100
 					progressElem.style.width = percentage+'%'
 					progressElem.innerText = percentage+'%';
