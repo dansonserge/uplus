@@ -1,3 +1,6 @@
+
+<?php 
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,41 +10,45 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css" media="all">
 	<link rel="stylesheet" href="css/bootstrap-theme.min.css" media="all">
 	<link rel="stylesheet" href="css/styles.css" media="all">
-	<style type="text/css">
-		.progress-bar{
-			background-color: #06467c;
-		}
-	</style>
 </head>
 <body style="background: #efefef;">
 	<div class="container">
-		<div class="jumbotron topbar" style="background-color: #3778b0">
+		<div class="jumbotron topbar">
 			<div class="row">
 				<div class="col-md-2">
-					<div style="box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
-    height: 100px;
-    background-color: #d3d5db;
-    width: 100px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    border-radius: 100px;
-    background-image: url();">
-				</div></div>
-				<div class="col-md-8" style="overflow-y: hidden;">
+					<img src="https://firebasestorage.googleapis.com/v0/b/uplusmp.appspot.com/o/users_photos%2Fcropped-2082218212.jpg?alt=media&token=5ceab3b9-5469-43e3-907e-06b2c0e82da4" alt="..." style="width: 100px;" class="img-circle">
+				</div>
+				<div class="col-md-8">
 					<form class="form-horizontal">
 						<div class="form-group">
-							<label for="inputEmail3" class="col-sm-3 control-label">LHS ID:</label>
+							<label for="inputEmail3" class="col-sm-3 control-label">Handle ID</label>
 							<div class="col-sm-9">
-							  <input type="email" class="form-control" id="inputEmail3" disabled value="25.001/NIDA/">
+							  <input type="email" class="form-control" id="inputEmail3" disabled value="25/NIDA/1199280036180077">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="currentTime" class="col-sm-3 control-label">LHS NAME:</label>
+							<label for="currentTime" class="col-sm-3 control-label">Current Time</label>
 							<div class="col-sm-9">
-							  <input type="text" class="form-control" id="currentTime" disabled value="NATIONA ID AGENCY">
+							  <input type="text" class="form-control" id="currentTime" disabled placeholder="Password">
 							</div>
 						</div>
+					  	<div class="col-sm-3"></div>
+					  	<div class="panel-group col-sm-9">
+					    	<div class="panel panel-default">
+					     	 	<div class="panel-heading">
+						        	<h4 class="panel-title">
+						          		<a data-toggle="collapse" href="#collapse1">More Info</a>
+						        	</h4>
+						      	</div>
+						      	<div id="collapse1" style="color: #000;" class="panel-collapse collapse">
+							        <ul class="list-group">
+										<li class="list-group-item">Name:	MUHIRWA CLEMENT</li>
+										<li class="list-group-item">AGE: 26</li>
+										<li class="list-group-item">GENDER: MALE</li>
+							        </ul>
+						     	</div>
+						    </div>
+				  		</div>
 					</form>
 				</div>
 				<div class="col-md-2">
@@ -60,161 +67,150 @@
 			</div>
 		</div>
 	  	<dir class="row mainContent">
-	  		<div class="col-md-9 contentHolder">
-	  			<div class="holderHead">NIDA (<?php 
-	  			include('db.php');
-		  						$sqlNida = $db->query("SELECT * FROM nida");
-		  						echo mysqli_num_rows($sqlNida); ?>)</div>
+	  		<div class="col-md-4 contentHolder">
+	  			<div class="holderHead">Sources</div>
 	  			<div class="card card-fluid">
-		  			<table class="table table-striped">
-		  				<thead>
-		  					<tr>
-		  						<th>IMG</th>
-		  						<th>Names</th>
-		  						<th>Gender</th>
-		  						<th>Nid</th>
-		  					</tr>
-		  				</thead>
-		  				<tbody id="peopleTable">
-		  				<?php 
-		  					$n=0;
-		  					while($row = mysqli_fetch_array($sqlNida))
-	  						{
-	  							$n++;
-	  							echo '<tr data-names="'.$row['names'].'" data-gender="'.$row['gender'].'" data-nid="11"><td>'.$n.'</td><td>'.$row['names'].'</td><td>'.$row['gender'].'</td><td>'.$row['nid'].'</td></tr>';
-	  						}
-		  				?>
-		  				</tbody>
-		  			</table>
+		  			<div class="list-group" style="padding-right: 10px;">
+						<a href="javascript:void()" onclick="callRecords(1)" id="source1" class="list-group-item active"><span class="badge">3</span>Ownership</a>
+						<a href="javascript:void()" onclick="callRecords(2)" id="source2" class="list-group-item"><span class="badge">14</span>Education</a>
+						<a href="javascript:void()" onclick="callRecords(3)" id="source3" class="list-group-item"><span class="badge">0</span>Criminal</a>
+						<a href="javascript:void()" onclick="callRecords(4)" id="source4" class="list-group-item"><span class="badge">148</span>Medical</a>
+						<a href="javascript:void()" onclick="callRecords(5)" id="source5" class="list-group-item"><span class="badge">5</span>Family</a>
+					</div>
 				</div>
 			</div>
-	  		<div class="col-md-3 contentHolder">
-	  			<div class="holderHead">DOA  (<?php 
-		  						$sqlDoa1 = $db->query("SELECT handleId FROM nida WHERE handleId <>'' AND handleId IS NOT NULL")or die(mysqli_error($db));
-		  						echo mysqli_num_rows($sqlDoa1); ?>)</div>
-	  			<table class="table table-striped ">
-		  				<thead>
-		  					<tr>
-		  						<th>Handle ID</th>
-		  					</tr>
-		  				</thead>
-		  				<tbody>
-		  					<?php 
-		  					include 'db.php';
-		  					$sqlDoa = $db->query("SELECT IF(handleId IS NULL OR handleId ='','-', handleId) handleId FROM nida")or die(mysqli_error($db));
-		  						
-		  					while($rowDoa = mysqli_fetch_array($sqlDoa))
-	  						{
-	  							echo '<tr><td>'.$rowDoa['handleId'].'</td></tr>';
-	  						}
-		  				?>
-		  				</tbody>
-		  			</table>
+	  		<div class="col-md-4 contentHolder">
+	  			<div class="holderHead">Records</div>
+	  			<div  id="recordsHolder" class="list-group" style="padding-right: 10px;">
+				</div>
 			</div>
-	  	</dir><br>
-	  	<div class="row mainContent">
-	  		<div class="col-md-11">
-	  			<div class="progress">
-			    <div class="progress-bar progress-bar-striped active progress-bar-dark" role="progressbar" id="handleProgress" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">
-			      0%
-			    </div>
-			  </div>
-	  		</div>
-	  		<div class="col-md-1">
-	  			<button class="btn btn-warning" id="generateHandles">Generate</button>
-	  		</div>
-	  	</div><br>
-	  	<dir class="row mainContent">
-	  		<div class="col-md-12 contentHolder" style="min-height: 100px;">
-	  			<div class="holderHead">ERROR LOG (0)</div>
-	  			<div style="color: red;padding: 15px;">
-	  				Test error here.
-	  			</div>
-	  		</div>
-	  	</dir><br>
+	  		<div class="col-md-4 contentHolder">
+	  			<div class="holderHead">Information</div>
+	  			<p id="detailsHolder" style="margin: 10px 15px 10px;">Expandable Information Here!</p>
+			</div>
+	  	</dir>
+	</div>
+   <!-- Modal -->
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+
+		  <!-- Modal content-->
+		  <div class="modal-content">
+		    <div class="modal-header">
+		      <button type="button" class="close" data-dismiss="modal">&times;</button>
+		      <h4 class="modal-title">Grant Access to:</h4>
+		    </div>
+		    <div class="modal-body">
+		        <div style="padding: 18px 0;">
+					<h5  style="float: left;">Ownership</h5>
+					<div class="btn-group btn-toggle" style="float: right;"> 
+						<button class="btn btn-xs btn-default">ON</button>
+						<button class="btn btn-xs btn-primary active">OFF</button>
+					</div>
+				</div>
+				<div style="padding: 18px 0;">
+					<h5  style="float: left;">Education</h5>
+					<div class="btn-group btn-toggle" style="float: right;"> 
+						<button class="btn btn-xs btn-default">ON</button>
+						<button class="btn btn-xs btn-primary active">OFF</button>
+					</div>
+				</div>
+				<div style="padding: 18px 0;">
+					<h5  style="float: left;">Criminal</h5>
+					<div class="btn-group btn-toggle" style="float: right;"> 
+						<button class="btn btn-xs btn-primary active">ON</button>
+						<button class="btn btn-xs btn-default ">OFF</button>
+					</div>
+				</div>
+				<div style="padding: 18px 0;">
+					<h5  style="float: left;">Medical</h5>
+					<div class="btn-group btn-toggle" style="float: right;"> 
+						<button class="btn btn-xs btn-default">ON</button>
+						<button class="btn btn-xs btn-primary active">OFF</button>
+					</div>
+				</div>
+				<div style="padding: 18px 0;">
+					<h5  style="float: left;">Family</h5>
+					<div class="btn-group btn-toggle" style="float: right;"> 
+						<button class="btn btn-xs btn-primary active">ON</button>
+						<button class="btn btn-xs btn-default ">OFF</button>
+					</div>
+				</div>
+		    </div>
+		    <div class="modal-footer">
+				<div class="btn-group btn-toggle"> 
+					<button class="btn btn-default" onclick="myFunction()"  data-toggle="collapse" data-target="#collapsible">Generate Key</button>
+				</div>
+				<div class="well collapse" id="collapsible" style="font-weight: 800;"> 
+					<div id="genkey"></div>
+				</div>
+		    </div>
+		</div>
+		  
+		</div>
 	</div>
 
-<script type="text/javascript">
-	//looping 
-	//when button is clicked
-	genBtn = document.getElementById('generateHandles')
-	genBtn.addEventListener('click', function(){
-		//get all people to generate handle
-		handleElems = document.querySelectorAll('#peopleTable tr')
-		progressElem = document.getElementById('handleProgress')
+<script>
+	var d = new Date();
+	document.getElementById('currentTime').value = d;
+	function myFunction() {
+	    var x = Math.floor((Math.random() * 9999) + 1000);
+	    document.getElementById("genkey").innerHTML = 'Authendication Key: '+x;
+	}
+	(callRecords(1))();
 
-		var nGenerated = 0; //number of handles generated
-		var nhandleElems = handleElems.length;
+	function callRecords(sourceId) {
 
-		for( n=0; n<handleElems.length; n++){
-			handleElem = handleElems[n]
+		var elem = document.querySelector(".list-group-item.active")
+		elem.classList.remove('active');
 
-			//getting details of user
-			names = handleElem.dataset.names
-			gender = handleElem.dataset.gender
-			nid = handleElem.dataset.nid
+		var elem = document.querySelector("#source"+sourceId)
+		elem.classList.add('active');
 
-			$.ajax({
-				type: "GET",
-				url: "functions.php",
-				dataType: "html",
-				async: "false",
-				cache: "false",
-				data: {
-					action: 'createNidHandle',
-					img: 	'img',
-					names: 	names,
-					gender: gender,
-					dob: 	'dob',
-					nid: 	nid
-				},
-				success: function(html, textStatus){
-					//progress changing
-					nGenerated++
-					console.log(nGenerated)
-					percentage = (nGenerated/nhandleElems)*100
-					progressElem.style.width = percentage+'%'
-					progressElem.innerText = percentage+'%';
-					
-				},
-				error : function(xht, textStatus, errorThrown){
-					alert("Error : " + errorThrown);
-				}
-			});
-		}
-	})
+		document.getElementById('detailsHolder').innerHTML ='';
+		document.getElementById('recordsHolder').innerHTML ='<svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">'
+		   +'<circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg>';
 
+		$.ajax({
+			type : "GET",
+			url : "records.php",
+			dataType : "html",
+			cache : "false",
+			data : {
+				sourceId: sourceId
+			},
+			success : function(html, textStatus){
+				//alert('reslut back');
+			$('#recordsHolder').html(html);
+			},
+			error : function(xht, textStatus, errorThrown){
+				alert("Error : " + errorThrown);
+			}
+		});
+	}
+	function callDetails(recordId) {
 
-(generateHandles('img', 'names', 'gender', 'dob', 'nid'))();
-function generateHandles(img, names, gender, dob, nid){
-	<?php 
-	while($rowDoa = mysqli_fetch_array($sqlDoa))
-	{
-	?>
-	$.ajax({
-		type: "GET",
-		url: "functions.php",
-		dataType: "html",
-		cache: "false",
-		data: {
-			action: 'createNidHandle',
-			img: 	'img',
-			names: 	'names',
-			gender: 'gender',
-			dob: 	'dob',
-			nid: 	'nid'
-		},
-		success: function(html, textStatus){
-			alert("ok");
-			console.log(html);
-		},
-		error : function(xht, textStatus, errorThrown){
-			alert("Error : " + errorThrown);
-		}
-	});
-	<?php 
-	}?>
-}
+		
+		document.getElementById('detailsHolder').innerHTML ='<svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">'
+		   +'<circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg>';
+
+		$.ajax({
+			type : "GET",
+			url : "records.php",
+			dataType : "html",
+			cache : "false",
+			data : {
+				recordId: recordId
+			},
+			success : function(html, textStatus){
+				//alert('reslut back');
+			$('#detailsHolder').html(html);
+			},
+			error : function(xht, textStatus, errorThrown){
+				alert("Error : " + errorThrown);
+			}
+		});
+	}
 </script>
 </body>
 </html>
