@@ -103,6 +103,26 @@
 		}else{
 			$response = array('status'=>false, 'msg'=>'provide user');
 		}		
+	}else if($action == "getChurch"){
+		//check if the user joined church and returns the branch church information
+		//branch is like church here
+		$church = $request['churchId']??"";
+		$user = $request['userId']??"";
+
+		if($church){
+			$query = $conn->query("SELECT B.*, CONCAT(B.name, ' ', C.name) as churchName, (SELECT COUNT(*) FROM church_members WHERE userCode = \"$user\" AND branchid = B.id AND archived = 'no' ORDER BY createdDate DESC LIMIT 1) as joined FROM branches as B JOIN church as C ON C.id = B.church WHERE B.id = \"$church\" LIMIT 1 ") or trigger_error($conn->error);
+
+			$data = $query->fetch_assoc();
+			$branches[] = array(
+					'churchName'=>$data['churchName'],
+					'churchId'=>$church,
+					'churchImage'=>$data['profile_picture'],
+					'joined'=>$exiq->num_rows==1?"Yes":"No",
+				);
+			$response = $branches;
+		}else{
+			$response = "Fail";
+		}		
 	}else if($action == "get_groups" || $action == "getGroups"){
 		//Elisaa want random groupps
 		//give the church ID u want groups of
@@ -201,7 +221,6 @@
 		}else{
 			$response = 'Failed';
 		}
-
 	}else if($action == 'pledge'){
 		//api for donation
 		$amount = $request['amount']??"";
@@ -227,8 +246,6 @@
 		}else{
 			$response = 'Failed';
 		}	
-
-
 	}else if($action == 'buy'){
 		$phonenumber = $request['phone'];
 		$count = $request['count'];

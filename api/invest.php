@@ -651,5 +651,6 @@
 		}
 		echo json_encode($response);
 	}
+	// function stocksTransaction
 // END INVESTMENT
 ?>
