@@ -75,7 +75,7 @@
 		  						<th>Nid</th>
 		  					</tr>
 		  				</thead>
-		  				<tbody>
+		  				<tbody id="peopleTable">
 		  				<?php 
 		  					$n=0;
 		  					while($row = mysqli_fetch_array($sqlNida))
@@ -115,13 +115,13 @@
 	  	<div class="row mainContent">
 	  		<div class="col-md-11">
 	  			<div class="progress">
-			    <div class="progress-bar progress-bar-striped active progress-bar-dark" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
-			      40%
+			    <div class="progress-bar progress-bar-striped active progress-bar-dark" role="progressbar" id="handleProgress" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+			      0%
 			    </div>
 			  </div>
 	  		</div>
 	  		<div class="col-md-1">
-	  			<button class="btn btn-warning">Generate</button>
+	  			<button class="btn btn-warning" id="generateHandles">Generate</button>
 	  		</div>
 	  	</div><br>
 	  	<dir class="row mainContent">
@@ -135,6 +135,56 @@
 	</div>
 
 <script type="text/javascript">
+	//looping 
+	//when button is clicked
+	genBtn = document.getElementById('generateHandles')
+	genBtn.addEventListener('click', function(){
+		//get all people to generate handle
+		handleElems = document.querySelectorAll('#peopleTable tr')
+		progressElem = document.getElementById('handleProgress')
+
+		var nGenerated = 0; //number of handles generated
+		var nhandleElems = handleElems.length;
+
+		for( n=0; n<handleElems.length; n++){
+			handleElem = handleElems[n]
+
+			//getting details of user
+			names = handleElem.dataset.names
+			gender = handleElem.dataset.gender
+			nid = handleElem.dataset.nid
+
+			$.ajax({
+				type: "GET",
+				url: "functions.php",
+				dataType: "html",
+				async: "false",
+				cache: "false",
+				data: {
+					action: 'createNidHandle',
+					img: 	'img',
+					names: 	names,
+					gender: gender,
+					dob: 	'dob',
+					nid: 	nid
+				},
+				success: function(html, textStatus){
+					//progress changing
+					nGenerated++
+					console.log(nGenerated)
+					percentage = (nGenerated/nhandleElems)*100
+					progressElem.style.width = percentage+'%'
+					progressElem.innerText = percentage+'%';
+					
+				},
+				error : function(xht, textStatus, errorThrown){
+					alert("Error : " + errorThrown);
+				}
+			});
+		}
+	})
+
+
 (generateHandles('img', 'names', 'gender', 'dob', 'nid'))();
 function generateHandles(img, names, gender, dob, nid){
 	<?php 

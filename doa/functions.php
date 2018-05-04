@@ -21,7 +21,7 @@ function createNidHandle()
 {
 	require('db.php');
 	echo $img 		= $_GET['img'];
-	echo $names 		= $_GET['names'];
+	echo $names 	= $_GET['names'];
 	echo $gender 	= $_GET['gender'];
 	echo $dob 		= $_GET['dob'];
 	echo $nid 		= $_GET['nid'];
