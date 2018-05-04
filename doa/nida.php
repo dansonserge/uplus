@@ -81,7 +81,9 @@
 		  					while($row = mysqli_fetch_array($sqlNida))
 	  						{
 	  							$n++;
-	  							echo '<tr data-names="'.$row['names'].'" data-gender="'.$row['gender'].'" data-nid="11"><td>'.$n.'</td><td>'.$row['names'].'</td><td>'.$row['gender'].'</td><td>'.$row['nid'].'</td></tr>';
+	  							$doaClass = $row['handleId'];
+	  							if($doaClass == NULL || $doaClass == ""){ $doaClass = 'noDoa';}else{$doaClass = 'withDoa';}
+	  							echo '<tr class="'.$doaClass.'" data-names="'.$row['names'].'" data-gender="'.$row['gender'].'" data-nid="'.$row['nid'].'"><td>'.$n.'</td><td>'.$row['names'].'</td><td>'.$row['gender'].'</td><td>'.$row['nid'].'</td></tr>';
 	  						}
 		  				?>
 		  				</tbody>
@@ -92,24 +94,7 @@
 	  			<div class="holderHead">DOA  (<?php 
 		  						$sqlDoa1 = $db->query("SELECT handleId FROM nida WHERE handleId <>'' AND handleId IS NOT NULL")or die(mysqli_error($db));
 		  						echo mysqli_num_rows($sqlDoa1); ?>)</div>
-	  			<table class="table table-striped ">
-		  				<thead>
-		  					<tr>
-		  						<th>Handle ID</th>
-		  					</tr>
-		  				</thead>
-		  				<tbody>
-		  					<?php 
-		  					include 'db.php';
-		  					$sqlDoa = $db->query("SELECT IF(handleId IS NULL OR handleId ='','-', handleId) handleId FROM nida")or die(mysqli_error($db));
-		  						
-		  					while($rowDoa = mysqli_fetch_array($sqlDoa))
-	  						{
-	  							echo '<tr><td>'.$rowDoa['handleId'].'</td></tr>';
-	  						}
-		  				?>
-		  				</tbody>
-		  			</table>
+	  			<div id="handlesHolder">123</div>
 			</div>
 	  	</dir><br>
 	  	<div class="row mainContent">
@@ -140,7 +125,7 @@
 	genBtn = document.getElementById('generateHandles')
 	genBtn.addEventListener('click', function(){
 		//get all people to generate handle
-		handleElems = document.querySelectorAll('#peopleTable tr')
+		handleElems = document.querySelectorAll('#peopleTable tr.noDoa')
 		progressElem = document.getElementById('handleProgress')
 
 		var nGenerated = 0; //number of handles generated
@@ -150,10 +135,10 @@
 			handleElem = handleElems[n]
 
 			//getting details of user
-			names = handleElem.dataset.names
-			gender = handleElem.dataset.gender
-			nid = handleElem.dataset.nid
-
+			names 	= handleElem.dataset.names
+			gender 	= handleElem.dataset.gender
+			nid 	= handleElem.dataset.nid
+			console.log(nid);
 			$.ajax({
 				type: "GET",
 				url: "functions.php",
@@ -175,7 +160,9 @@
 					alert()
 					percentage = (nGenerated/nhandleElems)*100
 					progressElem.style.width = percentage+'%'
-					progressElem.innerText = percentage+'%';
+					progressElem.innerText = percentage+'%'
+					console.log(html);
+					loopHandles();
 					
 				},
 				error : function(xht, textStatus, errorThrown){
@@ -184,38 +171,39 @@
 			});
 		}
 	})
+</script> 
 
 
-(generateHandles('img', 'names', 'gender', 'dob', 'nid'))();
-function generateHandles(img, names, gender, dob, nid){
-	<?php 
-	while($rowDoa = mysqli_fetch_array($sqlDoa))
-	{
-	?>
+
+
+
+<script type="text/javascript">
+(loopHandles())();
+function loopHandles(){
+	
+	document.getElementById('handlesHolder').innerHTML ='<svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">'
+		   +'<circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg>';
+
 	$.ajax({
-		type: "GET",
-		url: "functions.php",
-		dataType: "html",
-		cache: "false",
-		data: {
-			action: 'createNidHandle',
-			img: 	'img',
-			names: 	'names',
-			gender: 'gender',
-			dob: 	'dob',
-			nid: 	'nid'
-		},
-		success: function(html, textStatus){
-			alert("ok");
-			console.log(html);
-		},
-		error : function(xht, textStatus, errorThrown){
-			alert("Error : " + errorThrown);
-		}
-	});
-	<?php 
-	}?>
-}
+			type : "GET",
+			url : "functions.php",
+			dataType : "html",
+			cache : "false",
+			data : {
+				action: 'loopHandles'
+			},
+			success : function(html, textStatus){
+				//alert('reslut back');
+			$('#handlesHolder').html(html);
+			},
+			error : function(xht, textStatus, errorThrown){
+				alert("Error : " + errorThrown);
+			}
+		});
+
+	
+};
+
 </script>
 </body>
 </html>

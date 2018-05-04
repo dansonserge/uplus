@@ -28,6 +28,7 @@ function createNidHandle()
 
 	//	START GENERATE A HANDLE
 		$handleId = '25.001/NIDA/'.$nid;
+		sleep(8);
 	//	END GENERATE A HANDLE
 
 	//	START SAVE THE HANDLE ID
@@ -35,5 +36,28 @@ function createNidHandle()
 	//	END SAVE THE HANDLE ID
 }
 
+function loopHandles()
+{
+	?>
+	<table class="table table-striped ">
+		<thead>
+			<tr>
+				<th>Handle ID</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php 
+				include 'db.php';
+				$sqlDoa = $db->query("SELECT IF(handleId IS NULL OR handleId ='','-', handleId) handleId FROM nida")or die(mysqli_error($db));
+					
+				while($rowDoa = mysqli_fetch_array($sqlDoa))
+				{
+					echo '<tr><td>'.$rowDoa['handleId'].'</td></tr>';
+				}
+			?>
+		</tbody>
+	</table>
+	<?php
+}
 // END NID
 ?>
