@@ -28,7 +28,7 @@ function createNidHandle()
 
 	//	START GENERATE A HANDLE
 		$handleId = '25.001/NIDA/'.$nid;
-		sleep(8);
+		sleep(4);
 	//	END GENERATE A HANDLE
 
 	//	START SAVE THE HANDLE ID
