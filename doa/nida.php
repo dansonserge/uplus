@@ -81,7 +81,7 @@
 		  					while($row = mysqli_fetch_array($sqlNida))
 	  						{
 	  							$n++;
-	  							echo '<tr><td>'.$n.'</td><td>'.$row['names'].'</td><td>'.$row['gender'].'</td><td>'.$row['nid'].'</td></tr>';
+	  							echo '<tr data-names="'.$row['names'].'" data-gender="'.$row['gender'].'" data-nid="11"><td>'.$n.'</td><td>'.$row['names'].'</td><td>'.$row['gender'].'</td><td>'.$row['nid'].'</td></tr>';
 	  						}
 		  				?>
 		  				</tbody>
