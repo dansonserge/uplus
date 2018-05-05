@@ -11,9 +11,12 @@
 		.progress-bar{
 			background-color: #06467c;
 		}
-		.handlesHolder, .card.card-fluid {
+		#handlesHolder, .card.card-fluid {
 		    overflow-y: scroll;
 		    height: 400px;
+		}
+		#handlesHolder{
+			padding: 5px 10px;
 		}
 	</style>
 </head>
