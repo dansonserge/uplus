@@ -11,7 +11,7 @@
 		.progress-bar{
 			background-color: #06467c;
 		}
-		.card.card-fluid {
+		.handlesHolder, .card.card-fluid {
 		    overflow-y: scroll;
 		    height: 400px;
 		}
@@ -96,9 +96,17 @@
 			</div>
 	  		<div class="col-md-3 contentHolder">
 	  			<div class="holderHead">DOA  (<?php 
-		  						$sqlDoa1 = $db->query("SELECT handleId FROM nida WHERE handleId <>'' AND handleId IS NOT NULL")or die(mysqli_error($db));
+		  						$sqlDoa1 = $db->query("SELECT handleId FROM nida WHERE handleId <> '' AND handleId IS NOT NULL")or die(mysqli_error($db));
 		  						echo mysqli_num_rows($sqlDoa1); ?>)</div>
-	  			<div id="handlesHolder">123</div>
+	  			<div id="handlesHolder">
+	  				
+	  				<?php
+	  					while ($data = $sqlDoa1->fetch_assoc()) {
+	  						echo "<p>$data[handleId]</p>";
+	  					}
+	  				?>
+
+	  			</div>
 			</div>
 	  	</dir><br>
 	  	<div class="row mainContent">
