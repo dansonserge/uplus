@@ -11,6 +11,10 @@
 		.progress-bar{
 			background-color: #06467c;
 		}
+		.card.card-fluid {
+		    overflow-y: scroll;
+		    height: 400px;
+		}
 	</style>
 </head>
 <body style="background: #efefef;">
@@ -118,18 +122,24 @@
 	  		</div>
 	  	</dir><br>
 	</div>
-
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	//looping 
 	//when button is clicked
 	genBtn = document.getElementById('generateHandles')
+
+
+	var progressElem = document.getElementById('handleProgress');
+	var percentage = 0;
+
 	genBtn.addEventListener('click', function(){
 		//get all people to generate handle
-		handleElems = document.querySelectorAll('#peopleTable tr.noDoa')
-		progressElem = document.getElementById('handleProgress')
+		var handleElems = document.querySelectorAll('#peopleTable tr.noDoa')
+		var progressElem = document.getElementById('handleProgress')
 
 		var nGenerated = 0; //number of handles generated
 		var nhandleElems = handleElems.length;
+		
 
 		for( n=0; n<handleElems.length; n++){
 			handleElem = handleElems[n]
@@ -143,8 +153,8 @@
 				type: "GET",
 				url: "functions.php",
 				dataType: "html",
-				async: "false",
-				cache: "false",
+				async: true,
+				cache: false,
 				data: {
 					action: 'createNidHandle',
 					img: 	'img',
@@ -155,22 +165,38 @@
 				},
 				success: function(html, textStatus){
 					//progress changing
-					nGenerated++
-					console.log(nGenerated)
-					alert()
-					percentage = (nGenerated/nhandleElems)*100
-					progressElem.style.width = percentage+'%'
-					progressElem.innerText = percentage+'%'
-					console.log(html);
-					loopHandles();
+					console.log(html)
 					
+					// progressElem.style.width = percentage+'%'
+					// progressElem.innerText = percentage+'%'
+					if(html.length>0){
+						setTimeout(function(){
+						nGenerated++
+						percentage = ((nGenerated/nhandleElems)*100).toFixed(0)
+						changeProgress(percentage)
+						// alert("percentage: "+percentage);
+					}, 100);
+					}
+
+					
+					
+					// console.log(html);
+					// loopHandles();
+										
 				},
 				error : function(xht, textStatus, errorThrown){
 					alert("Error : " + errorThrown);
 				}
 			});
 		}
-	})
+	});
+	function changeProgress(percentage){
+		
+		percentage = percentage.toString()
+		// progressElem.style.width = percentage+'%'
+		$("#handleProgress").css('width', percentage+'%')
+		$("#handleProgress").html(percentage+'%');
+	}
 </script> 
 
 
@@ -178,7 +204,7 @@
 
 
 <script type="text/javascript">
-(loopHandles())();
+// (loopHandles())();
 function loopHandles(){
 	
 	document.getElementById('handlesHolder').innerHTML ='<svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">'
