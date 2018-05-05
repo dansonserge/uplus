@@ -165,7 +165,7 @@
 				},
 				success: function(html, textStatus){
 					//progress changing
-					console.log(html)
+					// console.log(html)
 					
 					// progressElem.style.width = percentage+'%'
 					// progressElem.innerText = percentage+'%'
@@ -174,14 +174,13 @@
 						nGenerated++
 						percentage = ((nGenerated/nhandleElems)*100).toFixed(0)
 						changeProgress(percentage)
-						// alert("percentage: "+percentage);
 					}, 100);
 					}
 
 					
 					
 					// console.log(html);
-					// loopHandles();
+					loopHandles();
 										
 				},
 				error : function(xht, textStatus, errorThrown){
